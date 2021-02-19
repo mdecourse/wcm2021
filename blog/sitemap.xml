@@ -4,105 +4,105 @@ xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitem
 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-<loc>./</loc>
-<lastmod>2021-02-19T07:03:43-00:00</lastmod>
+<loc>https://mdecourse.github.io/wcm2021/blog/</loc>
+<lastmod>2021-02-19T07:06:25-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>./archives.html</loc>
-<lastmod>2021-02-19T07:03:43-00:00</lastmod>
+<loc>https://mdecourse.github.io/wcm2021/blog/archives.html</loc>
+<lastmod>2021-02-19T07:06:25-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>./tags.html</loc>
-<lastmod>2021-02-19T07:03:43-00:00</lastmod>
+<loc>https://mdecourse.github.io/wcm2021/blog/tags.html</loc>
+<lastmod>2021-02-19T07:06:25-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>./categories.html</loc>
-<lastmod>2021-02-19T07:03:43-00:00</lastmod>
+<loc>https://mdecourse.github.io/wcm2021/blog/categories.html</loc>
+<lastmod>2021-02-19T07:06:25-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>./pages/about/</loc>
+<loc>https://mdecourse.github.io/wcm2021/blog/pages/about/</loc>
 <lastmod>2021-02-19T06:49:47+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>./2021-spring-course-planning.html</loc>
+<loc>https://mdecourse.github.io/wcm2021/blog/2021-spring-course-planning.html</loc>
 <lastmod>2021-02-16T11:00:00+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>./fossil-scm-and-github-integration.html</loc>
+<loc>https://mdecourse.github.io/wcm2021/blog/fossil-scm-and-github-integration.html</loc>
 <lastmod>2021-02-12T11:00:00+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>./fossil-scm-use-case.html</loc>
+<loc>https://mdecourse.github.io/wcm2021/blog/fossil-scm-use-case.html</loc>
 <lastmod>2021-02-11T11:10:00+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>./fossil-scm-on-ubuntu.html</loc>
+<loc>https://mdecourse.github.io/wcm2021/blog/fossil-scm-on-ubuntu.html</loc>
 <lastmod>2021-02-11T11:00:00+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>./sync-pelican-and-blogger-content2.html</loc>
+<loc>https://mdecourse.github.io/wcm2021/blog/sync-pelican-and-blogger-content2.html</loc>
 <lastmod>2021-02-10T11:20:00+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>./data-sustainablity.html</loc>
+<loc>https://mdecourse.github.io/wcm2021/blog/data-sustainablity.html</loc>
 <lastmod>2021-02-10T11:10:00+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>./starting-2021.html</loc>
+<loc>https://mdecourse.github.io/wcm2021/blog/starting-2021.html</loc>
 <lastmod>2021-02-10T11:00:00+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>./category/weblog.html</loc>
+<loc>https://mdecourse.github.io/wcm2021/blog/category/weblog.html</loc>
 <lastmod>2021-02-16T11:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>./tag/202102.html</loc>
+<loc>https://mdecourse.github.io/wcm2021/blog/tag/202102.html</loc>
 <lastmod>2021-02-16T11:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>./author/yen.html</loc>
+<loc>https://mdecourse.github.io/wcm2021/blog/author/yen.html</loc>
 <lastmod>2021-02-16T11:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
