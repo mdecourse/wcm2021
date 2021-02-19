@@ -30,7 +30,7 @@ DELETE_OUTPUT_DIRECTORY = True
 # Following items are often useful when publishing
 
 DISQUS_SITENAME = "kmolab-github"
-DISQUS_DISPLAY_COUNTS = False
+DISQUS_DISPLAY_COUNTS = True
 #GOOGLE_ANALYTICS = ""
 
 # 設定網誌以 md 檔案建立的 file system date 為準, 無需自行設定
