@@ -70,7 +70,8 @@
 <p>但是目前 Python 3.9 仍無法執行 Tensorflow 2.0, 因此若需使用 Tensorflow 2.0 必須退回 Python 3.8.5 環境.</p>
 <h4>主題:</h4>
 <p style="padding-left: 30px;"><a href="https://github.com/mdecourse/nfulist/discussions/2">https://github.com/mdecourse/nfulist/discussions/2</a></p>
-<p>編輯課表查詢程式:</p>
+<p>根據 <a href="https://qry.nfu.edu.tw/class.php">https://qry.nfu.edu.tw/class.php</a></p>
+<p>班級課表查詢程式:</p>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">&lt;script type="text/javascript"&gt;
 $(function(){
 	$("#bt_qry").click(function(){
@@ -134,7 +135,114 @@ selclss
 <p>ajax 透過 post 送出對應變數值</p>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">url:  'class_ajax.php',
 data: { pselyr: pselyr, pselclss: pselclss },</pre>
-<p></p><h2>Topic 1</h2>
+<p>利用 Python requests 以 post 送出查詢變數後取回查詢結果:</p>
+<p>w1_class_local.py</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
+import bs4
+
+'''
+url:  'class_ajax.php',
+data: { pselyr: pselyr, pselclss: pselclss
+'''
+semester = '1092'
+classno = '42311'
+column = True
+
+if semester == None:
+    semester = '1091'
+if classno == None:
+    # 42311 is 設一甲
+    classno = '42311'
+    
+headers = {'X-Requested-With': 'XMLHttpRequest'}
+
+url = 'https://qry.nfu.edu.tw/class_ajax.php'
+post_var = {'pselyr': semester, 'pselclss': classno}
+
+result = requests.post(url, data = post_var, headers = headers)
+
+soup = bs4.BeautifulSoup(result.content, 'lxml')
+
+# 先除掉所有 anchor
+for a in soup.findAll('a'):
+    a.replaceWithChildren()
+
+# 根據輸出設定, 取出 class='tbcls' 的 table 資料
+table = soup.find('table', {'class': 'tbcls'})
+
+# 重建 table, 設定邊線為 1 pixel
+output = "&lt;table border='1'&gt;"
+
+for i in table.contents:
+    # 利用 replace 復原  
+    output += str(i).replace("&amp;nbsp", " ")
+output += "&lt;/table&gt;"
+print(output)
+</pre>
+<p>若根據 <a href="https://qry.nfu.edu.tw/jclassroom.php">https://qry.nfu.edu.tw/jclassroom.php</a></p>
+<p>與</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">&lt;option value="BGA0611" &gt;BGA0611 (研討室(三)_綜合工程一館 6F)&lt;/option&gt;
+&lt;option value="BGA0620" &gt;BGA0620 (動態系統實驗室_綜合工程一館 6F)&lt;/option&gt;
+&lt;option value="BGA0640" &gt;BGA0640 (創意設計室_綜合工程一館 6F)&lt;/option&gt;
+&lt;option value="BGA0710" &gt;BGA0710 (研討室(二)_綜合工程一館 7F)&lt;/option&gt;
+&lt;option value="BGA0730" &gt;BGA0730 (研討室(一)_綜合工程一館 7F)&lt;/option&gt;
+&lt;option value="BGA0760" &gt;BGA0760 (逆向快速成型實驗室_綜合工程一館 7F)&lt;/option&gt;
+&lt;option value="BGA0810" &gt;BGA0810 (電腦輔助設計室_綜合工程一館 8F)&lt;/option&gt;
+&lt;option value="BGA0820" &gt;BGA0820 (智慧感測與致動實驗室_綜合工程一館 8F)&lt;/option&gt;
+&lt;option value="BGA0823" &gt;BGA0823 (新產品創意設計中心_綜合工程一館 8F)&lt;/option&gt;
+&lt;option value="BGA0830" &gt;BGA0830 (電腦輔助繪圖室_綜合工程一館 8F)&lt;/option&gt;
+&lt;option value="BGA0842" &gt;BGA0842 (機械元件設計實驗室_綜合工程一館 8F)&lt;/option&gt;
+&lt;option value="BGA0901" &gt;BGA0901 (國際會議廳_綜合工程一館 9F)&lt;/option&gt;
+&lt;option value="BGA0911" &gt;BGA0911 (機電實驗室_綜合工程一館 9F)&lt;/option&gt;</pre>
+<p>則可以查詢各教室排課結果:</p>
+<p>w1_classroom_local.py</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
+import bs4
+
+'''
+url:  'jclassroom_ajax.php',
+data: { pselyr: pselyr, pselclssroom: pselclssroom },
+'''
+semester = '1092'
+classroomno = 'BGA0810'
+column = True
+
+if semester == None:
+    semester = '1092'
+if classroomno == None:
+    # BGA0810 電腦輔助設計室
+    classroomno = 'BGA0810'
+    
+headers = {'X-Requested-With': 'XMLHttpRequest'}
+
+url = 'https://qry.nfu.edu.tw/jclassroom_ajax.php'
+post_var = {'pselyr': semester, 'pselclssroom': classroomno}
+
+result = requests.post(url, data = post_var, headers = headers)
+
+soup = bs4.BeautifulSoup(result.content, 'lxml')
+
+# 先除掉所有 anchor
+for a in soup.findAll('a'):
+    a.replaceWithChildren()
+
+# 根據輸出設定, 取出 class='tbcls' 的 table 資料
+table = soup.find('table', {'class': 'tbcls'})
+
+# 重建 table, 設定邊線為 1 pixel
+output = "&lt;table border='1'&gt;"
+
+for i in table.contents:
+    # 利用 replace 復原  
+    output += str(i).replace("&amp;nbsp", " ")
+output += "&lt;/table&gt;"
+print(output)
+</pre>
+<h4>延伸練習:</h4>
+<ol>
+<li>請各組修改上述程式碼, 直接將查詢結果存為 html, 並且直接呼叫 firefox 瀏覽器開啟所建立的超文件檔案.</li>
+<li>請問上述的近端或網際程式架構, 是否可以應用在機械設計的某一個過程?</li>
+</ol><h2>Topic 1</h2>
 <ol>
 <li>學會利用 Leo Editor 編輯 Blog 與簡報內容</li>
 <li>學會將 Pelican Blog 資料同步至 Blogger</li>
