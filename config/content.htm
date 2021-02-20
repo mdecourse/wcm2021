@@ -62,7 +62,115 @@
 <li><a href="https://github.com/mdecourse/wcm2021/discussions/6">Flask CRUD 範例 </a></li>
 <li><a href="https://github.com/mdecourse/wcm2021/discussions/8">CMU Web</a></li>
 <li><a href="https://ubuntu.com">Ubuntu</a> 實體與 <a href="https://www.virtualbox.org/">Virtualbox</a> 虛擬主機的安裝與應用.</li>
-</ol><h2>Topic 1</h2>
+</ol><h2>Topic 0</h2>
+<p><a href="https://drive.google.com/drive/folders/1aIPm_u2RNKk-xVRdhHDqHokjLWHFLAsk">2021 Spring GDrive 下載區</a> (for @gm users only)</p>
+<p><a href="https://drive.google.com/file/d/1oJPgppmLSQtx0SDrs4QKOs_YgWDDv2fj/view?usp=sharing">kmol2021_spring_v1</a> 只安裝 Python 3.9, Git, Putty, ShareX 與 processexplorer</p>
+<p><a href="https://drive.google.com/file/d/1R6vAAWdNDigmyvFFQTKyM-XNKOWeCFJU/view?usp=sharing">kmol2021_spring_v2</a> 則安裝 Python 3.9, Git, Putty, ShareX 與 processexplorer 外, Python 又加裝 flask, flask_cors, bs4, lxml, pelican, markdown, leo</p>
+<p>升級可攜隨身程式系統與其他工具的主要目的, 在確保先前的使用模式與所開發的程式碼, 可以在最新的環境中執行.</p>
+<p>但是目前 Python 3.9 仍無法執行 Tensorflow 2.0, 因此若需使用 Tensorflow 2.0 必須退回 Python 3.8.5 環境.</p>
+<h4>主題:</h4>
+<p style="padding-left: 30px;"><a href="https://github.com/mdecourse/nfulist/discussions/2">https://github.com/mdecourse/nfulist/discussions/2</a></p>
+<p>編輯課表查詢程式:</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">&lt;script type="text/javascript"&gt;
+$(function(){
+	$("#bt_qry").click(function(){
+	pselyr=$("#selyr").val();
+	pselclss=$('#selclss').val();
+		if(pselyr.length!=1 &amp;&amp; pselclss.length!=1)
+		{
+			$.blockUI({
+				message: $('&lt;div id="loading" style="display: none;"&gt;處理中...&lt;/div&gt;'),
+				css: {
+						border: 'none',
+						padding: '10px',
+						'font-size': '16px'
+				}
+			});
+			$.ajax({
+				type: "POST", //post,get
+				dataType: "html",
+				cache: false, //關閉ajax緩衝區
+				url:  'class_ajax.php',
+				data: { pselyr: pselyr, pselclss: pselclss },
+				success: function(response){
+					$("#div_output").html(response);
+					//alert(response);
+					//$("#myParentSelect").trigger('change');
+				$.unblockUI();
+				}
+			})
+		}else{
+			alert("請選擇學年/學期或班級代號！");
+		}
+	});
+});
+&lt;/script&gt;</pre>
+<p>選單參數與對應值</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">selyr
+
+&lt;option value="1092" selected&gt;109學年度第2學期&lt;/option&gt;
+&lt;option value="1091" &gt;109學年度第1學期&lt;/option&gt;
+&lt;option value="1083" &gt;108學年度第3學期&lt;/option&gt;
+&lt;option value="1082" &gt;108學年度第2學期&lt;/option&gt;
+
+selclss
+
+&lt;option value="42310" &gt;42310四設計一訓&lt;/option&gt;
+&lt;option value="42311" &gt;42311四設計一甲&lt;/option&gt;
+&lt;option value="42312" &gt;42312四設計一乙&lt;/option&gt;
+&lt;option value="42319" &gt;42319四設計一攜&lt;/option&gt;
+&lt;option value="42320" &gt;42320四設計二訓&lt;/option&gt;
+&lt;option value="42321" &gt;42321四設計二甲&lt;/option&gt;
+&lt;option value="42322" &gt;42322四設計二乙&lt;/option&gt;
+&lt;option value="42329" &gt;42329四設計二攜&lt;/option&gt;
+&lt;option value="42330" &gt;42330四設計三訓&lt;/option&gt;
+&lt;option value="42331" &gt;42331四設計三甲&lt;/option&gt;
+&lt;option value="42332" &gt;42332四設計三乙&lt;/option&gt;
+&lt;option value="42339" &gt;42339四設計三攜&lt;/option&gt;
+&lt;option value="42340" &gt;42340四設計四訓&lt;/option&gt;
+&lt;option value="42341" &gt;42341四設計四甲&lt;/option&gt;
+&lt;option value="42342" &gt;42342四設計四乙&lt;/option&gt;
+&lt;option value="42349" &gt;42349四設計四攜&lt;/option&gt;</pre>
+<p>ajax 透過 post 送出對應變數值</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">url:  'class_ajax.php',
+data: { pselyr: pselyr, pselclss: pselclss },</pre>
+<p>利用 Python requests 以 post 送出查詢變數後取回查詢結果:</p>
+<p>w1_class_local.py</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
+import bs4
+
+'''
+url:  'class_ajax.php',
+data: { pselyr: pselyr, pselclss: pselclss
+'''
+semester = '1092'
+classno = '42311'
+column = True
+
+if semester == None:
+    semester = '1091'
+if classno == None:
+    # 42311 is 設一甲
+    classno = '42311'
+    
+headers = {'X-Requested-With': 'XMLHttpRequest'}
+
+url = 'https://qry.nfu.edu.tw/class_ajax.php'
+post_var = {'pselyr': semester, 'pselclss': classno}
+
+result = requests.post(url, data = post_var, headers = headers)
+
+soup = bs4.BeautifulSoup(result.content, 'lxml')
+table = soup.find('table', {'class': 'tbcls'})
+
+output = "&lt;table border='1'&gt;"
+for i in table.contents:
+    # 利用 replace 換回 html 空白符號
+    output += str(i).replace("&amp;nbsp", " ")
+output += "&lt;/table&gt;"
+print(output)
+</pre>
+<p></p><h2>Topic 1</h2>
 <ol>
 <li>學會利用 Leo Editor 編輯 Blog 與簡報內容</li>
 <li>學會將 Pelican Blog 資料同步至 Blogger</li>
