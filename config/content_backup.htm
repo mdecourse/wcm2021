@@ -70,11 +70,62 @@
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/37l2T6lF2oo" width="560"></iframe></p>
 <p>為了讓各學員可以從 <a href="http://c.kmol.info:88">http://c.kmol.info:88</a> 取下 Python 3.9.1 版的可攜程式系統, 特別將需要 @gm 權限的兩階段程式系統, 從 @gm 移動到 <a href="http://c.kmol.info:88">http://c.kmol.info:88</a>, 其中使用 sftp 與 ssh 對 c.kmol.info 進行連線:</p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/OaOdFv3EbIs" width="560"></iframe></p>
+<p>因為電腦輔助設計室第三磁區上課時使用純 IPv6 網路協定上線, 在 Python 3.8.5 可直接執行連結到 IPv4 網站的程式 (因為 Python 會自動使用 Windows 系統中所設定的 Proxy), 但在 Python 3.9.1 環境則必須明確宣告所使用的 IPv6 代理主機 (見以下註解說明, 因為至今 Python 3.9 仍無法如 3.8 自動透過 Windows 系統代理主機執行程式).</p>
+<p>註解: 根據 <a href="https://github.com/psf/requests/issues/5740">https://github.com/psf/requests/issues/5740</a> 的說明, 之所以 Python 3.8 與 3.9 在 requests 呼叫之所以產生差異的原因: Python 3.9 中目前仍存在 <span><a href="https://bugs.python.org/issue42627">urllib.request.getproxies() misparses Windows registry proxy settings</a> bug. 無法在 Windows 環境中執行時自動使用系統所設定的 Proxy Server. 但此問題可以自行在 Python 3.9 執行時的程式碼中設定代理主機而避開.</span></p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/c-AsFU2UMBE" width="560"></iframe></p>
+<p>參考用程式碼:</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
+import bs4
+ 
+import os
+
+proxy = 'http://[2001:288:6004:17::69]:3128'
+
+os.environ['http_proxy'] = proxy 
+os.environ['HTTP_PROXY'] = proxy
+os.environ['https_proxy'] = proxy
+os.environ['HTTPS_PROXY'] = proxy
+
+semester = '1092'
+classno = '42311'
+column = True
+ 
+if semester == None:
+    semester = '1091'
+if classno == None:
+    # 42311 is 設一甲
+    classno = '42311'
+     
+headers = {'X-Requested-With': 'XMLHttpRequest'}
+ 
+url = 'https://qry.nfu.edu.tw/class_ajax.php'
+post_var = {'pselyr': semester, 'pselclss': classno}
+ 
+result = requests.post(url, data = post_var, headers = headers)
+ 
+soup = bs4.BeautifulSoup(result.content, 'lxml')
+ 
+# 先除掉所有 anchor
+for a in soup.findAll('a'):
+    a.replaceWithChildren()
+ 
+# 根據輸出設定, 取出 class='tbcls' 的 table 資料
+table = soup.find('table', {'class': 'tbcls'})
+ 
+# 重建 table, 設定邊線為 1 pixel
+output = "&lt;table border='1'&gt;"
+ 
+for i in table.contents:
+    # 利用 replace 復原  
+    output += str(i).replace(" ", " ")
+output += "&lt;/table&gt;"
+print(output)
+</pre>
 <p><a href="https://drive.google.com/drive/folders/1aIPm_u2RNKk-xVRdhHDqHokjLWHFLAsk">2021 Spring GDrive 下載區</a> (for @gm users only)</p>
 <p><a href="https://drive.google.com/file/d/1oJPgppmLSQtx0SDrs4QKOs_YgWDDv2fj/view?usp=sharing">kmol2021_spring_v1</a> 只安裝 Python 3.9, Git, Putty, ShareX 與 processexplorer</p>
 <p><a href="https://drive.google.com/file/d/1R6vAAWdNDigmyvFFQTKyM-XNKOWeCFJU/view?usp=sharing">kmol2021_spring_v2</a> 則安裝 Python 3.9, Git, Putty, ShareX 與 processexplorer 外, Python 又加裝 flask, flask_cors, bs4, lxml, pelican, markdown, leo</p>
 <p>升級可攜隨身程式系統與其他工具的主要目的, 在確保先前的使用模式與所開發的程式碼, 可以在最新的環境中執行.</p>
-<p>但是目前 Python 3.9 仍無法執行 Tensorflow 2.0, 因此若需使用 Tensorflow 2.0 必須退回 Python 3.8.5 環境.</p>
+<p>但是目前 Python 3.9 仍<a href="https://github.com/tensorflow/tensorflow/issues/44485">無法</a>執行 Tensorflow 2.0, 因此若需使用 Tensorflow 2.0 必須退回 Python 3.8.5 環境.</p>
 <h4>主題:</h4>
 <p style="padding-left: 30px;"><a href="https://github.com/mdecourse/nfulist/discussions/2">https://github.com/mdecourse/nfulist/discussions/2</a></p>
 <p>根據 <a href="https://qry.nfu.edu.tw/class.php">https://qry.nfu.edu.tw/class.php</a></p>
@@ -205,6 +256,17 @@ print(output)
 <p>w1_classroom_local.py</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
 import bs4
+'''
+# 假如使用 Python 3.9 執行則必須自行在程式碼中設定代理主機
+import os
+ 
+proxy = 'http://[2001:288:6004:17::69]:3128'
+ 
+os.environ['http_proxy'] = proxy 
+os.environ['HTTP_PROXY'] = proxy
+os.environ['https_proxy'] = proxy
+os.environ['HTTPS_PROXY'] = proxy
+'''
 
 '''
 url:  'jclassroom_ajax.php',
@@ -247,11 +309,11 @@ print(output)
 </pre>
 <h4>延伸練習:</h4>
 <ol>
-<li>請各組修改上述程式碼, 直接將查詢結果存為 html, 並且直接呼叫 firefox 瀏覽器開啟所建立的超文件檔案.</li>
-<li>請各組將上述兩則程式套入 Flask, 改寫成網際程式, 並分別在 Windows 10 與 Ubuntu 20.04 中執行.</li>
-<li>請問上述的近端或網際程式架構, 是否可以應用在機械設計的某一個過程?</li>
+<li><span style="background-color: #ffff99;">請各組修改上述程式碼, 直接將查詢結果存為 html, 並且直接呼叫 firefox 瀏覽器開啟所建立的超文件檔案.</span></li>
+<li><span style="background-color: #ffff99;">請各組將上述兩則程式套入 Flask, 改寫成網際程式, 並分別在 Windows 10 與 Ubuntu 20.04 中執行.</span></li>
+<li><span style="background-color: #ffff99;">請各組設法為程將上述程式改為 Flask based 後, 將程式部署在 Heroku 中執行.</span></li>
+<li><span style="background-color: #ffff99;">請問上述的近端或網際程式架構, 是否可以應用在機械設計的某一個過程? (網際, AJAX, Heroku 部署).</span></li>
 </ol>
-<p></p>
 <h4>額外處理:</h4>
 <p style="padding-left: 30px;"><a href="https://forum.eng.nfu.edu.tw/t/topic/105/2">https://forum.eng.nfu.edu.tw/t/topic/105/2</a></p>
 <p style="padding-left: 30px;">針對 CMSiMDE 無法正確對 config/content.htm 分頁時能夠列出建議事項, 協助用戶解決問題.</p>
@@ -260,7 +322,9 @@ print(output)
 <p style="padding-left: 60px;">CMSiMDE 的靜態網頁如何產生?</p>
 <p style="padding-left: 60px;">為何網際內容管理系統要分動態與靜態網頁?</p>
 <p style="padding-left: 60px;">CMSiMDE 的網站分頁架構源自 <a href="https://www.cmsimple.org/en/,">https://www.cmsimple.org/en/,</a> 其中一度使用 <a href="https://cherrypy.org/">https://cherrypy.org/</a>, 最後才改為現在的 <a href="https://github.com/pallets/flask">https://github.com/pallets/flask</a>.</p>
-<p style="padding-left: 60px;">CMSiMDE 自 2013 年底開發至今, 可能需要重新改寫了:-) anybody??</p><h2>Topic 1</h2>
+<p style="padding-left: 60px;">CMSiMDE 自 2013 年底開發至今, 可能需要重新改寫了:-) anybody??</p>
+<p style="padding-left: 30px;">延伸練習:</p>
+<p style="padding-left: 60px;"><span style="background-color: #ffff99;">請各組研究一下 <a href="https://github.com/mdecourse/cmsimde" style="background-color: #ffff99;">https://github.com/mdecourse/cmsimde</a> 中的分頁程式, 並嘗試編寫一個能夠協助使用者在無法正確編輯動態網頁時進行 Debug 用.</span></p><h2>Topic 1</h2>
 <ol>
 <li>學會利用 Leo Editor 編輯 Blog 與簡報內容</li>
 <li>學會將 Pelican Blog 資料同步至 Blogger</li>
