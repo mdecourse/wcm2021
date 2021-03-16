@@ -1,5 +1,17 @@
 import requests
 import bs4
+# for os.environ and os.system
+import os
+# for geting html file path
+import pathlib
+
+# for pythn 3.9
+proxy = 'http://[2001:288:6004:17::69]:3128'
+
+os.environ['http_proxy'] = proxy 
+os.environ['HTTP_PROXY'] = proxy
+os.environ['https_proxy'] = proxy
+os.environ['HTTPS_PROXY'] = proxy
 
 '''
 url:  'jclassroom_ajax.php',
@@ -38,4 +50,15 @@ for i in table.contents:
     # 利用 replace 復原 &nbsp
     output += str(i).replace("&amp;nbsp", "&nbsp")
 output += "</table>"
-print(output)
+#print(output)
+
+# 將 output 寫入 w1_classroom.html
+fileName = "w1_classroom.html"
+with open(fileName, "w", encoding="utf-8") as file:
+    file.write(output)
+# 利用 os.system() 以 default browser 開啟 w1_class_local.html
+filePath = pathlib.Path(__file__).parent.absolute()
+#print(filePath)
+# set firefox as default browser and start url to open html file
+os.system("start file:///" + str(filePath) + "\\" + fileName)
+

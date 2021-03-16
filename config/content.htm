@@ -63,7 +63,7 @@
 <li><a href="https://github.com/mdecourse/wcm2021/discussions/6">Flask CRUD 範例 </a></li>
 <li><a href="https://github.com/mdecourse/wcm2021/discussions/8">CMU Web</a></li>
 <li><a href="https://ubuntu.com">Ubuntu</a> 實體與 <a href="https://www.virtualbox.org/">Virtualbox</a> 虛擬主機的安裝與應用.</li>
-</ol><h2>Topic 0</h2>
+</ol><h2>W1-W2</h2>
 <p>網際內容管理課程簡介</p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/hZMriptiTU4" width="560"></iframe></p>
 <p>網際內容管理將從學校教務主機, 以 Flask 與 bs4 擷取出各種相關資料作為開端, 以下為初步流程介紹:</p>
@@ -83,13 +83,33 @@
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/s5ty-MpnK7c" width="560"></iframe></p>
 <p>說明 topic0 執行動機以及自選組員後所衍生相關資料擷取問題的因應及處理</p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/ZHeFGqNRaDw" width="560"></iframe></p>
-<p></p>
-<p>參考用程式碼:</p>
+<h3>Topic 0</h3>
+<p>2021 Spring 的網際內容管理課程將從學校的課程主機中擷取資料開始:</p>
+<p>學校的課程相關主機為: <a href="https://qry.nfu.edu.tw/">https://qry.nfu.edu.tw/</a></p>
+<p>其中包括</p>
+<p style="padding-left: 30px;">查詢各班課表用: <a href="https://qry.nfu.edu.tw/class.php">https://qry.nfu.edu.tw/class.php</a></p>
+<p style="padding-left: 30px;">查詢教師課表: <a href="https://qry.nfu.edu.tw/teacher.php">https://qry.nfu.edu.tw/teacher.php</a></p>
+<p style="padding-left: 30px;">查詢教室課表: <a href="https://qry.nfu.edu.tw/classroom.php">https://qry.nfu.edu.tw/classroom.php</a></p>
+<p style="padding-left: 30px;">查詢課程: <a href="https://qry.nfu.edu.tw/classname.php">https://qry.nfu.edu.tw/classname.php</a></p>
+<p style="padding-left: 30px;">查詢班級名條: <a href="https://qry.nfu.edu.tw/classlist.php">https://qry.nfu.edu.tw/classlist.php</a></p>
+<p>而與學校排課相關的專案.</p>
+<p style="padding-left: 30px;"><a href="https://github.com/mdecourse/GeneticAlgorithmUniversityClassScheduler">https://github.com/mdecourse/GeneticAlgorithmUniversityClassScheduler</a></p>
+<p style="padding-left: 60px;"><a href="/downloads/2018_UNIVERSITY TIMETABLE SCHEDULING USING METAHEURISTIC ADAPTIVE-ELITIST GENETIC ALGORITHM.pdf">2018_UNIVERSITY TIMETABLE SCHEDULING USING METAHEURISTIC ADAPTIVE-ELITIST GENETIC ALGORITHM.pdf</a></p>
+<p style="padding-left: 60px;"><a href="https://link.springer.com/book/10.1007/978-1-4842-5857-6">Beginning PyQt - 2020 ebook.pdf</a></p>
+<p>以下則為可用來擷取課程主機的參考程式碼:</p>
+<p><a href="https://qry.nfu.edu.tw/class.php">class.php</a> 網頁原始碼中 AJAX 程式段:</p>
+<p><img alt="" class="add_border" height="604" src="/images/class.php_ajax_script.png" width="600"/></p>
+<p>在 class.php 頁面以表單選擇四技設一甲後進行查詢, 所得超文件中, 以<span style="background-color: #ccffcc;">網頁開發者</span>中的<span style="background-color: #ccffcc;">檢測器</span>可以查得所傳回的 table class 名稱為 tbcls:</p>
+<p><img alt="" class="add_border" height="404" src="/images/class.php_return_table_class_name_tbcls.png" width="600"/></p>
+<p>取得四技設一甲 2021 Spring 班級課表, 存為 html 後以內定瀏覽器開啟:</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
 import bs4
- 
+# for os.environ and os.system()
 import os
+# for geting html file path
+import pathlib
 
+# for pythn 3.9
 proxy = 'http://[2001:288:6004:17::69]:3128'
 
 os.environ['http_proxy'] = proxy 
@@ -97,40 +117,52 @@ os.environ['HTTP_PROXY'] = proxy
 os.environ['https_proxy'] = proxy
 os.environ['HTTPS_PROXY'] = proxy
 
+'''
+url:  'class_ajax.php',
+data: { pselyr: pselyr, pselclss: pselclss
+'''
 semester = '1092'
 classno = '42311'
 column = True
- 
+
 if semester == None:
     semester = '1091'
 if classno == None:
     # 42311 is 設一甲
     classno = '42311'
-     
+    
 headers = {'X-Requested-With': 'XMLHttpRequest'}
- 
+
 url = 'https://qry.nfu.edu.tw/class_ajax.php'
 post_var = {'pselyr': semester, 'pselclss': classno}
- 
+
 result = requests.post(url, data = post_var, headers = headers)
- 
+
 soup = bs4.BeautifulSoup(result.content, 'lxml')
- 
+
 # 先除掉所有 anchor
 for a in soup.findAll('a'):
     a.replaceWithChildren()
- 
+
 # 根據輸出設定, 取出 class='tbcls' 的 table 資料
 table = soup.find('table', {'class': 'tbcls'})
- 
+
 # 重建 table, 設定邊線為 1 pixel
 output = "&lt;table border='1'&gt;"
- 
+
 for i in table.contents:
-    # 利用 replace 復原  
-    output += str(i).replace(" ", " ")
+    # 利用 replace 復原  
+    output += str(i).replace("&amp;nbsp", " ")
 output += "&lt;/table&gt;"
-print(output)
+# print(output)
+# 將 output 寫入 w1_class_local.html
+with open("w1_class_local.html", "w", encoding="utf-8") as file:
+    file.write(output)
+# 利用 os.system() 以 default browser 開啟 w1_class_local.html
+filePath = pathlib.Path(__file__).parent.absolute()
+#print(filePath)
+# set firefox as default browser and start url to open html file
+os.system("start file:///" + str(filePath) + "\\w1_class_local.html")
 </pre>
 <p><a href="https://drive.google.com/drive/folders/1aIPm_u2RNKk-xVRdhHDqHokjLWHFLAsk">2021 Spring GDrive 下載區</a> (for @gm users only)</p>
 <p><a href="https://drive.google.com/file/d/1oJPgppmLSQtx0SDrs4QKOs_YgWDDv2fj/view?usp=sharing">kmol2021_spring_v1</a> 只安裝 Python 3.9, Git, Putty, ShareX 與 processexplorer</p>
@@ -141,6 +173,7 @@ print(output)
 <p style="padding-left: 30px;"><a href="https://github.com/mdecourse/nfulist/discussions/2">https://github.com/mdecourse/nfulist/discussions/2</a></p>
 <p>根據 <a href="https://qry.nfu.edu.tw/class.php">https://qry.nfu.edu.tw/class.php</a></p>
 <p>班級課表查詢程式:</p>
+<p><a href="https://github.com/mdecourse/wcm2021/blob/main/downloads/w1_class_local.py">w1_class_local.py</a></p>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">&lt;script type="text/javascript"&gt;
 $(function(){
 	$("#bt_qry").click(function(){
@@ -205,28 +238,41 @@ selclss
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">url:  'class_ajax.php',
 data: { pselyr: pselyr, pselclss: pselclss },</pre>
 <p>利用 Python requests 以 post 送出查詢變數後取回查詢結果:</p>
-<p>w1_class_local.py</p>
+<p>以下為綜一館八樓電腦輔助設計室 2021 Spring 排課表, 程式取回資料後存為 html 後以內定的瀏覽器開啟:</p>
+<p><a href="https://github.com/mdecourse/wcm2021/blob/main/downloads/w1_classroom_local.py">w1_classroom_local.py</a></p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
 import bs4
+# for os.environ and os.system
+import os
+# for geting html file path
+import pathlib
+
+# for pythn 3.9
+proxy = 'http://[2001:288:6004:17::69]:3128'
+
+os.environ['http_proxy'] = proxy 
+os.environ['HTTP_PROXY'] = proxy
+os.environ['https_proxy'] = proxy
+os.environ['HTTPS_PROXY'] = proxy
 
 '''
-url:  'class_ajax.php',
-data: { pselyr: pselyr, pselclss: pselclss
+url:  'jclassroom_ajax.php',
+data: { pselyr: pselyr, pselclssroom: pselclssroom },
 '''
 semester = '1092'
-classno = '42311'
+classroomno = 'BGA0810'
 column = True
 
 if semester == None:
-    semester = '1091'
-if classno == None:
-    # 42311 is 設一甲
-    classno = '42311'
+    semester = '1092'
+if classroomno == None:
+    # BGA0810 電腦輔助設計室
+    classroomno = 'BGA0810'
     
 headers = {'X-Requested-With': 'XMLHttpRequest'}
 
-url = 'https://qry.nfu.edu.tw/class_ajax.php'
-post_var = {'pselyr': semester, 'pselclss': classno}
+url = 'https://qry.nfu.edu.tw/jclassroom_ajax.php'
+post_var = {'pselyr': semester, 'pselclssroom': classroomno}
 
 result = requests.post(url, data = post_var, headers = headers)
 
@@ -246,7 +292,18 @@ for i in table.contents:
     # 利用 replace 復原  
     output += str(i).replace("&amp;nbsp", " ")
 output += "&lt;/table&gt;"
-print(output)
+#print(output)
+
+# 將 output 寫入 w1_classroom.html
+fileName = "w1_classroom.html"
+with open(fileName, "w", encoding="utf-8") as file:
+    file.write(output)
+# 利用 os.system() 以 default browser 開啟 w1_class_local.html
+filePath = pathlib.Path(__file__).parent.absolute()
+#print(filePath)
+# set firefox as default browser and start url to open html file
+os.system("start file:///" + str(filePath) + "\\" + fileName)
+
 </pre>
 <p>若根據 <a href="https://qry.nfu.edu.tw/jclassroom.php">https://qry.nfu.edu.tw/jclassroom.php</a></p>
 <p>與</p>
