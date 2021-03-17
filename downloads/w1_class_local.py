@@ -38,7 +38,10 @@ soup = bs4.BeautifulSoup(result.content, 'lxml')
 
 # 先除掉所有 anchor
 for a in soup.findAll('a'):
-    a.replaceWithChildren()
+    # bs3 語法
+    #a.replaceWithChildren()
+    # bs4 語法, 將標註與內容拆開
+    a.unwrap()
 
 # 根據輸出設定, 取出 class='tbcls' 的 table 資料
 table = soup.find('table', {'class': 'tbcls'})
@@ -47,8 +50,8 @@ table = soup.find('table', {'class': 'tbcls'})
 output = "<table border='1'>"
 
 for i in table.contents:
-    # 利用 replace 復原 &nbsp
-    output += str(i).replace("&amp;nbsp", "&nbsp")
+    # 利用 replace 復原 &nbsp;
+    output += str(i).replace("&amp;nbsp", "&nbsp;")
 output += "</table>"
 # print(output)
 # 將 output 寫入 w1_class_local.html

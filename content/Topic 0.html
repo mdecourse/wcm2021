@@ -134,6 +134,14 @@ img.add_border {
           
         </header>
     <div id="tipue_search_content">W1-W2 << <a href='W1-W2.html'>Previous</a> <a href='網頁除錯.html'>Next</a> >> 網頁除錯<br /><h1>Topic 0</h1>
+<h4>網際內容管理程式練習題目:</h4>
+<ol>
+<li>學習如何解讀帶有 <a href="https://en.wikipedia.org/wiki/Ajax_(programming)">AJAX</a> 程式架構的網際伺服器內容</li>
+<li>學習如何利用 Python <a href="https://requests.readthedocs.io/en/master/">requests</a> 中的 post 方法, 向伺服器送出表單資料</li>
+<li>學習如何利用 <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">bs4</a> 解讀 <a href="https://developer.mozilla.org/zh-TW/docs/Learn/Getting_started_with_the_web/HTML_basics">HTML</a> 檔案</li>
+<li>學習如何利用 Python 程式執行操作系統指令 (<a href="https://docs.python.org/3/library/os.html">os Module</a>)</li>
+<li>學習如何將網際程式伺服至 <a href="https://www.heroku.com/">Heroku</a> 雲端主機</li>
+</ol>
 <p>2021 Spring 的網際內容管理課程將從學校的課程主機中擷取資料開始:</p>
 <p>學校的課程相關主機為: <a href="https://qry.nfu.edu.tw/">https://qry.nfu.edu.tw/</a></p>
 <p>其中包括</p>
@@ -192,7 +200,10 @@ soup = bs4.BeautifulSoup(result.content, 'lxml')
 
 # 先除掉所有 anchor
 for a in soup.findAll('a'):
-    a.replaceWithChildren()
+    # bs3 語法
+    #a.replaceWithChildren()
+    # bs4 語法, 將標註與內容拆開
+    a.unwrap()
 
 # 根據輸出設定, 取出 class='tbcls' 的 table 資料
 table = soup.find('table', {'class': 'tbcls'})
@@ -330,7 +341,10 @@ soup = bs4.BeautifulSoup(result.content, 'lxml')
 
 # 先除掉所有 anchor
 for a in soup.findAll('a'):
-    a.replaceWithChildren()
+    # bs3 語法
+    #a.replaceWithChildren()
+    # bs4 語法, 將標註與內容拆開
+    a.unwrap()
 
 # 根據輸出設定, 取出 class='tbcls' 的 table 資料
 table = soup.find('table', {'class': 'tbcls'})
@@ -444,7 +458,22 @@ print(output)
 <p style="padding-left: 60px;">CMSiMDE 的網站分頁架構源自 <a href="https://www.cmsimple.org/en/,">https://www.cmsimple.org/en/,</a> 其中一度使用 <a href="https://cherrypy.org/">https://cherrypy.org/</a>, 最後才改為現在的 <a href="https://github.com/pallets/flask">https://github.com/pallets/flask</a>.</p>
 <p style="padding-left: 60px;">CMSiMDE 自 2013 年底開發至今, 可能需要重新改寫了:-) anybody??</p>
 <p style="padding-left: 30px;">延伸練習:</p>
-<p style="padding-left: 60px;"><span style="background-color: #ffff99;">請各組研究一下 <a href="https://github.com/mdecourse/cmsimde" style="background-color: #ffff99;">https://github.com/mdecourse/cmsimde</a> 中的分頁程式, 並嘗試編寫一個能夠協助使用者在無法正確編輯動態網頁時進行 Debug 用.</span></p><br />W1-W2 << <a href='W1-W2.html'>Previous</a> <a href='網頁除錯.html'>Next</a> >> 網頁除錯</div>
+<p style="padding-left: 60px;"><span style="background-color: #ffff99;">請各組研究一下 <a href="https://github.com/mdecourse/cmsimde" style="background-color: #ffff99;">https://github.com/mdecourse/cmsimde</a> 中的分頁程式, 並嘗試編寫一個能夠協助使用者在無法正確編輯動態網頁時進行 Debug 用.</span></p>
+<p>在處理特定目錄中檔案內容字串置換時, 可以利用下列程式碼:</p>
+<p>walk_in_dir_and_replace_string.py</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import os
+findText = """content to remove"""
+for dname, dirs, files in os.walk("path_name"):
+    for fname in files:
+        if fname[-5:] == ".html":
+            print(fname)
+            fpath = os.path.join(dname, fname)
+            with open(fpath, encoding="utf-8") as f:
+                s = f.read()
+            s = s.replace(findText, "")
+            with open(fpath, "w", encoding="utf-8") as f:
+                f.write(s)</pre>
+<p></p><br />W1-W2 << <a href='W1-W2.html'>Previous</a> <a href='網頁除錯.html'>Next</a> >> 網頁除錯</div>
         
     <!-- footer -->
       <div class="container">
