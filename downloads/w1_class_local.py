@@ -33,7 +33,7 @@ url = 'https://qry.nfu.edu.tw/class_ajax.php'
 post_var = {'pselyr': semester, 'pselclss': classno}
 
 result = requests.post(url, data = post_var, headers = headers)
-
+#print(result)
 soup = bs4.BeautifulSoup(result.content, 'lxml')
 
 # 先除掉所有 anchor
