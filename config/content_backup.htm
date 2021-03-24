@@ -540,6 +540,11 @@ for dname, dirs, files in os.walk("path_name"):
 <p style="padding-left: 30px;"><a href="/downloads/flask_tutorial.pdf">flask_tutorial.pdf</a></p>
 <p style="padding-left: 30px;"><a href="/downloads/flask_document.pdf">flask_document.pdf</a></p>
 <p style="padding-left: 30px;"><a href="/downloads/2021_flask_document.pdf">2021_flask_document.pdf</a></p>
+<p style="padding-left: 30px;"><a href="https://realpython.com/primer-on-python-decorators/">https://realpython.com/primer-on-python-decorators/</a></p>
+<p style="padding-left: 30px;"><a href="https://www.programiz.com/python-programming/decorator">https://www.programiz.com/python-programming/decorator</a></p>
+<p style="padding-left: 30px;"><a href="https://www.python-course.eu/python3_decorators.php">https://www.python-course.eu/python3_decorators.php</a></p>
+<p style="padding-left: 60px;">Python has a feature called decorators to add functionality to an existing code. This is also called metaprogramming because a part of the program tries to modify another part of the program at compile time.</p>
+<p style="padding-left: 60px;">Decorators allow us to wrap another function in order to extend the behavior of the wrapped function, without permanently modifying it.</p>
 <p>Heroku 參考教材:</p>
 <p style="padding-left: 30px;"><a href="/downloads/heroku.pdf">heroku.pdf</a></p>
 <p style="padding-left: 30px;"><a href="/downloads/2017_web_apps.pdf">2017_web_apps.pdf</a></p>
@@ -627,6 +632,41 @@ filePath = pathlib.Path(__file__).parent.absolute()
 # set firefox as default browser and start url to open html file
 os.system("start file:///" + str(filePath) + "\\w1_class_local.html")</pre>
 <p>以上在 CMSMDE 列出程式碼, 有一個技巧, 針對 <a href="https://developer.mozilla.org/en-US/docs/Glossary/Entity">Html entity</a> 符號必須將 &amp; 表示為 &amp;amp; 否則在頁面程式引用時無法正確顯示出原始碼內容.</p>
+<p>Flask example:</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from flask import Flask, request
+from datetime import datetime
+import os
+
+# for pythn 3.9
+proxy = 'http://[2001:288:6004:17::69]:3128'
+''' 
+os.environ['http_proxy'] = proxy 
+os.environ['HTTP_PROXY'] = proxy
+os.environ['https_proxy'] = proxy
+os.environ['HTTPS_PROXY'] = proxy
+'''
+app = Flask(__name__)
+
+# https://realpython.com/primer-on-python-decorators/
+@app.route('/')
+def hello():
+    # 若取不到 name 則 name = None
+    name = request.args.get('name')
+    if name == None:
+        name = "test"
+    # https://realpython.com/python-formatted-output/
+    return HELLO_HTML.format(
+            name, str(datetime.now()))
+
+HELLO_HTML = """
+    &lt;html&gt;&lt;body&gt;
+        &lt;h1&gt;Hello, {0}!&lt;/h1&gt;
+        現在時間為: {1}.
+    &lt;/body&gt;&lt;/html&gt;"""
+
+if __name__ == "__main__":
+    # Launch the Flask dev server
+    app.run(host="localhost", debug=True)</pre>
 <p></p><h3>開放教科書</h3>
 <p><a href="https://www.openculture.com/free_textbooks">https://www.openculture.com/free_textbooks</a> (K-12)</p>
 <p><a href="https://openstax.org/subjects">https://openstax.org/subjects</a> (University)</p>
