@@ -133,18 +133,113 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">機械工程師 << <a href='機械工程師.html'>Previous</a> <a href='Heroku.html'>Next</a> >> Heroku<br /><h1>Programming</h1>
-<p>利用 MSYS2 與 Tiny C 編譯 ANSI C</p>
-<p><a href="./../downloads/programming_in_c.pdf">programming_in_c.pdf</a></p>
-<p><a href="./../downloads/cprogramming_tutorial.pdf">cprogramming_tutorial.pdf</a></p>
-<p><a href="./../downloads/ctext.pdf">ctext.pdf</a></p>
-<p><a href="./../downloads/c-primer.pdf">c-primer.pdf</a></p>
-<p><a href="./../downloads/c-refcard.pdf">c-refcard.pdf</a></p>
-<h4>應用練習:</h4>
-<p style="padding-left: 30px;">編譯修改 <a href="https://fossil-scm.org">https://fossil-scm.org</a> 增加新功能, 或令其可以透過 Oauth2 登入.</p>
-<p style="padding-left: 30px;"><a href="https://fossil-scm.org/home/doc/trunk/www/theory1.wiki">https://fossil-scm.org/home/doc/trunk/www/theory1.wiki</a></p>
-<h4>About Fossil SCM:</h4>
-<p>The underlying database is very simple: it is an unordered collection of "artifacts". An artifact is a list of bytes - a "file" in the usual manner of thinking. Many artifacts are simply the content of source files that have been checked into the Fossil repository. Call these "content artifacts". Other artifacts, known as "control artifacts", contain ASCII text in a particular format that defines relationships between other artifacts, such as which content artifacts that go together to form a particular version of the project. Each artifact is named by its SHA1 or SHA3-256 hash and is thus immutable. Artifacts can be added to the database but not removed (if we ignore the exceptional case of shunning.) Repositories synchronize by computing the union of their artifact sets. SQL and relation theory play no role in any of this.</p><br />機械工程師 << <a href='機械工程師.html'>Previous</a> <a href='Heroku.html'>Next</a> >> Heroku</div>
+    <div id="tipue_search_content">創新教育 << <a href='創新教育.html'>Previous</a> <a href='Topic 1.html'>Next</a> >> Topic 1<br /><h1>網際程式開發</h1>
+<p>實習目的:</p>
+<ol>
+<li>利用網際模組擷取資料 (<a href="https://requests.readthedocs.io/en/master/">Python requests</a>)</li>
+<li>利用 bs4 擷取網頁資料</li>
+<li>利用 Flask 編寫網際程式</li>
+<li>利用 Heroku 部署網際程式</li>
+<li>利用 Ubuntu 虛擬主機作為伺服器</li>
+</ol>
+<p>Beautifulsoup 參考教材:</p>
+<p style="padding-left: 30px;"><a href="./../downloads/beautifulsoup.pdf">beautifulsoup.pdf</a></p>
+<p style="padding-left: 30px;"><a href="./../downloads/WebScraping_with_bs4.pdf">WebScraping_with_bs4.pdf</a></p>
+<p style="padding-left: 30px;"><a href="./../downloads/beautiful_soup_tutorial.pdf">beautiful_soup_tutorial.pdf</a></p>
+<p style="padding-left: 30px;"><a href="./../downloads/2019_beautifulsoup_document.pdf">2019_beautifulsoup_document.pd</a></p>
+<p>Flask 參考教材:</p>
+<p style="padding-left: 30px;"><a href="./../downloads/flask.pdf">flask.pdf</a></p>
+<p style="padding-left: 30px;"><a href="./../downloads/flask_tutorial.pdf">flask_tutorial.pdf</a></p>
+<p style="padding-left: 30px;"><a href="./../downloads/flask_document.pdf">flask_document.pdf</a></p>
+<p style="padding-left: 30px;"><a href="./../downloads/2021_flask_document.pdf">2021_flask_document.pdf</a></p>
+<p>Heroku 參考教材:</p>
+<p style="padding-left: 30px;"><a href="./../downloads/heroku.pdf">heroku.pdf</a></p>
+<p style="padding-left: 30px;"><a href="./../downloads/2017_web_apps.pdf">2017_web_apps.pdf</a></p>
+<p><a href="https://assets.ubuntu.com/v1/f954307f-ubuntu-server-guide.pdf">Ubuntu server 參考教材</a>.</p>
+<p><a href="http://mde.tw/wcm2021/content/Topic%200.html">Topic 0</a> 已經列出兩組可以從學校教務主機擷取資料的程式, 分別可以根據學期代號與班級代號取出班級排課表, 還有利用學期代號與實習實驗室代號擷取排客時間表.</p>
+<p>接下來實習的目標是希望寫一組程式可以擷取機械設計工程系各實習實驗室排課表, 並且統計各實驗室每週排課總時數.</p>
+<p>我們先來看 <a href="https://requests.readthedocs.io/en/master/">Python requests</a> 的用法:</p>
+<p>W5_requests_ex1.py</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
+
+r = requests.get("https://mde.tw")
+print("status_code:", r.status_code)
+print("content-type:", r.headers['content-type'])
+print("encoding:", r.encoding)
+print("text:", r.text)
+</pre>
+<p>要看懂下列程式, 必須知道何謂 <a href="https://developer.mozilla.org/en-US/docs/Glossary/Entity">html entity</a>, 而且要會使用 requests.post() 與 bs4.BeautifulSoup()</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
+import bs4
+# for os.environ and os.system()
+import os
+# for geting html file path
+import pathlib
+ 
+# for pythn 3.9
+proxy = 'http://[2001:288:6004:17::69]:3128'
+ 
+os.environ['http_proxy'] = proxy 
+os.environ['HTTP_PROXY'] = proxy
+os.environ['https_proxy'] = proxy
+os.environ['HTTPS_PROXY'] = proxy
+ 
+'''
+url:  'class_ajax.php',
+data: { pselyr: pselyr, pselclss: pselclss
+'''
+semester = '1092'
+classno = '42311'
+column = True
+ 
+if semester == None:
+    semester = '1091'
+if classno == None:
+    # 42311 is 設一甲
+    classno = '42311'
+     
+headers = {'X-Requested-With': 'XMLHttpRequest'}
+ 
+url = 'https://qry.nfu.edu.tw/class_ajax.php'
+post_var = {'pselyr': semester, 'pselclss': classno}
+ 
+result = requests.post(url, data = post_var, headers = headers)
+ 
+# result.content 傳回 binary 資料
+# soup = bs4.BeautifulSoup(result.content, 'lxml')
+# result.text 傳回純文字資料
+soup = bs4.BeautifulSoup(result.text, 'lxml')
+ 
+# 先除掉所有 anchor
+for a in soup.findAll('a'):
+    # bs3 語法
+    #a.replaceWithChildren()
+    # bs4 語法, 將標註與內容拆開
+    a.unwrap()
+ 
+# 根據輸出設定, 取出 class='tbcls' 的 table 資料
+table = soup.find('table', {'class': 'tbcls'})
+ 
+# 重建 table, 設定邊線為 1 pixel
+output = "&lt;table border='1'&gt;"
+ 
+for i in table.contents:
+    # 利用 replace 復原  
+    # https://www.w3schools.com/html/html_entities.asp
+    # https://developer.mozilla.org/en-US/docs/Glossary/Entity
+    output += str(i).replace("&amp;amp;nbsp", " ")
+output += "&lt;/table&gt;"
+# print(output)
+# 將 output 寫入 w1_class_local.html
+with open("w1_class_local.html", "w", encoding="utf-8") as file:
+    file.write(output)
+# 利用 os.system() 以 default browser 開啟 w1_class_local.html
+filePath = pathlib.Path(__file__).parent.absolute()
+#print(filePath)
+# set firefox as default browser and start url to open html file
+os.system("start file:///" + str(filePath) + "\\w1_class_local.html")</pre>
+<p>以上在 CMSMDE 列出程式碼, 有一個技巧, 針對 <a href="https://developer.mozilla.org/en-US/docs/Glossary/Entity">Html entity</a> 符號必須將 &amp; 表示為 &amp;amp; 否則在頁面程式引用時無法正確顯示出原始碼內容.</p>
+<p></p><br />創新教育 << <a href='創新教育.html'>Previous</a> <a href='Topic 1.html'>Next</a> >> Topic 1</div>
         
     <!-- footer -->
       <div class="container">

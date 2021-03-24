@@ -181,7 +181,7 @@ output = "&lt;table border='1'&gt;"
 
 for i in table.contents:
     # 利用 replace 復原  
-    output += str(i).replace("&amp;nbsp", " ")
+    output += str(i).replace("&amp;amp;nbsp", " ")
 output += "&lt;/table&gt;"
 # print(output)
 # 將 output 寫入 w1_class_local.html
@@ -322,7 +322,7 @@ output = "&lt;table border='1'&gt;"
 
 for i in table.contents:
     # 利用 replace 復原  
-    output += str(i).replace("&amp;nbsp", " ")
+    output += str(i).replace("&amp;amp;nbsp", " ")
 output += "&lt;/table&gt;"
 #print(output)
 
@@ -403,7 +403,7 @@ output = "&lt;table border='1'&gt;"
 
 for i in table.contents:
     # 利用 replace 復原  
-    output += str(i).replace("&amp;nbsp", " ")
+    output += str(i).replace("&amp;amp;nbsp", " ")
 output += "&lt;/table&gt;"
 print(output)
 </pre>
@@ -492,6 +492,7 @@ for dname, dirs, files in os.walk("path_name"):
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/0XZdN6KaR-s" title="YouTube video player" width="560"></iframe></p>
 <p><br/>說明如何在近端啟動 <a href="https://github.com/mdecourse/nfulist">https://github.com/mdecourse/nfulist</a> <br/>因為目前近端為純 IPv6 上網, 且使用 Python 3.9.1 解譯, 因此啟動 server 時必須自行以程式設定 Proxy (due to bug of Python 3.9.1, 不會自動使用 Windows 10 的 Proxy 設定上網).</p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/Ec9lc9DLzaE" title="YouTube video player" width="560"></iframe></p><h2>W5</h2>
+<p>各分組開始執行 W4-W9 的分組專案 (延續 <a href="http://mde.tw/wcm2021/content/Topic%200.html">Topic0</a> 的程式開發), 並從下列台灣未來 10 年科技願景內容中, 確認此舉隸屬未來創新教育體系的一環.</p>
 <h4>台灣 2030 科技願景:</h4>
 <p style="padding-left: 30px;"><a href="/downloads/taiwan_2030_tech_vision.pdf">taiwan_2030_tech_vision.pdf</a></p>
 <p style="padding-left: 60px;">台灣2030—創新、包容、永續, 實現樂活社會、高值經濟、強韌環境、普惠科技、創新教育等五大目標.</p>
@@ -518,8 +519,111 @@ for dname, dirs, files in os.walk("path_name"):
 <li>推動多元適性教育</li>
 <li>培育未來產業人才</li>
 <li>營造終身學習環境</li>
+<li>推動多元適性教育<br/><br/>策略說明:<br/><br/>科技顛覆工作與就業所需的技能, 因此學齡教育更需要能夠按照學童的能力、興趣及需求, 提供<span style="background-color: #ffff99;">個人化的教學方式</span>, 並且創造公平學習機會, 強化學童<span style="background-color: #ffff99;">自主學習與動手實作</span>的動機, 朝向<span style="background-color: #ffff99;">深度知識學習</span>, 進而為未來社會與公民做出有意義的貢獻.<br/><br/>回應族群:<br/><br/>滿足學童自我探索知識且能深入理解內容的需求, 包含對於知識資訊、概念想法、實作技巧與直覺等, 並<span style="background-color: #ffff99;">建立同儕認同感, 以共同合作取代競爭</span>觀念; 提供橋接多元教育及升學途徑之認證體系, 緩減家長經濟負擔與學童學習壓力.<br/><br/>國際標竿:<br/><br/>愛沙尼亞推動<span style="background-color: #ccffcc;">全面的數位科技教育應用</span>, 讓學生能充分獲得數位技能, 例如"ekool" 和 "Stuudium" 能協助教師與家長討論學童學習狀況和教學方法的平台, "電子書包(e-Scoolbag)" 提供數位教材, 如電子教科書、互動遊戲, 且能蒐集學習數據.<br/><br/>新加坡自 2019 年開始逐步<span style="background-color: #ffff99;">取消中小學考試</span>, 從傳統的菁英教育轉型為提供公平教育機會、培育未來人才的搖籃, 改為採用 "<span style="background-color: #ccffcc;">課堂評估</span>" 瞭解學生學習狀況, 讓老師能以彈性的方式取代制式教學, 注重每一個學生個體的成長與發展.<br/><br/>建議推動方向:<br/><br/>- 科技輔助自主深度學習<br/>- 協助彌平城鄉數位落差<br/><br/><br/>2. 培育未來產業人才<br/><br/>策略說明:<br/><br/>依據未來產業發展階段之可能需求, <span style="background-color: #ffff99;">培養數位人才</span>, 並縮短學用落差. 理解產業需求脈絡, 建置<span style="background-color: #ffff99;">數位化勞動技能地圖</span>, 以科技強化職場與技職教育連結, 讓<span style="background-color: #ffff99;">學歷、技能與資歷認證流程數位化</span>. 同時也應標靶式鎖定特定領域, 強化延攬與留住專業人才, 使人才供應更活化多元.<br/><br/>回應族群:<br/><br/>回應中壯年面對自動化科技持續演進趨勢下, 將被迫面臨專業或就業轉換的挑戰, 跨越技能落差, 破除求職障礙; 滿足青年族群預判職業發展所需具備技能, 強化教育與職場連結的人才培育; 滿足產業界對於高階人才(如科技、數位人才)的需求, 支持國內產業轉型.<br/><br/>國際標竿:<br/><br/>美國勞工部的生涯輔導網站 CareerOneStop, 提供整合職業生涯訊息的網路平台, 目的在於幫助求職者、學生、勞工、人資單位及雇主, 可以有效運用資源藉以達到自我發展, 並在新經濟環境下做出有效的決策. 更提供美國地區的未來就業預測, 針對不同教育程度提供未來 10 年就業的可能環境.<br/><br/>體驗新加坡 (Contact  Singapore) 計劃: 海內外共設有 9 個專門吸引外籍專業人士及海外學生的據點, 提供最新的就業規範及生活訊息. 透過寬鬆的專業人士移民政策、外籍專業人士稅賦優惠及親屬安置、個人化就業許可證、維持良好生活環境等, 提高人才駐留入籍的誘因.<br/><br/>建議推動方向:<br/><br/>‒創建<span style="background-color: #ffff99;">勞動與數位技能地圖</span>連結職場<br/>‒推動<span style="background-color: #ffff99;">目標導向</span>專業人才平台設置<br/><br/>3. <span style="background-color: #ccffcc;">營造終身學習環境</span><br/><br/>策略說明:<br/><br/>協助建立終身學習平台, 可記錄實體和數位技能學習的進程與軌跡, 提供多元微課程的推薦服務, 能夠自主選擇培養興趣課程或累積培訓進修權利, 可輕鬆參與學習社群, 分享學習資源或合作實踐成果, 增加學習的持久性並促進社會參與.<br/><br/>回應族群:<br/><br/>滿足中高齡與高齡者終身學習與持續貢獻社會的需求, 提供能按自有學習經驗, 連結吸收新知的管道或加入學習社群; 同時, 也提供教育工作者研究及交流數位教學方法內容之設計, 協助教師社群應用數位工具, 發展創新的教學模式.<br/><br/>國際標竿:<br/><br/>新加坡終身學習及培訓帳戶 "SkillsFuture" 提供 25 歲以上的新加坡公民每年新加坡幣 500 元 (約新台幣一萬元) 的津貼, 讓<span style="background-color: #ccffcc;">公民能夠選修超過 200 堂技能加值與進修課程</span>, 另外也提供額外 500 元新幣協助 40 到 60 歲的勞工就業或轉職.<br/><br/>愛沙尼亞的教育資訊系統 (EHIS) 儲存 2005 年以來, 學生受教的資訊與統計數據, 能夠協助老師調整教學方法, 成為政府確保未來勞動力的重要依據, 也能<span style="background-color: #ccffcc;">促進老師和教育科技廠商共同開發新的科技教材、教具</span>, 啟發學生自主學習動機.<br/><br/>建議推動方向:<br/><br/>‒打造<span style="background-color: #ffff99;">全齡個人學習帳戶</span><br/>‒推動<span style="background-color: #ffff99;">數位師資</span>培訓革新</li>
 </ol>
-<p>1. 推動多元適性教育<br/><br/>策略說明:<br/><br/>科技顛覆工作與就業所需的技能, 因此學齡教育更需要能夠按照學童的能力、興趣及需求, 提供個人化的教學方式, 並且創造公平學習機會, 強化學童<span style="background-color: #ffff99;">自主學習與動手實作</span>的動機, 朝向<span style="background-color: #ffff99;">深度知識學習</span>, 進而為未來社會與公民做出有意義的貢獻.<br/><br/>回應族群:<br/><br/>滿足學童自我探索知識且能深入理解內容的需求, 包含對於知識資訊、概念想法、實作技巧與直覺等, 並建<span style="background-color: #ffff99;">立同儕認同感, 以共同合作取代競爭</span>觀念; 提供橋接多元教育及升學途徑之認證體系, 緩減家長經濟負擔與學童學習壓力.<br/><br/>國際標竿:<br/><br/>愛沙尼亞推動全面的數位科技教育應用, 讓學生能充分獲得數位技能, 例如"ekool" 和 "Stuudium" 能協助教師與家長討論學童學習狀況和教學方法的平台, "電子書包(e-Scoolbag)" 提供數位教材, 如電子教科書、互動遊戲, 且能蒐集學習數據.<br/><br/>新加坡自 2019 年開始逐步<span style="background-color: #ffff99;">取消中小學考試</span>, 從傳統的菁英教育轉型為提供公平教育機會、培育未來人才的搖籃, 改為採用 "課堂評估" 瞭解學生學習狀況, 讓老師能以彈性的方式取代制式教學, 注重每一個學生個體的成長與發展.<br/><br/>建議推動方向:<br/><br/>- 科技輔助自主深度學習<br/>- 協助彌平城鄉數位落差<br/><br/><br/>2. 培育未來產業人才<br/><br/>策略說明:<br/><br/>依據未來產業發展階段之可能需求, <span style="background-color: #ffff99;">培養數位人才</span>, 並縮短學用落差. 理解產業需求脈絡, 建置<span style="background-color: #ffff99;">數位化勞動技能地圖</span>, 以科技強化職場與技職教育連結, 讓<span style="background-color: #ffff99;">學歷、技能與資歷認證流程數位化</span>. 同時也應標靶式鎖定特定領域, 強化延攬與留住專業人才, 使人才供應更活化多元.<br/><br/>回應族群:<br/><br/>回應中壯年面對自動化科技持續演進趨勢下, 將被迫面臨專業或就業轉換的挑戰, 跨越技能落差, 破除求職障礙; 滿足青年族群預判職業發展所需具備技能, 強化教育與職場連結的人才培育; 滿足產業界對於高階人才(如科技、數位人才)的需求, 支持國內產業轉型.<br/><br/>國際標竿:<br/><br/>美國勞工部的生涯輔導網站 CareerOneStop, 提供整合職業生涯訊息的網路平台, 目的在於幫助求職者、學生、勞工、人資單位及雇主, 可以有效運用資源藉以達到自我發展, 並在新經濟環境下做出有效的決策. 更提供美國地區的未來就業預測, 針對不同教育程度提供未來 10 年就業的可能環境.<br/><br/>體驗新加坡 (Contact  Singapore) 計劃: 海內外共設有 9 個專門吸引外籍專業人士及海外學生的據點, 提供最新的就業規範及生活訊息. 透過寬鬆的專業人士移民政策、外籍專業人士稅賦優惠及親屬安置、個人化就業許可證、維持良好生活環境等, 提高人才駐留入籍的誘因.<br/><br/>建議推動方向:<br/><br/>‒創建<span style="background-color: #ffff99;">勞動與數位技能地圖</span>連結職場<br/>‒推動<span style="background-color: #ffff99;">目標導</span>向專業人才平台設置<br/><br/>3. 營造終身學習環境<br/><br/>策略說明:<br/><br/>協助建立終身學習平台, 可記錄實體和數位技能學習的進程與軌跡, 提供多元微課程的推薦服務, 能夠自主選擇培養興趣課程或累積培訓進修權利, 可輕鬆參與學習社群, 分享學習資源或合作實踐成果, 增加學習的持久性並促進社會參與.<br/><br/>回應族群:<br/><br/>滿足中高齡與高齡者終身學習與持續貢獻社會的需求, 提供能按自有學習經驗, 連結吸收新知的管道或加入學習社群; 同時, 也提供教育工作者研究及交流數位教學方法內容之設計, 協助教師社群應用數位工具, 發展創新的教學模式.<br/><br/>國際標竿:<br/><br/>新加坡終身學習及培訓帳戶 "SkillsFuture" 提供 25 歲以上的新加坡公民每年新加坡幣 500 元 (約新台幣一萬元) 的津貼, 讓公民能夠選修超過 200 堂技能加值與進修課程, 另外也提供額外 500 元新幣協助 40 到 60 歲的勞工就業或轉職.<br/><br/>愛沙尼亞的教育資訊系統 (EHIS) 儲存 2005 年以來, 學生受教的資訊與統計數據, 能夠協助老師調整教學方法, 成為政府確保未來勞動力的重要依據, 也能促進老師和教育科技廠商共同開發新的科技教材、教具, 發學生自主學習動機.<br/><br/>建議推動方向:<br/><br/>‒打造<span style="background-color: #ffff99;">全齡個人學習帳戶</span><br/>‒推動<span style="background-color: #ffff99;">數位師資</span>培訓革新</p><h2>Topic 1</h2>
+<h3>網際程式開發</h3>
+<p>實習目的:</p>
+<ol>
+<li>利用網際模組擷取資料 (<a href="https://requests.readthedocs.io/en/master/">Python requests</a>)</li>
+<li>利用 bs4 擷取網頁資料</li>
+<li>利用 Flask 編寫網際程式</li>
+<li>利用 Heroku 部署網際程式</li>
+<li>利用 Ubuntu 虛擬主機作為伺服器</li>
+</ol>
+<p>Beautifulsoup 參考教材:</p>
+<p style="padding-left: 30px;"><a href="/downloads/beautifulsoup.pdf">beautifulsoup.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/WebScraping_with_bs4.pdf">WebScraping_with_bs4.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/beautiful_soup_tutorial.pdf">beautiful_soup_tutorial.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/2019_beautifulsoup_document.pdf">2019_beautifulsoup_document.pd</a></p>
+<p>Flask 參考教材:</p>
+<p style="padding-left: 30px;"><a href="/downloads/flask.pdf">flask.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/flask_tutorial.pdf">flask_tutorial.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/flask_document.pdf">flask_document.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/2021_flask_document.pdf">2021_flask_document.pdf</a></p>
+<p><a href="http://mde.tw/wcm2021/content/Topic%200.html">Topic 0</a> 已經列出兩組可以從學校教務主機擷取資料的程式, 分別可以根據學期代號與班級代號取出班級排課表, 還有利用學期代號與實習實驗室代號擷取排客時間表.</p>
+<p>接下來實習的目標是希望寫一組程式可以擷取機械設計工程系各實習實驗室排課表, 並且統計各實驗室每週排課總時數.</p>
+<p>我們先來看 <a href="https://requests.readthedocs.io/en/master/">Python requests</a> 的用法:</p>
+<p>W5_requests_ex1.py</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
+
+r = requests.get("https://mde.tw")
+print("status_code:", r.status_code)
+print("content-type:", r.headers['content-type'])
+print("encoding:", r.encoding)
+print("text:", r.text)
+</pre>
+<p>要看懂下列程式, 必須知道何謂 <a href="https://developer.mozilla.org/en-US/docs/Glossary/Entity">html entity</a>, 而且要會使用 requests.post() 與 bs4.BeautifulSoup()</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
+import bs4
+# for os.environ and os.system()
+import os
+# for geting html file path
+import pathlib
+ 
+# for pythn 3.9
+proxy = 'http://[2001:288:6004:17::69]:3128'
+ 
+os.environ['http_proxy'] = proxy 
+os.environ['HTTP_PROXY'] = proxy
+os.environ['https_proxy'] = proxy
+os.environ['HTTPS_PROXY'] = proxy
+ 
+'''
+url:  'class_ajax.php',
+data: { pselyr: pselyr, pselclss: pselclss
+'''
+semester = '1092'
+classno = '42311'
+column = True
+ 
+if semester == None:
+    semester = '1091'
+if classno == None:
+    # 42311 is 設一甲
+    classno = '42311'
+     
+headers = {'X-Requested-With': 'XMLHttpRequest'}
+ 
+url = 'https://qry.nfu.edu.tw/class_ajax.php'
+post_var = {'pselyr': semester, 'pselclss': classno}
+ 
+result = requests.post(url, data = post_var, headers = headers)
+ 
+# result.content 傳回 binary 資料
+# soup = bs4.BeautifulSoup(result.content, 'lxml')
+# result.text 傳回純文字資料
+soup = bs4.BeautifulSoup(result.text, 'lxml')
+ 
+# 先除掉所有 anchor
+for a in soup.findAll('a'):
+    # bs3 語法
+    #a.replaceWithChildren()
+    # bs4 語法, 將標註與內容拆開
+    a.unwrap()
+ 
+# 根據輸出設定, 取出 class='tbcls' 的 table 資料
+table = soup.find('table', {'class': 'tbcls'})
+ 
+# 重建 table, 設定邊線為 1 pixel
+output = "&lt;table border='1'&gt;"
+ 
+for i in table.contents:
+    # 利用 replace 復原  
+    # https://www.w3schools.com/html/html_entities.asp
+    # https://developer.mozilla.org/en-US/docs/Glossary/Entity
+    output += str(i).replace("&amp;amp;nbsp", " ")
+output += "&lt;/table&gt;"
+# print(output)
+# 將 output 寫入 w1_class_local.html
+with open("w1_class_local.html", "w", encoding="utf-8") as file:
+    file.write(output)
+# 利用 os.system() 以 default browser 開啟 w1_class_local.html
+filePath = pathlib.Path(__file__).parent.absolute()
+#print(filePath)
+# set firefox as default browser and start url to open html file
+os.system("start file:///" + str(filePath) + "\\w1_class_local.html")</pre>
+<p>以上在 CMSMDE 列出程式碼, 有一個技巧, 針對 <a href="https://developer.mozilla.org/en-US/docs/Glossary/Entity">Html entity</a> 符號必須將 &amp; 表示為 &amp;amp; 否則在頁面程式引用時無法正確顯示出原始碼內容.</p>
+<p></p><h2>Topic 1</h2>
 <ol>
 <li>學會利用 Leo Editor 編輯 Blog 與簡報內容</li>
 <li>學會將 Pelican Blog 資料同步至 Blogger</li>
