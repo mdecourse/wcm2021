@@ -354,13 +354,23 @@ if __name__ == "__main__":
 <p style="padding-left: 30px;"><a href="https://github.com/OpenFOAM">https://github.com/OpenFOAM</a></p>
 <p style="padding-left: 30px;">有限元素分析法教科書: <a href="http://web.mit.edu/kjb/www/Books/FEP_2nd_Edition_4th_Printing.pdf">http://web.mit.edu/kjb/www/Books/FEP_2nd_Edition_4th_Printing.pdf</a></p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/kGJ8fKWfWU8" title="YouTube video player" width="560"></iframe></p><h2>分組專題</h2>
+<h4>Solvespace 3D 參數設計繪圖建立零組件 (<a href="https://solvespace.com">Solvespace</a> 編譯與<a href="http://www.farwire.net/SolveSpace-LearningGuide.htm">應用</a>):</h4>
+<ol>
+<li>轉入 <a href="https://www.coppeliarobotics.com/">CoppeliaSim</a> 組合為機電系統 (<a href="/downloads/stl_format.pdf">STL 零件格式</a>, <a href="https://en.wikipedia.org/wiki/STL_(file_format)">STL file format</a>, <a href="/downloads/stl-viewer_python_tkinter_pygame.7z">STL viewer in Tkinter and Pygame.7z</a>, <a href="/downloads/STL-3D-Rasterer_pygame_opengl.7z">STL-3D-Rasterer_pygame_opengl.7z</a>, <a href="https://github.com/admesh/python-admesh">ADMesh</a>)</li>
+<li>利用 Lua script 進行 Kinematic and Dynamic 控制 (<a href="https://www.coppeliarobotics.com/">CoppeliaSim</a>, <a href="https://www.coppeliarobotics.com/helpFiles/en/xmlFormat.htm">XML 格式</a>)</li>
+<li>利用 Python remote API 進行 Kinematic and Dynamic 控制 (<a href="https://www.coppeliarobotics.com/">CoppeliaSim</a>)</li>
+<li>利用 <a href="https://ubuntu.com/">Ubuntu</a> 建立 Web based server 進行機電資系統控制 (<a href="https://uwsgi-docs.readthedocs.io/en/latest/">uwsgi,</a> <a href="https://nginx.org/">nginx</a>, <a href="https://www.stunnel.org/">stunnel</a>)</li>
+<li>利用 <a href="https://ubuntu.com/">Ubuntu</a> 建立 Fossil SCM 分散式版次控制系統 (<a href="https://git-scm.com/book/en/v2">Git</a>, <a href="https://fossil-scm.org">Fossil SCM</a>, <a href="https://www.heroku.com/">Heroku</a> and <a href="https://github.com/mdecourse/cmsimde">CMSiMDE</a>)</li>
+</ol>
+<h4>Solvespace 編譯:</h4>
+<p style="padding-left: 30px;">利用 MSYS2 編譯 Solvespace, 需要 install cmake<br/><br/>pacman -S mingw-w64-x86_64-cmake<br/><br/>而且必須 rename Y:\msys64\usr\bin\sh.exe 換成其他名稱.<br/><br/>cd solvespace<br/>mkdir build<br/>cd build<br/>cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release<br/>make<br/><br/>need libwinpthread-1.dll to execute solvespace.exe<br/>上述<a href="https://www.youtube.com/watch?v=OHyeZz6XE8A">流程影片</a>編譯時間約需 19 分鐘, 完成的 <a href="https://drive.google.com/file/d/1tMy9ir-gIuXSYbUKTFQ0W5hd00pRozEM/view?usp=sharing">solvespace 可執行檔案下載</a></p>
 <p>以網際內容管理系統整理自動控制系統設計流程:</p>
 <p style="padding-left: 30px;"><a href="/downloads/control/controller design for magnetic levitation system.pdf">Controller design for magnetic levitation system.pdf</a> (以 <a href="https://www.coppeliarobotics.com/">Coppeliasim</a> 或 <a href="https://cyberbotics.com/">Webots</a> 實現)</p>
 <p style="padding-left: 30px;"><a href="https://github.com/mdecourse/vrep_inverted_pendulum">https://github.com/mdecourse/vrep_inverted_pendulum</a></p>
 <p style="padding-left: 30px;"><a href="https://github.com/mdecourse/RobotSimulator">https://github.com/mdecourse/RobotSimulator</a></p>
 <p style="padding-left: 30px;"><a href="https://ctmakro.github.io/site/on_learning/rl/vrep.html">https://ctmakro.github.io/site/on_learning/rl/vrep.html</a></p>
 <p style="padding-left: 30px;"><a href="https://medium.com/pytorch/robotic-assembly-using-deep-reinforcement-learning-dfd9916c5ad7">https://medium.com/pytorch/robotic-assembly-using-deep-reinforcement-learning-dfd9916c5ad7</a></p>
-<p style="padding-left: 30px;"><a href="https://www.toptal.com/deep-learning/pytorch-reinforcement-learning-tutorial">https://www.toptal.com/deep-learning/pytorch-reinforcement-learning-tutorial</a> </p>
+<p style="padding-left: 30px;"><a href="https://www.toptal.com/deep-learning/pytorch-reinforcement-learning-tutorial">https://www.toptal.com/deep-learning/pytorch-reinforcement-learning-tutorial</a></p>
 <p></p><h2>Topic 0</h2>
 <h4>網際內容管理程式練習題目:</h4>
 <ol>
