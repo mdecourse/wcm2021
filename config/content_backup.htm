@@ -353,7 +353,13 @@ if __name__ == "__main__":
 <h4>透過理論分析與模擬進行產品設計:</h4>
 <p style="padding-left: 30px;"><a href="https://github.com/OpenFOAM">https://github.com/OpenFOAM</a></p>
 <p style="padding-left: 30px;">有限元素分析法教科書: <a href="http://web.mit.edu/kjb/www/Books/FEP_2nd_Edition_4th_Printing.pdf">http://web.mit.edu/kjb/www/Books/FEP_2nd_Edition_4th_Printing.pdf</a></p>
-<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/kGJ8fKWfWU8" title="YouTube video player" width="560"></iframe></p><h2>分組專題</h2>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/kGJ8fKWfWU8" title="YouTube video player" width="560"></iframe></p><h2>W6</h2>
+<p>利用 <a href="https://portableapps.com/apps/music_video/obs-studio-portable">https://portableapps.com/apps/music_video/obs-studio-portable</a> 將 Windows 10 上的 <a href="https://robodk.com/">RoboDK</a> 程式畫面串流至 Youtube Live 頻道, 並將 Python 控制程式轉為 Flask based 後, 將可讓使用者在網際環境操控遠端的 Robot 系統.</p>
+<p>單機 <a href="https://robodk.com/pricing">RoboDK Free trial 版本</a>近端操作:</p>
+<p>免費評估版本無法存檔, 因此操作過程只能使用既有的 Station 範例檔案, 或者在操作時自行輸入所需的 robot 與相關定位座標</p>
+<p>Item.setParentStatic("ParentName")<br/><br/>Item should be the item to grab.<br/>ParentName should be the gripper name.</p>
+<p></p>
+<p><a href="/downloads/robodk/welding_ex1.7z">welding_ex1.7z</a></p><h2>分組專題</h2>
 <h4>Solvespace 3D 參數設計繪圖建立零組件 (<a href="https://solvespace.com">Solvespace</a> 編譯與<a href="http://www.farwire.net/SolveSpace-LearningGuide.htm">應用</a>):</h4>
 <ol>
 <li>轉入 <a href="https://www.coppeliarobotics.com/">CoppeliaSim</a> 組合為機電系統 (<a href="/downloads/stl_format.pdf">STL 零件格式</a>, <a href="https://en.wikipedia.org/wiki/STL_(file_format)">STL file format</a>, <a href="/downloads/stl-viewer_python_tkinter_pygame.7z">STL viewer in Tkinter and Pygame.7z</a>, <a href="/downloads/STL-3D-Rasterer_pygame_opengl.7z">STL-3D-Rasterer_pygame_opengl.7z</a>, <a href="https://github.com/admesh/python-admesh">ADMesh</a>)</li>
@@ -364,7 +370,12 @@ if __name__ == "__main__":
 </ol>
 <h4>Solvespace 編譯:</h4>
 <p style="padding-left: 30px;">利用 MSYS2 編譯 Solvespace, 需要 install cmake<br/><br/>pacman -S mingw-w64-x86_64-cmake<br/><br/>而且必須 rename Y:\msys64\usr\bin\sh.exe 換成其他名稱.<br/><br/>cd solvespace<br/>mkdir build<br/>cd build<br/>cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release<br/>make<br/><br/>need libwinpthread-1.dll to execute solvespace.exe<br/>上述<a href="https://www.youtube.com/watch?v=OHyeZz6XE8A">流程影片</a>編譯時間約需 19 分鐘, 完成的 <a href="https://drive.google.com/file/d/1tMy9ir-gIuXSYbUKTFQ0W5hd00pRozEM/view?usp=sharing">solvespace 可執行檔案下載</a></p>
+<p>以 Msys2 編譯 Solvespace:</p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/OHyeZz6XE8A" title="YouTube video player" width="560"></iframe></p>
+<p>根據 svg 檔案資料, 以 Python 驅動機械手臂繪圖. <a href="/downloads/ABB-IRB-4600-20-2.50_draw.7z">ABB-IRB-4600-20-2.50_draw.7z</a></p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/dkRaf5n3OKs" title="YouTube video player" width="560"></iframe></p>
+<p>利用 Python 程式控制 robot 執行 Pick and Place. <a href="/downloads/pick_and_place.7z">pick_and_place.7z</a></p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/45J9Rr1VOt0" title="YouTube video player" width="560"></iframe></p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/gybeOY6PiFs" title="YouTube video player" width="560"></iframe></p>
 <p>以網際內容管理系統整理自動控制系統設計流程:</p>
 <p style="padding-left: 30px;"><a href="/downloads/control/controller design for magnetic levitation system.pdf">Controller design for magnetic levitation system.pdf</a> (以 <a href="https://www.coppeliarobotics.com/">Coppeliasim</a> 或 <a href="https://cyberbotics.com/">Webots</a> 實現)</p>
