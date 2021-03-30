@@ -354,12 +354,52 @@ if __name__ == "__main__":
 <p style="padding-left: 30px;"><a href="https://github.com/OpenFOAM">https://github.com/OpenFOAM</a></p>
 <p style="padding-left: 30px;">有限元素分析法教科書: <a href="http://web.mit.edu/kjb/www/Books/FEP_2nd_Edition_4th_Printing.pdf">http://web.mit.edu/kjb/www/Books/FEP_2nd_Edition_4th_Printing.pdf</a></p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/kGJ8fKWfWU8" title="YouTube video player" width="560"></iframe></p><h2>W6</h2>
+<h4>KMOLab 使用的機電資模擬套件:</h4>
+<ol>
+<li><a href="https://robodk.com">RoboDK</a> (<a href="https://robodk.com/pricing">Free Trial version</a>) <a href="https://portableapps.com/apps/music_video/obs-studio-portable">OBS</a> + Youtube Live + Web based Python API</li>
+<li><a href="https://www.coppeliarobotics.com">CoppeliaSim</a> (<a href="https://www.coppeliarobotics.com/helpFiles/en/licensing.htm">Free Educational version</a>) Image sensor streamming + Web based Python remote API</li>
+<li><a href="https://cyberbotics.com/">Webots</a> (<a href="https://cyberbotics.com/doc/guide/webots-license-agreement">Free Apache 2.0 version</a>) <a href="https://www.cyberbotics.com/doc/guide/web-interface">Web based ready</a></li>
+</ol>
+<h4>離線模擬的準確性:</h4>
+<p style="padding-left: 30px;"><a href="https://robodk.com/blog/robot-calibration-offline-programming/">https://robodk.com/blog/robot-calibration-offline-programming/</a></p>
+<h4>10 Causes of Inaccurate Robot Programming:</h4>
+<ol>
+<li>Lack of calibration — The most important factor has got to be calibration, or lack of it. If your cell is not calibrated, you are setting yourself up to fail. I’ll cover calibration in more detail in the rest of this article.</li>
+<li>Inaccurate robot model — Your offline program is only as good as your robot model. Over the years I have spent hours and hours building various robot models for simulators. In the process, I have learned this: if you can find an existing, accurate robot model (like the ones in RoboDK’s Robot Library) you’ll save yourself a lot of time and energy. The accuracy of the robot model can be improved using robot calibration.</li>
+<li>Inaccurate cell layout design — Equally important is having an accurate model of the robot’s work cell. This you will almost certainly have to build yourself, so check and double check that it is an accurate representation of the real workstation.</li>
+<li>Bad post-processor — The post-processor turns the program you have created in offline programming into code which the robot can use. If you are using a good post-processor (such as those included in RoboDK) this is very simple. However, if you have to write your own post-processor for any reason, it could introduce inaccuracies if it is not programmed correctly.</li>
+<li>Distortions in the real world — The real world is never as clean as a simulated environment. The robot links will be slightly different sizes, its joint angles will be slightly different from the readings, etc. This is why calibration is so important.</li>
+<li>Sensor inaccuracy — Sensors are used to detect the difference between the theoretical values and real robot values. The simplest example is a potentiometer to detect the real position of a robot joint. A more complex example is a 3D vision setup. However, sensors are also physical devices sensors so can also introduce errors.</li>
+<li>Unhelpful product design — Some objects are harder to manipulate with a robot than others. Even if your robot program is entirely accurate, you may see inaccuracies in the robot’s actions if the objects it manipulates are not designed with robots in mind.</li>
+<li>Different coordinate systems — Robot manufacturers sometimes use different coordinate systems. This can cause inaccuracies if the wrong system is used or if errors are introduced when converting between different systems.</li>
+<li>Wrong reference frame — All positions in a robot program are given relative to a reference frame. Sometimes this is a fixed frame, e.g. the robot’s base, but you can also make it relative to another frame, like the manipulated object. Poorly calibrating this frame can cause inaccuracies.</li>
+<li>Lack of testing — Test your program. Even when your cell is properly calibrated, you should always test the program thoroughly in software and then double check it on the real robot before you go into production</li>
+</ol>
+<h4>RoboDK (由 Solvespace 提供系統零組件 STL)</h4>
 <p>利用 <a href="https://portableapps.com/apps/music_video/obs-studio-portable">https://portableapps.com/apps/music_video/obs-studio-portable</a> 將 Windows 10 上的 <a href="https://robodk.com/">RoboDK</a> 程式畫面串流至 Youtube Live 頻道, 並將 Python 控制程式轉為 Flask based 後, 將可讓使用者在網際環境操控遠端的 Robot 系統.</p>
 <p>單機 <a href="https://robodk.com/pricing">RoboDK Free trial 版本</a>近端操作:</p>
-<p>免費評估版本無法存檔, 因此操作過程只能使用既有的 Station 範例檔案, 或者在操作時自行輸入所需的 robot 與相關定位座標</p>
-<p>Item.setParentStatic("ParentName")<br/><br/>Item should be the item to grab.<br/>ParentName should be the gripper name.</p>
-<p></p>
-<p><a href="/downloads/robodk/welding_ex1.7z">welding_ex1.7z</a></p><h2>分組專題</h2>
+<ol>
+<li>免費評估版本無法存檔, 因此操作過程只能使用既有的 Station 範例檔案, 或者在操作時自行輸入所需的 robot 與相關定位座標.</li>
+<li>下載 RoboDK 5.22 版本</li>
+<li>開啟可攜程式系統與 RoboDK</li>
+<li>執行 Draw 與 Pick and Place</li>
+</ol>
+<h4>練習:</h4>
+<p style="padding-left: 30px;">請寫一個 Python 程式可以在 Pick and Place 程式架構下, 不使用 Replace Objects 情況下, 將所有的球放回原處.</p>
+<h4>Tips:</h4>
+<p style="padding-left: 30px;">Item.setParentStatic("ParentName")<br/><br/>Item should be the item to grab.<br/>ParentName should be the gripper name.</p>
+<p><a href="/downloads/robodk/welding_ex1.7z">welding_ex1.7z</a></p>
+<p>Draw:</p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/dkRaf5n3OKs" title="YouTube video player" width="560"></iframe></p>
+<p>Pick and Place:</p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/45J9Rr1VOt0" title="YouTube video player" width="560"></iframe></p>
+<p>測試是否可以將 Solvespace 建立的 Robot 存為 RoboDK 的 .robot 格式.</p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/wZQ0uriwApY" title="YouTube video player" width="560"></iframe></p>
+<p>參考資料:</p>
+<p style="padding-left: 30px;"><a href="http://mde.tw/cad2020/content/Robot.html">http://mde.tw/cad2020/content/Robot.html</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/UR3_IntroRobotics.pdf">UR3_IntroRobotics.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/RoboDK-Doc-EN-Getting-Started.pdf">RoboDK-Doc-EN-Getting-Started.pdf</a></p>
+<p style="padding-left: 30px;"><a href="https://wiredworkers.io/product/ur10/">https://wiredworkers.io/product/ur10/</a> </p><h2>分組專題</h2>
 <h4>Solvespace 3D 參數設計繪圖建立零組件 (<a href="https://solvespace.com">Solvespace</a> 編譯與<a href="http://www.farwire.net/SolveSpace-LearningGuide.htm">應用</a>):</h4>
 <ol>
 <li>轉入 <a href="https://www.coppeliarobotics.com/">CoppeliaSim</a> 組合為機電系統 (<a href="/downloads/stl_format.pdf">STL 零件格式</a>, <a href="https://en.wikipedia.org/wiki/STL_(file_format)">STL file format</a>, <a href="/downloads/stl-viewer_python_tkinter_pygame.7z">STL viewer in Tkinter and Pygame.7z</a>, <a href="/downloads/STL-3D-Rasterer_pygame_opengl.7z">STL-3D-Rasterer_pygame_opengl.7z</a>, <a href="https://github.com/admesh/python-admesh">ADMesh</a>)</li>
@@ -369,7 +409,7 @@ if __name__ == "__main__":
 <li>利用 <a href="https://ubuntu.com/">Ubuntu</a> 建立 Fossil SCM 分散式版次控制系統 (<a href="https://git-scm.com/book/en/v2">Git</a>, <a href="https://fossil-scm.org">Fossil SCM</a>, <a href="https://www.heroku.com/">Heroku</a> and <a href="https://github.com/mdecourse/cmsimde">CMSiMDE</a>)</li>
 </ol>
 <h4>Solvespace 編譯:</h4>
-<p style="padding-left: 30px;">利用 MSYS2 編譯 Solvespace, 需要 install cmake<br/><br/>pacman -S mingw-w64-x86_64-cmake<br/><br/>而且必須 rename Y:\msys64\usr\bin\sh.exe 換成其他名稱.<br/><br/>cd solvespace<br/>mkdir build<br/>cd build<br/>cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release<br/>make<br/><br/>need libwinpthread-1.dll to execute solvespace.exe<br/>上述<a href="https://www.youtube.com/watch?v=OHyeZz6XE8A">流程影片</a>編譯時間約需 19 分鐘, 完成的 <a href="https://drive.google.com/file/d/1tMy9ir-gIuXSYbUKTFQ0W5hd00pRozEM/view?usp=sharing">solvespace 可執行檔案下載</a></p>
+<p style="padding-left: 30px;">利用 MSYS2 編譯 Solvespace, 需要 install cmake<br/><br/>pacman -S mingw-w64-x86_64-cmake<br/><br/>而且必須 rename Y:\msys64\usr\bin\sh.exe 換成其他名稱.<br/><br/>cd solvespace<br/>mkdir build<br/>cd build<br/>cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release<br>make<br><br>need libwinpthread-1.dll to execute solvespace.exe<br/>上述<a href="https://www.youtube.com/watch?v=OHyeZz6XE8A">流程影片</a>編譯時間約需 19 分鐘, 完成的 <a href="https://drive.google.com/file/d/1tMy9ir-gIuXSYbUKTFQ0W5hd00pRozEM/view?usp=sharing">solvespace 可執行檔案下載</a></br></br></br></p>
 <p>以 Msys2 編譯 Solvespace:</p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/OHyeZz6XE8A" title="YouTube video player" width="560"></iframe></p>
 <p>根據 svg 檔案資料, 以 Python 驅動機械手臂繪圖. <a href="/downloads/ABB-IRB-4600-20-2.50_draw.7z">ABB-IRB-4600-20-2.50_draw.7z</a></p>
