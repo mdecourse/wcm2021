@@ -431,6 +431,7 @@ if __name__ == "__main__":
 <p>以下在 RoboDK 的啟發下, 可以利用下列工具建立開源 Robotics 套件:</p>
 <p style="padding-left: 30px;">從 <a href="http://a.kmol.info:88/Robot_stl.7z">Robot_stl.7z</a> 下載 Robot stl ASCII 檔案, 並利用 <a href="https://github.com/mdecourse/RobotSimulator">https://github.com/mdecourse/RobotSimulator</a> 程式架構, 結合 <a href="https://github.com/bulletphysics/bullet3">https://github.com/bulletphysics/bullet3</a> (可以利用 <a href="http://a.kmol.info:88/fall2020_v3.1_pybullet.7z">http://a.kmol.info:88/fall2020_v3.1_pybullet.7z</a> 可攜程式環境) 建立 Robotics oriented 開源套件.</p>
 <h4>Tips:</h4>
+<p style="padding-left: 30px;">從 <a href="https://robodk.com/forum/attachment.php?aid=502">https://robodk.com/forum/attachment.php?aid=502</a> 應該有機會將 RoboDK 執行畫面串流至網際伺服器.</p>
 <p style="padding-left: 30px;">tool_item = robot.AddTool(robodk.Mat(mat))<br/> shape = RDK.AddShape(triangles)<br/> tool_item.AddGeometry(shape, robodk.eye())<br/> shape.Delete()</p>
 <p style="padding-left: 30px;">##########</p>
 <p style="padding-left: 30px;">csvdata = LoadList(strfile, ',')<br/>values = []<br/>for i in range(len(csvdata)):<br/>    print(csvdata[i])<br/>    values.append(csvdata[i])<br/>  <br/># We can also save the list back to a CSV file<br/># SaveList(csvdata, strfile, ',')</p>
@@ -2115,6 +2116,192 @@ while True:
     print('Pose of the robot (forward kinematics):')
     print(Hrobot)
     print('\n\n')</pre>
+<h4>camera example:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">#!/usr/local/bin/python3
+'''
+https://robodk.com/forum/Thread-Camera-Recorder-Script-APP
+Its simple to use, just paste the .py file in the Robodk´s script folder or in the new Robodk´s Apps folder --&gt;C:\RoboDK\Apps\Camera_Recorder
+
+Execute the program and it will be prompt you for a reference for the camera, in the next step the seconds you want to record... hit OK.
+
+The output file will be saved in the desktop folder.
+
+'''
+
+import cv2 #if is not installed in your system run in terminal " pip install opencv-python "
+import os
+import datetime
+import tempfile
+import shutil
+import robodk   # import the robodk library (robotics toolbox)
+from robolink import *    # API to communicate with RoboDK
+
+RDK = Robolink()
+
+RDK.Cam2D_Close() #close any Camera on Robodk
+tempfile.TemporaryDirectory()
+simulation_speed = RDK.SimulationSpeed()
+
+#Video Configuration (Slow(480p)=640x480@30FPS - Medium(720p)=1280x720@60FPS - High(1080p)=1920x1080@60FPS )  
+width = 1920
+height = 1080
+frames_per_second = 60 #in frames per second FPS
+
+# Retrieve the camera reference frame
+RDK.setSelection([])
+camref = RDK.ItemUserPick('Select a reference frame for the Camera Record', ITEM_TYPE_FRAME)
+if not camref.Valid():
+    RDK.ShowMessage('No valid Reference frame')
+    quit(0)    
+
+#Time to Record Question
+
+def time_question(title_msg, show_value, expected_values):
+    if type(show_value) == Mat:
+        show_value = show_value.tolist()
+    answer = mbox(title_msg, entry=str(show_value))
+    if answer is False:
+        print('Operation cancelled by user')
+        RDK.Cam2D_Close()
+        quit(0)
+    try:
+        answer = int(answer) 
+    except:
+        print('Bad time number')
+        RDK.Cam2D_Close()
+        RDK.ShowMessage("Not a valid time number")
+        quit(0)
+    else:        
+        time = answer
+        return time
+    
+time_record = time_question("Enter the time to record in seconds", 10 , 20)
+cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=5 FOV=30 FAR_LENGHT=10000 SIZE=' + str(width) + "x" + str(height))
+pause(1)
+# Auxiliary items &amp; operations
+date_str = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+dir_path = tempfile.gettempdir() + '\Record_' + date_str 
+out_path = RDK.getParam('PATH_DESKTOP')
+frame_rate = 1 / int(frames_per_second)
+n_photos = frames_per_second * int(time_record) 
+counter = 0
+images = []
+
+# Creating the working folder
+if not os.path.exists(dir_path):
+    os.makedirs(dir_path)
+           
+# Image Capture Loop
+while counter &lt; n_photos:
+    counter = counter +1
+    RDK.setSimulationSpeed(0.001)
+    file_name = dir_path + "/Image_" + str(counter) + ".png"
+    images.append(file_name)
+    RDK.Cam2D_Snapshot(file_name)
+    print("Saving camera snapshot to the file:" + file_name) 
+    RDK.setSimulationSpeed(1)
+    pause(frame_rate)
+
+# Define the codec and create VideoWriter object 
+fourcc = cv2.VideoWriter_fourcc(*'XVID') # Choose the codec (mp4v, XVID or DIVX)
+output = out_path + "/" + date_str + ".avi" # ".mp4" for mp4v.... ".avi" for XVID and DIVX
+out = cv2.VideoWriter(output, fourcc, frames_per_second, (width, height))
+
+# Compose the video with the images and the parameters 
+for image in images:
+    image_path = os.path.join(dir_path, image)
+    frame = cv2.imread(image_path)
+    out.write(frame) # Write out frame to video
+    cv2.imshow('video',frame)
+
+# Release everything if job is finished
+out.release()
+cv2.destroyAllWindows()
+
+msg_str = "The output video is in " + out_path + format(output)
+print(msg_str)
+RDK.Cam2D_Close()
+RDK.ShowMessage(msg_str)
+
+#Delete de trash (folder&amp;files)
+shutil.rmtree(dir_path, ignore_errors=True)
+</pre>
+<h4>camex:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *    # API to communicate with RoboDK
+from robodk import *      # library for basic matrix operations
+RDK = Robolink()
+
+# Close any open 2D camera views
+RDK.Cam2D_Close()
+
+camref = RDK.ItemUserPick('Select the Camera location (reference, tool or object)')
+#camref = RDK.Item('Frame 7',ITEM_TYPE_FRAME)
+
+# Set parameters in mm and degrees:
+#  FOV: Field of view in degrees (atan(0.5*height/distance) of the sensor
+#  FOCAL_LENGHT: focal lenght in mm
+#  FAR_LENGHT: maximum working distance (in mm)
+#  SIZE: size of the window in pixels (fixed) (width x height)
+#  SNAPSHOT: size of the snapshot image in pixels (width x height)
+#  BG_COLOR: background color (rgb color or named color: AARRGGBB)
+#  LIGHT_AMBIENT: ambient color (rgb color or named color: AARRGGBB)
+#  LIGHT_SPECULAR: specular color (rgb color or named color: AARRGGBB)
+#  LIGHT_DIFFUSE: diffuse color (rgb color or named color: AARRGGBB)
+#  DEPTH: Add this flag to create a 32 bit depth map (white=close, black=far)
+#  NO_TASKBAR: Don't add the window to the task bar
+#  MINIMIZED: Show the window minimized
+#  ALWAYS_VISIBLE: Keep the window on top of all other windows
+#  SHADER_VERTEX: File to a vertex shader (GLSL file)
+#  SHADER_FRAGMENT: File to a fragment shader (GLSL file)
+
+# Examples to call Camd2D_Add:
+
+# Camera without a fixed window size and 1000 mm length
+cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=1000')
+
+# Camera with a fixed window size and 1000 mm length
+cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=1000 SIZE=640x480')
+
+# Camera with a black background
+cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=1000 SIZE=640x480 BG_COLOR=black')
+
+# Camera without a fixed window size and high resolution snapshot
+cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=1000 SIZE=640x480')
+
+# Depth view: 32 bit depth map (white=close, black=far)
+cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=1000 SIZE=640x480 DEPTH')
+
+# Minimized camera
+cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=1000 SIZE=640x480 MINIMIZED')
+
+# Do not show the camera window in the taskbar
+cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=1000 SIZE=640x480 NO_TASKBAR')
+
+# Customize the light
+cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=1000 SIZE=640x480 BG_COLOR=black LIGHT_AMBIENT=red LIGHT_DIFFUSE=#FF00FF00 LIGHT_SPECULAR=black')
+cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=600 SIZE=640x480 BG_COLOR=black LIGHT_AMBIENT=red LIGHT_DIFFUSE=black LIGHT_SPECULAR=white')
+cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=1000 SIZE=640x480 LIGHT_AMBIENT=red')
+
+# Provoke a popup and allow the user to enter some parameters
+cam_id = RDK.Cam2D_Add(camref, 'POPUP')
+
+# Example to take a snapshot from the camera
+RDK.Cam2D_Snapshot(RDK.getParam('PATH_OPENSTATION') + "/sample_image.png", cam_id)
+
+# Special command to retrieve the window ID:
+win_id = RDK.Command("CamWinID", str(cam_id))
+# print(str(win_id))
+
+#-----------------------------------------------------------------------------------
+# Example to use a customized shader to customize the effect of light
+# Tip: Use the example: C:/RoboDK/Library/Example-Shader-Customized-Light.rdk
+# Tip: If you need a fixed light source update the variable light_Position in the shader_fragment.glsl file
+
+# Get the path to the RoboDK library (usually in C:/RoboDK/Library/)
+path_library = RDK.getParam("PATH_LIBRARY")
+file_shader_fragment = path_library + '/Macros/Camera-Shaders/shader_fragment.glsl'
+file_shader_vertex = path_library + '/Macros/Camera-Shaders/shader_vertex.glsl'
+cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=2500 SHADER_FRAGMENT=' + file_shader_fragment + ' SHADER_VERTEX=' + file_shader_vertex)</pre>
 <p></p><h2>分組專題</h2>
 <h4>Solvespace 3D 參數設計繪圖建立零組件 (<a href="https://solvespace.com">Solvespace</a> 編譯與<a href="http://www.farwire.net/SolveSpace-LearningGuide.htm">應用</a>):</h4>
 <ol>
