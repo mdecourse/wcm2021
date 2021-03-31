@@ -134,11 +134,1697 @@ img.add_border {
           
         </header>
     <div id="tipue_search_content">W6 << <a href='W6.html'>Previous</a> <a href='分組專題.html'>Next</a> >> 分組專題<br /><h1>RoboDK</h1>
-<p><a href="https://robodk.com/">https://robodk.com/</a> 源自 <a href="http://www.etsmtl.ca/unites-de-recherche/coro/accueil,">http://www.etsmtl.ca/unites-de-recherche/coro/accueil,</a> 最早的程式位於 <a href="https://www.parallemic.org/RoKiSim.html">https://www.parallemic.org/RoKiSim.html</a> (<a href="http://a.kmol.info:88/RoKiSim.7z">http://a.kmol.info:88/RoKiSim.7z</a>), 相關介紹: <a href="https://en.wikipedia.org/wiki/RoboDK">https://en.wikipedia.org/wiki/RoboDK</a>.</p>
+<p>2015 年 <a href="https://robodk.com/">https://robodk.com/</a> 從 <a href="http://www.etsmtl.ca/unites-de-recherche/coro/accueil,">http://www.etsmtl.ca/unites-de-recherche/coro/accueil</a> spin offf 創立公司, 最早開發的程式位於 <a href="https://www.parallemic.org/RoKiSim.html">https://www.parallemic.org/RoKiSim.html</a> (<a href="http://a.kmol.info:88/RoKiSim.7z">http://a.kmol.info:88/RoKiSim.7z</a>), 至今已經支援超過 500 型工業用機械手臂的離線與在線控制, 且支援 STL, STEP, IGES, WRML, 3DS and OBJ 的零件格式輸入. 相關介紹: <a href="https://en.wikipedia.org/wiki/RoboDK">https://en.wikipedia.org/wiki/RoboDK</a>.</p>
 <p>RoboDK API 為開源套件: <a href="https://github.com/mdecourse/RoboDK-API">https://github.com/mdecourse/RoboDK-API</a></p>
+<p style="padding-left: 30px;"><a href="https://robodk.com/doc/en/PythonAPI/index.html">https://robodk.com/doc/en/PythonAPI/index.html</a></p>
+<p style="padding-left: 30px;"><a href="./../downloads/robodk_modules_for_python39.7z">robodk_modules_for_python39.7z</a></p>
 <p>以下在 RoboDK 的啟發下, 可以利用下列工具建立開源 Robotics 套件:</p>
 <p style="padding-left: 30px;">從 <a href="http://a.kmol.info:88/Robot_stl.7z">Robot_stl.7z</a> 下載 Robot stl ASCII 檔案, 並利用 <a href="https://github.com/mdecourse/RobotSimulator">https://github.com/mdecourse/RobotSimulator</a> 程式架構, 結合 <a href="https://github.com/bulletphysics/bullet3">https://github.com/bulletphysics/bullet3</a> (可以利用 <a href="http://a.kmol.info:88/fall2020_v3.1_pybullet.7z">http://a.kmol.info:88/fall2020_v3.1_pybullet.7z</a> 可攜程式環境) 建立 Robotics oriented 開源套件.</p>
-<p></p>
+<h4>Tips:</h4>
+<p style="padding-left: 30px;">tool_item = robot.AddTool(robodk.Mat(mat))<br/> shape = RDK.AddShape(triangles)<br/> tool_item.AddGeometry(shape, robodk.eye())<br/> shape.Delete()</p>
+<p style="padding-left: 30px;">##########</p>
+<p style="padding-left: 30px;">csvdata = LoadList(strfile, ',')<br/>values = []<br/>for i in range(len(csvdata)):<br/>    print(csvdata[i])<br/>    values.append(csvdata[i])<br/>  <br/># We can also save the list back to a CSV file<br/># SaveList(csvdata, strfile, ',')</p>
+<h4>RoboDK Python API ex1:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *              # import the robolink library (bridge with RoboDK)
+from robodk import *                # import the robodk library (robotics toolbox)
+
+RDK = Robolink()                    # establish a link with the simulator
+robot = RDK.Item('KUKA KR210')      # retrieve the robot by name
+robot.setJoints([0,90,-90,0,0,0])   # set the robot to the home position
+
+target = robot.Pose()               # retrieve the current target as a pose (position of the active tool with respect to the active reference frame)
+xyzabc = Pose_2_KUKA(target)        # Convert the 4x4 pose matrix to XYZABC position and orientation angles (mm and deg)
+
+x,y,z,a,b,c = xyzabc                # Calculate a new pose based on the previous pose
+xyzabc2 = [x,y,z+50,a,b,c+45]
+target2 = KUKA_2_Pose(xyzabc2)      # Convert the XYZABC array to a pose (4x4 matrix)
+
+robot.MoveJ(target2)                # Make a linear move to the calculated position</pre>
+<h4>ex2:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *                  # import the robolink library
+from robodk import *                    # import the robodk library
+
+RDK = Robolink()                        # connect to the RoboDK API
+robot  = RDK.Item('', ITEM_TYPE_ROBOT)  # Retrieve a robot available in RoboDK
+#target  = RDK.Item('Target 1')         # Retrieve a target (example)
+
+
+pose = robot.Pose()                     # retrieve the current robot position as a pose (position of the active tool with respect to the active reference frame)
+# target = target.Pose()                # the same can be applied to targets (taught position)
+
+# Read the 4x4 pose matrix as [X,Y,Z , A,B,C] Euler representation (mm and deg): same representation as KUKA robots
+XYZABC = Pose_2_KUKA(pose)
+print(XYZABC)
+
+# Read the 4x4 pose matrix as [X,Y,Z, q1,q2,q3,q4] quaternion representation (position in mm and orientation in quaternion): same representation as ABB robots (RAPID programming)
+xyzq1234 = Pose_2_ABB(pose)
+print(xyzq1234)
+
+# Read the 4x4 pose matrix as [X,Y,Z, u,v,w] representation (position in mm and orientation vector in radians): same representation as Universal Robots
+xyzuvw = Pose_2_UR(pose)
+print(xyzuvw)
+
+x,y,z,a,b,c = XYZABC                    # Use the KUKA representation (for example) and calculate a new pose based on the previous pose
+XYZABC2 = [x,y,z+50,a,b,c+45]
+pose2 = KUKA_2_Pose(XYZABC2)            # Convert the XYZABC array to a pose (4x4 matrix)
+
+robot.MoveJ(pose2)                      # Make a joint move to the new position
+# target.setPose(pose2)                  # We can also update the pose to targets, tools, reference frames, objects, ...</pre>
+<h4>ex3:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">name = mbox('Enter your name', entry=True)
+name = mbox('Enter your name', entry='default')
+if name:
+    print("Value: " + name)
+
+value = mbox('Male or female?', ('male', 'm'), ('female', 'f'))
+mbox('Process done')</pre>
+<h4>ex4:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># This macro shows an example to draw a polygon of radius R and n_sides vertices using the RoboDK API for Python
+from robolink import *    # API to communicate with RoboDK for simulation and offline/online programming
+from robodk import *      # Robotics toolbox for industrial robots
+
+# Any interaction with RoboDK must be done through RDK:
+RDK = Robolink()
+
+# Select a robot (popup is displayed if more than one robot is available)
+robot = RDK.ItemUserPick('Select a robot', ITEM_TYPE_ROBOT)
+if not robot.Valid():
+    raise Exception('No robot selected or available')
+
+    
+# get the current position of the TCP with respect to the reference frame:
+# (4x4 matrix representing position and orientation)
+target_ref = robot.Pose()
+pos_ref = target_ref.Pos()
+print("Drawing a polygon around the target: ")
+print(Pose_2_TxyzRxyz(target_ref))
+
+
+# move the robot to the first point:
+robot.MoveJ(target_ref)
+
+# It is important to provide the reference frame and the tool frames when generating programs offline
+robot.setPoseFrame(robot.PoseFrame())
+robot.setPoseTool(robot.PoseTool())
+robot.setZoneData(10) # Set the rounding parameter (Also known as: CNT, APO/C_DIS, ZoneData, Blending radius, cornering, ...)
+robot.setSpeed(200) # Set linear speed in mm/s
+
+# Set the number of sides of the polygon:
+n_sides = 6
+R = 100
+
+# make a hexagon around reference target:
+for i in range(n_sides+1):
+    ang = i*2*pi/n_sides #angle: 0, 60, 120, ...
+
+    #-----------------------------
+    # Movement relative to the reference frame
+    # Create a copy of the target
+    target_i = Mat(target_ref)
+    pos_i = target_i.Pos()
+    pos_i[0] = pos_i[0] + R*cos(ang)
+    pos_i[1] = pos_i[1] + R*sin(ang)
+    target_i.setPos(pos_i)
+    print("Moving to target %i: angle %.1f" % (i, ang*180/pi))
+    print(str(Pose_2_TxyzRxyz(target_i)))
+    robot.MoveL(target_i)
+    
+    #-----------------------------
+    # Post multiply: relative to the tool
+    #target_i = target_ref * rotz(ang) * transl(R,0,0) * rotz(-ang)
+    #robot.MoveL(target_i)
+
+# move back to the center, then home:
+robot.MoveL(target_ref)
+
+print('Done')</pre>
+<h4>ex5:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># Move a robot along a line given a start and end point by steps
+# This macro shows different ways of programming a robot using a Python script and the RoboDK API
+
+# Default parameters:
+P_START = [1755, -500, 2155]    # Start point with respect to the robot base frame
+P_END   = [1755,  600, 2155]    # End point with respect to the robot base frame
+NUM_POINTS  = 10                # Number of points to interpolate
+
+# Function definition to create a list of points (line)
+def MakePoints(xStart, xEnd, numPoints):
+    """Generates a list of points"""
+    if len(xStart) != 3 or len(xEnd) != 3:
+        raise Exception("Start and end point must be 3-dimensional vectors")
+    if numPoints &lt; 2:
+        raise Exception("At least two points are required")
+    
+    # Starting Points
+    pt_list = []
+    x = xStart[0]
+    y = xStart[1]
+    z = xStart[2]
+
+    # How much we add/subtract between each interpolated point
+    x_steps = (xEnd[0] - xStart[0])/(numPoints-1)
+    y_steps = (xEnd[1] - xStart[1])/(numPoints-1)
+    z_steps = (xEnd[2] - xStart[2])/(numPoints-1)
+
+    # Incrementally add to each point until the end point is reached
+    for i in range(numPoints):
+        point_i = [x,y,z] # create a point
+        #append the point to the list
+        pt_list.append(point_i)
+        x = x + x_steps
+        y = y + y_steps
+        z = z + z_steps
+    return pt_list
+
+#---------------------------------------------------
+#--------------- PROGRAM START ---------------------
+from robolink import *    # API to communicate with RoboDK for simulation and offline/online programming
+from robodk import *      # Robotics toolbox for industrial robots
+
+# Generate the points curve path
+POINTS = MakePoints(P_START, P_END, NUM_POINTS)
+
+# Initialize the RoboDK API
+RDK = Robolink()
+
+# turn off auto rendering (faster)
+RDK.Render(False) 
+
+# Automatically delete previously generated items (Auto tag)
+list_items = RDK.ItemList() # list all names
+for item in list_items:
+    if item.Name().startswith('Auto'):
+        item.Delete()
+
+# Promt the user to select a robot (if only one robot is available it will select that robot automatically)
+robot = RDK.ItemUserPick('Select a robot', ITEM_TYPE_ROBOT)
+
+# Turn rendering ON before starting the simulation
+RDK.Render(True) 
+
+# Abort if the user hits Cancel
+if not robot.Valid():
+    quit()
+
+# Retrieve the robot reference frame
+reference = robot.Parent()
+
+# Use the robot base frame as the active reference
+robot.setPoseFrame(reference)
+
+# get the current orientation of the robot (with respect to the active reference frame and tool frame)
+pose_ref = robot.Pose()
+print(Pose_2_TxyzRxyz(pose_ref))
+# a pose can also be defined as xyzwpr / xyzABC
+#pose_ref = TxyzRxyz_2_Pose([100,200,300,0,0,pi])
+
+
+
+#-------------------------------------------------------------
+# Option 1: Move the robot using the Python script
+
+# We can automatically force the "Create robot program" action using a RUNMODE state
+# RDK.setRunMode(RUNMODE_MAKE_ROBOTPROG)
+
+# Iterate through all the points
+for i in range(NUM_POINTS):
+    # update the reference target with the desired XYZ coordinates
+    pose_i = pose_ref
+    pose_i.setPos(POINTS[i])
+    
+    # Move the robot to that target:
+    robot.MoveJ(pose_i)
+    
+# Done, stop program execution
+quit()
+
+
+#-------------------------------------------------------------
+# Option 2: Create the program on the graphical user interface
+# Turn off rendering
+RDK.Render(False)
+prog = RDK.AddProgram('AutoProgram')
+
+# Iterate through all the points
+for i in range(NUM_POINTS):
+    # add a new target and keep the reference to it
+    ti = RDK.AddTarget('Auto Target %i' % (i+1))
+    # use the reference pose and update the XYZ position
+    pose_i = pose_ref
+    pose_i.setPos(POINTS[i])
+    ti.setPose(pose_i)
+    # force to use the target as a Cartesian target
+    ti.setAsCartesianTarget()
+
+    # Optionally, add the target as a Linear/Joint move in the new program
+    prog.MoveL(ti)
+
+# Turn rendering ON before starting the simulation
+RDK.Render(True) 
+
+# Run the program on the simulator (simulate the program):
+prog.RunProgram()
+# prog.WaitFinished() # wait for the program to finish
+
+# We can create the program automatically
+# prog.MakeProgram()
+
+# Also, if we have the robot driver we could use the following call to provoke a "Run on robot" action (simulation and the robot move simultaneously)
+# prog.setRunType(PROGRAM_RUN_ON_ROBOT)
+
+# Done, stop program execution
+quit()
+
+
+#-------------------------------------------------------------
+# Option 3: Move the robot using the Python script and detect if movements can be linear
+# This is an improved version of option 1
+#
+# We can automatically force the "Create robot program" action using a RUNMODE state
+# RDK.setRunMode(RUNMODE_MAKE_ROBOTPROG)
+
+# Iterate through all the points
+ROBOT_JOINTS = None
+for i in range(NUM_POINTS):
+    # update the reference target with the desired XYZ coordinates
+    pose_i = pose_ref
+    pose_i.setPos(POINTS[i])
+    
+    # Move the robot to that target:
+    if i == 0:
+        # important: make the first movement a joint move!
+        robot.MoveJ(pose_i)
+        ROBOT_JOINTS = robot.Joints()
+    else:
+        # test if we can do a linear movement from the current position to the next point
+        if robot.MoveL_Test(ROBOT_JOINTS, pose_i) == 0:
+            robot.MoveL(pose_i)
+        else:
+            robot.MoveJ(pose_i)
+            
+        ROBOT_JOINTS = robot.Joints()
+    
+# Done, stop program execution
+quit()</pre>
+<h4>ex6:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># Move a robot along a line given a start and end point by steps
+# This macro shows different ways of programming a robot using a Python script and the RoboDK API
+
+# Default parameters:
+P_START = [1755, -500, 2155]    # Start point with respect to the robot base frame
+P_END   = [1755,  600, 2155]    # End point with respect to the robot base frame
+NUM_POINTS  = 10                # Number of points to interpolate
+
+# Function definition to create a list of points (line)
+def MakePoints(xStart, xEnd, numPoints):
+    """Generates a list of points"""
+    if len(xStart) != 3 or len(xEnd) != 3:
+        raise Exception("Start and end point must be 3-dimensional vectors")
+    if numPoints &lt; 2:
+        raise Exception("At least two points are required")
+    
+    # Starting Points
+    pt_list = []
+    x = xStart[0]
+    y = xStart[1]
+    z = xStart[2]
+
+    # How much we add/subtract between each interpolated point
+    x_steps = (xEnd[0] - xStart[0])/(numPoints-1)
+    y_steps = (xEnd[1] - xStart[1])/(numPoints-1)
+    z_steps = (xEnd[2] - xStart[2])/(numPoints-1)
+
+    # Incrementally add to each point until the end point is reached
+    for i in range(numPoints):
+        point_i = [x,y,z] # create a point
+        #append the point to the list
+        pt_list.append(point_i)
+        x = x + x_steps
+        y = y + y_steps
+        z = z + z_steps
+    return pt_list
+
+#---------------------------------------------------
+#--------------- PROGRAM START ---------------------
+from robolink import *    # API to communicate with RoboDK for simulation and offline/online programming
+from robodk import *      # Robotics toolbox for industrial robots
+
+# Generate the points curve path
+POINTS = MakePoints(P_START, P_END, NUM_POINTS)
+
+# Initialize the RoboDK API
+RDK = Robolink()
+
+# turn off auto rendering (faster)
+RDK.Render(False) 
+
+# Automatically delete previously generated items (Auto tag)
+list_items = RDK.ItemList() # list all names
+for item in list_items:
+    if item.Name().startswith('Auto'):
+        item.Delete()
+
+# Promt the user to select a robot (if only one robot is available it will select that robot automatically)
+robot = RDK.ItemUserPick('Select a robot', ITEM_TYPE_ROBOT)
+
+# Turn rendering ON before starting the simulation
+RDK.Render(True) 
+
+# Abort if the user hits Cancel
+if not robot.Valid():
+    quit()
+
+# Retrieve the robot reference frame
+reference = robot.Parent()
+
+# Use the robot base frame as the active reference
+robot.setPoseFrame(reference)
+
+# get the current orientation of the robot (with respect to the active reference frame and tool frame)
+pose_ref = robot.Pose()
+print(Pose_2_TxyzRxyz(pose_ref))
+# a pose can also be defined as xyzwpr / xyzABC
+#pose_ref = TxyzRxyz_2_Pose([100,200,300,0,0,pi])
+
+
+#-------------------------------------------------------------
+# Option 1: Create a curve follow project
+
+# First we need to create an object from the provided points or add the points to an existing object and optionally project them on the surface
+
+# Create a new object given the list of points (the 3xN vector can be extended to 6xN to provide the normal)
+object_points = RDK.AddPoints(POINTS)
+
+# Alternatively, we can project the points on the object surface
+# object = RDK.Item('Object', ITEM_TYPE_OBJECT)
+# object_points = object.AddPoints(POINTS, PROJECTION_ALONG_NORMAL_RECALC)
+# Place the points at the same location as the reference frame of the object
+# object_points.setParent(object.Parent())
+
+# Set the name of the object containing points
+object_points.setName('AutoPoints n%i' % NUM_POINTS)
+
+path_settings = RDK.AddMillingProject("AutoPointFollow settings")
+prog, status = path_settings.setMillingParameters(part=object_points)
+# At this point, we may have to manually adjust the tool object or the reference frame
+
+# Run the create program if success
+prog.RunProgram()
+
+# Done
+quit()
+
+
+
+#-------------------------------------------------------------
+# Option 2: Create a point follow project (similar to Option 4)
+
+# First we need to create an object from the provided points or add the points to an existing object and optionally project them on the surface
+
+# Create a new object given the list of points:
+object_curve = RDK.AddCurve(POINTS)
+
+# Alternatively, we can project the points on the object surface
+# object = RDK.Item('Object', ITEM_TYPE_OBJECT)
+# object_curve = object.AddCurve(POINTS, PROJECTION_ALONG_NORMAL_RECALC)
+# Place the curve at the same location as the reference frame of the object
+# object_curve.setParent(object.Parent())
+
+# Set the name of the object containing points
+object_curve.setName('AutoPoints n%i' % NUM_POINTS)
+
+# Create a new "Curve follow project" to automatically follow the curve
+path_settings = RDK.AddMillingProject("AutoCurveFollow settings")
+prog, status = path_settings.setMillingParameters(part=object_curve)
+# At this point, we may have to manually adjust the tool object or the reference frame
+
+# Run the create program if success
+prog.RunProgram()
+
+# Done
+quit()</pre>
+<h4>ex7:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robodk import *
+from robolink import *
+
+# Set the name of the reference frame to place the targets:
+REFERENCE_NAME = 'Reference CSV'
+
+# Set the name of the reference target
+# (orientation will be maintained constant with respect to this target)
+TARGET_NAME = 'Home' 
+
+#---------------------------
+# Start the RoboDK API
+RDK = Robolink()
+
+# Ask the user to pick a file:
+rdk_file_path = RDK.getParam("PATH_OPENSTATION")
+path_file = getOpenFile(rdk_file_path + "/")
+if not path_file:
+    print("Nothing selected")
+    quit()
+
+# Get the program name from the file path
+program_name = getFileName(path_file)
+
+# Load the CSV file as a list of list [[x,y,z,speed],[x,y,z,speed],...]
+data = LoadList(path_file)
+
+# Delete previously generated programs that follow a specific naming
+# Automatically delete previously generated items (Auto tag)
+#list_items = RDK.ItemList() # list all names
+#for item in list_items:
+#    if item.Name().startswith('Frame'):
+#        item.Delete()
+
+# Select the robot (the popup is diplayed only if there are 2 or more robots)
+robot = RDK.ItemUserPick('Select a robot',ITEM_TYPE_ROBOT)
+if not robot.Valid():
+    raise Exception("Robot not selected or not valid")
+    quit()
+
+# Get the reference frame to generate the path
+frame = RDK.Item(REFERENCE_NAME,ITEM_TYPE_FRAME)
+if not frame.Valid():
+    raise Exception("Reference frame not found. Use name: %s" % REFERENCE_NAME)
+
+# Use the home target as a reference
+target = RDK.Item(TARGET_NAME, ITEM_TYPE_TARGET)
+if not target.Valid():
+    raise Exception("Home target is not valid. Set a home target named: %s" % TARGET_NAME)
+
+# Set the robot to the home position
+robot.setJoints(target.Joints())
+
+# Get the pose reference from the home target
+pose_ref = robot.Pose()
+
+# Add a new program
+program = RDK.AddProgram(program_name, robot)
+
+# Turn off rendering (faster)
+RDK.Render(False)
+
+# Speed up by not showing the instruction:
+program.ShowInstructions(False)
+
+# Remember the speed so that we don't set it with every instruction
+current_speed = None
+target = None
+
+# Very important: Make sure we set the reference frame and tool frame so that the robot is aware of it
+program.setPoseFrame(frame)
+program.setPoseTool(robot.PoseTool())
+
+# Iterate through all the points
+for i in range(len(data)):
+    pi = pose_ref
+    pi.setPos(data[i])
+
+    # Update speed if there is a 4th column
+    if len(data[i]) &gt;= 3:
+        speed = data[i][3]
+        # Update the program if the speed is different than the previously set speed
+        if type(speed) != str and speed != current_speed:
+            program.setSpeed(speed)
+            current_speed = speed
+
+    target = RDK.AddTarget('T%i'% i, frame)
+    target.setPose(pi)
+    pi = target
+
+    # Add a linear movement (with the exception of the first point which will be a joint movement)
+    if i == 0:
+        program.MoveJ(pi)
+    else:
+        program.MoveL(pi)
+
+    # Update from time to time to notify the user about progress
+    if i % 100 == 0:
+        program.ShowTargets(False)
+        RDK.ShowMessage("Loading %s: %.1f %%" % (program_name, 100*i/len(data)),False)
+        RDK.Render()
+        
+program.ShowTargets(False)
+
+RDK.ShowMessage("Done",False)
+print("Done")</pre>
+<h4>ex8:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *    # API to communicate with RoboDK
+from robodk import *      # basic matrix operations
+
+# Start the with RoboDK
+RDK = Robolink()
+
+# Select the robot
+ROBOT = RDK.ItemUserPick('Select a robot', ITEM_TYPE_ROBOT)
+
+FRAME = RDK.Item('Path Reference', ITEM_TYPE_FRAME)
+TOOL = RDK.Item('Tool Reference', ITEM_TYPE_TOOL)
+if not FRAME.Valid() or not TOOL.Valid():
+    raise Exception("Select appropriate FRAME and TOOL references")
+
+# Check if the user selected a robot
+if not ROBOT.Valid():
+    quit()
+
+# csv_file = 'C:/Users/Albert/Desktop/Var_P.csv'
+csv_file = getOpenFile(RDK.getParam('PATH_OPENSTATION'))
+
+# Load P_Var.CSV data as a list of poses, including links to reference and tool frames
+def load_targets(strfile):
+    csvdata = LoadList(strfile, ',', 'utf-8')
+    poses = []
+    idxs = []
+    for i in range(0, len(csvdata)):
+        x,y,z,rx,ry,rz = csvdata[i][0:6]
+        poses.append(transl(x,y,z)*rotz(rz*pi/180)*roty(ry*pi/180)*rotx(rx*pi/180))
+        idxs.append(csvdata[i][6])
+    return poses, idxs
+
+# Load and display Targets from the CSV file
+def load_targets_GUI(strfile):
+    poses, idxs = load_targets(strfile)
+    program_name = getFileName(strfile)
+    program_name = program_name.replace('-','_').replace(' ','_')
+    program = RDK.Item(program_name, ITEM_TYPE_PROGRAM)
+    if program.Valid():
+        program.Delete()
+        
+    program = RDK.AddProgram(program_name, ROBOT)
+    program.setFrame(FRAME)
+    program.setTool(TOOL)
+    ROBOT.MoveJ(ROBOT.JointsHome())
+    
+    for pose, idx in zip(poses, idxs):
+        name = '%s-%i' % (program_name, idx)
+        target = RDK.Item(name, ITEM_TYPE_TARGET)
+        if target.Valid():
+            target.Delete()
+        target = RDK.AddTarget(name, FRAME, ROBOT)
+        target.setPose(pose)
+        
+        try:
+            program.MoveJ(target)
+        except:
+            print('Warning: %s can not be reached. It will not be added to the program' % name)
+
+
+def load_targets_move(strfile):
+    poses, idxs = load_targets(strfile)
+    
+    ROBOT.setFrame(FRAME)
+    ROBOT.setTool(TOOL)
+
+    ROBOT.MoveJ(ROBOT.JointsHome())
+    
+    for pose, idx in zip(poses, idxs):
+        try:
+            ROBOT.MoveJ(pose)
+        except:
+            RDK.ShowMessage('Target %i can not be reached' % idx, False)
+        
+
+# Force just moving the robot after double clicking
+#load_targets_move(csv_file)
+#quit()
+
+# Recommended mode of operation:
+# 1-Double click the python file creates a program in RoboDK station
+# 2-Generate program generates the program directly
+
+MAKE_GUI_PROGRAM = False
+
+ROBOT.setFrame(FRAME)
+ROBOT.setTool(TOOL)
+
+
+if RDK.RunMode() == RUNMODE_SIMULATE:
+    MAKE_GUI_PROGRAM = True
+    # MAKE_GUI_PROGRAM = mbox('Do you want to create a new program? If not, the robot will just move along the tagets', 'Yes', 'No')
+    
+else:
+    # if we run in program generation mode just move the robot
+    MAKE_GUI_PROGRAM = False
+
+
+if MAKE_GUI_PROGRAM:
+    RDK.Render(False) # Faster if we turn render off
+    load_targets_GUI(csv_file)
+else:
+    load_targets_move(csv_file)</pre>
+<h4>ex9:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># This macro shows how to load a KUKA SRC file
+# PTP movements with joint coordinates and LIN movements with Cartesian information (XYZABC) will be imported as a program.
+# This macro also supports defining the tool and the base inline and changing the speed using the VEL.CP global variable
+
+## Example program:
+# DEF Milling ( )
+# 
+# $BASE = {FRAME: X 0.000,Y -1000.000,Z 0.000,A 0.000,B 0.000,C 0.000}
+# $TOOL = {FRAME: X 466.604,Y -4.165,Z 109.636,A -0.000,B 90.000,C 0.000}
+# 
+# $VEL.CP = 1.00000
+# 
+# PTP {A1 107.78457,A2 -44.95260,A3 141.64681,A4 107.66839,A5 -87.93467,A6 6.37710}
+# LIN {X -0.000,Y -0.000,Z 6.350,A -180.000,B 0.000,C -180.000}
+# 
+# $VEL.CP = 0.02117
+# LIN {X 276.225,Y 0.000,Z 6.350,A 180.000,B 0.000,C -180.000}
+# LIN {X 276.225,Y 323.850,Z 6.350,A -160.000,B 0.000,C 180.000}
+# LIN {X -0.000,Y 323.850,Z 6.350,A -180.000,B -0.000,C -180.000}
+# LIN {X -0.000,Y -0.000,Z 6.350,A -180.000,B 0.000,C -180.000}
+# $VEL.CP = 1.00000
+# LIN {X -0.000,Y -0.000,Z 106.350,A -180.000,B 0.000,C -180.000}
+# 
+# END
+
+
+from robodk import *
+from robolink import *
+
+#---------------------------
+# Start the RoboDK API
+RDK = Robolink()
+
+# Ask the user to pick an SRC file:
+rdk_file_path = RDK.getParam("PATH_OPENSTATION")
+src_file_path = getOpenFile(rdk_file_path + "/")
+if not src_file_path:
+    print("Nothing selected")
+    quit()
+
+# Get the program name from the file path
+program_name = getFileName(src_file_path)
+print("Loading program: " + program_name)
+
+if not src_file_path.lower().endswith(".src"):
+    raise Exception("Invalid file selected. Select an SRC file.")
+
+def GetValues(line):
+    """Get all the numeric values from a line"""
+    # LIN {X 1671.189,Y -562.497,Z -243.070,A 173.363,B -8.525,C -113.306} C_DIS    
+    line = line.replace(",", " ")
+    line = line.replace("}", " ")
+    values = line.split(" ")
+
+    list_values = []
+    for value in values:
+        try:
+            value = float(value)
+        except:
+            continue
+
+        list_values.append(value)
+    
+    return list_values
+
+# Ask the user to select a robot (if more than a robot is available)    
+robot = RDK.ItemUserPick('Select a robot',ITEM_TYPE_ROBOT)
+if not robot.Valid():
+    raise Exception("Robot not selected or not valid")
+
+# Get the active reference frame
+frame = robot.getLink(ITEM_TYPE_FRAME)
+if not frame.Valid():
+    # If there is no active reference frame, use the robot base
+    frame = robot.Parent()
+
+# Get the active tool frame
+tool = robot.getLink(ITEM_TYPE_TOOL)
+
+# Add a new program
+program = RDK.AddProgram(program_name, robot)
+
+# Turn off rendering (faster)
+RDK.Render(False)
+
+# Speed up by not showing the instruction:
+program.ShowInstructions(False)
+
+# Open the file and iterate through each line
+f = open(src_file_path)
+count = 0
+for line in f:
+    # Remove empty characters:
+    line = line.strip()
+    print("Loading line: " + line)
+
+    # Get all the numeric values in order
+    values = GetValues(line)
+
+    # Increase the counter
+    count = count + 1
+
+    # Update TCP speed (KUKA works in m/s, RoboDK works in mm/s)
+    if line.startswith("$VEL.CP"):
+        program.setSpeed(values[0]*1000)
+        continue
+        
+    # Check operations that involve a pose
+    if len(values) &lt; 6:
+        print("Warning! Invalid line: " + line)
+        continue
+
+    # Check what instruction we need to add:
+    if line.startswith("LIN"):
+        target = RDK.AddTarget('T%i'% count, frame)
+        target.setPose(KUKA_2_Pose(values))
+        program.MoveL(target)
+
+    # Check PTP move
+    elif line.startswith("PTP"):
+        target = RDK.AddTarget('T%i'% count, frame)
+        target.setAsJointTarget()
+        target.setJoints(values)
+        program.MoveJ(target)
+
+    # Set the tool
+    elif line.startswith("$TOOL"):
+        pose = KUKA_2_Pose(values)
+        tool = robot.AddTool(pose, "SRC TOOL")
+        program.setTool(tool)
+
+    # Set the reference frame
+    elif line.startswith("$BASE"):
+        frame = RDK.AddFrame("SRC BASE", robot.Parent())
+        frame.setPose(KUKA_2_Pose(values))
+        program.setFrame(frame)
+
+# Hide the targets
+program.ShowTargets(False)
+
+# Show the instructions
+program.ShowInstructions(True)
+
+RDK.ShowMessage("Done",False)
+print("Done")</pre>
+<h4>ex10:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># This macro shows how you can create a program that moves the robot through a set of points
+# The points are automatically created as a cube grid around a reference target
+# If a linear movement can't be done from one point to the next one the robot will follow a joint movement
+from robolink import *    # API to communicate with RoboDK
+from robodk import *      # basic matrix operations
+from random import uniform # to randomly calculate rz (rotation around the Z axis)
+
+# Name of the reference target
+REFERENCE_TARGET = 'RefTarget'
+
+# Check for collisions
+CHECK_COLLISIONS = False
+
+#Start the RoboDK API
+RDK = Robolink()
+
+# Set collision checking ON or OFF
+RDK.setCollisionActive(COLLISION_ON if CHECK_COLLISIONS else COLLISION_OFF)
+
+# Run on robot: Force the program to run on the connected robot (same behavior as right clicking the program, then, selecting "Run on Robot")
+# RDK.setRunMode(RUNMODE_RUN_ROBOT)
+
+# Get the main/only robot in the station
+robot = RDK.Item('', ITEM_TYPE_ROBOT)
+if not robot.Valid():
+    raise Exception("Robot not valid or not available")
+
+# Get the active reference frame
+frame = robot.getLink(ITEM_TYPE_FRAME)
+if not frame.Valid():
+    frame = robot.Parent()
+    robot.setPoseFrame(frame)
+
+# Get the reference pose with respect to the robot
+frame_pose = robot.PoseFrame()
+
+# Get the active tool
+tool = robot.getLink(ITEM_TYPE_TOOL)
+if not tool.Valid():
+    tool = robot.AddTool(transl(0,0,75), "Tool Grid")
+    robot.setPoseTool(tool)
+
+# Get the target reference RefTarget
+target_ref = RDK.Item(REFERENCE_TARGET, ITEM_TYPE_TARGET)
+if not target_ref.Valid():
+    target_ref = RDK.AddTarget(REFERENCE_TARGET, frame, robot)
+
+# Get the reference position (pose=4x4 matrix of the target with respect to the reference frame)
+pose_ref = target_ref.Pose()
+startpoint = target_ref.Joints()
+config_ref = robot.JointsConfig(startpoint)
+
+# Retrieve the tool pose
+tool_pose = tool.PoseTool()
+
+# Retrieve the degrees of freedom or axes (num_dofs = 6 for a 6 axis robot)
+num_dofs = len(robot.JointsHome().list())
+
+# Get the reference frame of the target reference
+ref_frame = target_ref.Parent()
+
+# Function definition to check if 2 robot configurations are the same
+# Configurations are set as [Rear/Front,LowerArm/UpperArm,Flip/NonFlip] bits (int values)
+def config_equal(config1, config2):
+    if config1[0] != config2[0] or config1[1] != config2[1] or config1[2] != config2[2]:
+        return False
+    return True
+
+
+# Create a new program
+prog = RDK.AddProgram('AutoCreated')
+
+# This should make program generation slightly faster
+#prog.ShowInstructions(False)
+
+# Start creating the program or moving the robot:
+program_or_robot = prog
+program_or_robot.setPoseTool(tool_pose)
+
+program_or_robot.MoveJ(target_ref)
+lastjoints = startpoint
+rz = 0
+ntargets = 0
+for tz in range(-100, 101, 100):
+    for ty in range(0, 401, 200):
+        for tx in range(100, -5001, -250):
+            ntargets = ntargets + 1
+            # calculate a random rotation around the Z axis of the tool
+            #rz = uniform(-20*pi/180, 20*pi/180)
+                        
+            # Calculate the position of the new target: translate with respect to the robot base and rotate around the tool
+            newtarget_pose = transl(tx,ty,tz)*pose_ref*rotz(rz)
+            
+            # First, make sure the target is reachable:
+            newtarget_joints = robot.SolveIK(newtarget_pose, lastjoints, tool_pose, frame_pose)
+            if len(newtarget_joints.list()) &lt; num_dofs:
+                print('...target not reachable!! Skipping target')
+                continue
+
+            # Create a new target:
+            newtarget_name = 'Auto T%.0f,%.0f,%.0f Rz=%.1f' % (tx,ty,tz,rz)
+            print('Creating target %i: %s' % (ntargets, newtarget_name))
+            newtarget = RDK.AddTarget(newtarget_name, ref_frame, robot)
+
+            # At this point, the target is reachable.
+            # We have to check if we can do a linear move or not. We have 2 methods:
+            can_move_linear = True
+            
+            # ------------------------------
+            # Validation method 1: check the joints at the destination target
+            # and make sure we have the same configuration
+            # A quick way to validate (it may not be perfect if robot joints can move more than 1 turn)
+            # To improve this method we would have to check configurations on all possible solutions
+            # from the inverse kinematics, using SolveIK_All()
+            if False:
+                target_joints_config = robot.JointsConfig(newtarget_joints)
+                if not config_equal(config_ref, target_joints_config):
+                    # We can't do a linear movement
+                    can_move_linear = False
+                    print("Warning! configuration is not the same as the reference target! Linear move will not be possible")
+                    
+                    # update the reference configuration to the new one
+                    config_ref = target_joints_config
+            # -------------------------------
+
+
+
+            # -------------------------------
+            # Validation method 2: use the robot.MoveL_Test option to check if the robot can make a linear movement
+            # This method is more robust and should provide a 100% accurate result but it may take more time
+            # robot.MoveL_Test can also take collisions into account if collision checking is activated
+            issues = robot.MoveL_Test(lastjoints, newtarget_pose)
+            can_move_linear = (issues == 0)
+            # We can retrieve the final joint position by retrieving the robot joints
+            if can_move_linear:
+                newtarget_joints = robot.Joints()
+            
+            # ---------------------------------
+
+            if can_move_linear:
+                # All good, we don't need to modify the target.
+                # However, we could set the joints in the target as this may allow us to retrieve the robot configuration if we ever need it
+                newtarget.setAsCartesianTarget() # default behavior
+                newtarget.setJoints(newtarget_joints)
+                # It is important to have setPose after setJoints as it may recalculate the joints to match the target
+                newtarget.setPose(newtarget_pose) 
+
+                # Add the linear movement
+                program_or_robot.MoveL(newtarget)
+                
+            else:
+                #print(newtarget_joints)
+                # Check if we can do a joint movement (check for collisions)
+                issues = robot.MoveJ_Test(lastjoints, newtarget_joints)
+                can_move_joints = (issues == 0)
+                if not can_move_joints:
+                    # Skip this point
+                    print("Skipping movement to: " + str(newtarget_joints))
+                    continue
+
+                # Make sure we have a joint target and a joint movement
+                newtarget.setAsJointTarget() # default behavior
+                
+                # Setting the pose for a joint target is not important unless we want to retrieve the pose later
+                # or we want to use the Cartesian coordinates for post processing
+                newtarget.setPose(newtarget_pose)
+
+                # Make sure we set the joints after the pose for a joint taget as it may recalculate the pose
+                newtarget.setJoints(newtarget_joints)
+
+                # Add the joint movement
+                program_or_robot.MoveJ(newtarget)
+
+
+            # Remember the joint poisition of the last movement
+            lastjoints = newtarget_joints
+
+# Showing the instructions at the end is faster:
+prog.ShowInstructions(True)
+
+# Hiding the targets is cleaner and more difficult to accidentaly move a target
+#prog.ShowTargets(False)
+
+print('Program done with %i targets' % ntargets)</pre>
+<h4>ex11:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from tkinter import *
+from robolink import *
+import threading    
+
+# Create a new window
+window = tkinter.Tk()
+
+# Close the window
+def onClose():
+    window.destroy()
+    quit(0)
+
+# Trigger Select button
+# IMPORTANT: We need to run the action on a separate thread because
+# (otherwise, if we want to interact with RoboDK window it will freeze)
+def on_btnSelect():
+    def thread_btnSelect():
+        # Run button action (example to select an item and display its name)
+        RDK = Robolink()
+        item = RDK.ItemUserPick('Select an item')
+        if item.Valid():
+            RDK.ShowMessage("You selected the item: " + item.Name())
+        
+    threading.Thread(target=thread_btnSelect).start()
+
+# Set the window title (must be unique for the docking to work, try to be creative)
+window_title = 'RoboDK API Docked Window'
+window.title(window_title)
+
+# Delete the window when we close it
+window.protocol("WM_DELETE_WINDOW", onClose)
+
+# Add a button (Select action)
+btnSelect = Button(window, text='Trigger on_btnSelect', height=5, width=60, command=on_btnSelect)
+btnSelect.pack(fill=X)
+
+# Embed the window
+EmbedWindow(window_title)
+
+# Run the window event loop. This is like an app and will block until we close the window
+window.mainloop()</pre>
+<h4>ex12:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># Start the RoboDK API
+from robolink import *    # RoboDK API
+RDK = Robolink()
+
+# Ask the user to select a program
+program = RDK.ItemUserPick('Select a program (make sure the program does not change the robot speed)', ITEM_TYPE_PROGRAM)
+
+# Retrieve the robot linked to the selected program
+robot = program.getLink(ITEM_TYPE_ROBOT)
+
+# Output the linear speed, joint speed and time (separated by tabs)
+writeline = "Linear Speed (mm/s)\tJoint Speed (deg/s)\tCycle Time(s)"
+print(writeline)
+# Prepare an HTML message we can show to the user through the RoboDK API:
+msg_html = "&lt;table border=1&gt;&lt;tr&gt;&lt;td&gt;"+writeline.replace('\t','&lt;/td&gt;&lt;td&gt;')+"&lt;/td&gt;&lt;/tr&gt;"
+
+for speed_lin in [1, 5, 10, 20, 50, 100, 200, 500]:
+    for speed_joints in [1, 5, 10, 20, 50, 100, 200, 500]:
+        # Set the robot speed
+        robot.setSpeed(speed_lin, speed_joints)
+
+        # Update the program and retrieve updated information:
+        # https://robodk.com/doc/en/PythonAPI/robolink.html#robolink.Item.Update
+        result = program.Update()
+        instructions, time, travel, ok, error = result
+
+        # Print the information
+        newline = "%.1f\t%.1f\t%.1f" % (speed_lin, speed_joints, time)
+        print(newline)
+        msg_html = msg_html + '&lt;tr&gt;&lt;td&gt;' + newline.replace('\t','&lt;/td&gt;&lt;td&gt;') + '&lt;/td&gt;&lt;/tr&gt;'
+
+msg_html = msg_html + '&lt;/table&gt;'
+
+RDK.ShowMessage(msg_html)</pre>
+<h4>ex13:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import sys # allows getting the passed argument parameters
+from robodk import *
+from robolink import *
+
+RDK = Robolink()
+
+TOOL_ID = 0
+if len(sys.argv) &gt;= 2:
+    TOOL_ID = int(sys.argv[1])
+else:
+    tool_str = mbox("Enter the tool number:\n(for example, for Tool 1 set 1)", entry='1')
+    if not tool_str:
+        # No input
+        quit()
+    TOOL_ID = int(tool_str)
+
+# Select a robot
+robot = RDK.Item('', ITEM_TYPE_ROBOT)
+if not robot.Valid():
+    raise Exception("Robot not available")
+
+# Create the tool name
+tool_name = 'Tool ' + str(TOOL_ID)
+print("Using robot: " + robot.Name())
+print("Setting tool: " + tool_name)
+
+# Select the tool
+tool = RDK.Item(tool_name, ITEM_TYPE_TOOL)
+if not tool.Valid():
+    raise Exception("Tool %s does not exist!" % tool_name)
+
+# Update the robot to use the tool
+robot.setTool(tool)
+
+print("Done!")</pre>
+<h4>ex14:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *    # RoboDK API
+from robodk import *      # Robot toolbox
+RDK = Robolink()
+
+# Set to True to invert the normals (flip the normals)
+FlipNormals = False
+
+# Set the type of projection
+ProjectionType = PROJECTION_ALONG_NORMAL_RECALC
+# Available values include:
+#PROJECTION_NONE                = 0 # No curve projection
+#PROJECTION_CLOSEST             = 1 # The projection will be the closest point on the surface
+#PROJECTION_ALONG_NORMAL        = 2 # The projection will be done along the normal.
+#PROJECTION_ALONG_NORMAL_RECALC = 3 # The projection will be done along the normal. Furthermore, the normal will be recalculated according to the surface normal.
+#PROJECTION_CLOSEST_RECALC      = 4 # The projection will be the closest point on the surface and the normals will be recalculated
+#PROJECTION_RECALC              = 5 # The normals are recalculated according to the surface normal of the closest projection
+
+#-------------------------------------------------------------
+# Ask the user to provide the object with the features
+object_features = RDK.ItemUserPick("Select object with the features to project (curves and/or points)", ITEM_TYPE_OBJECT)
+if not object_features.Valid():
+    quit()
+
+# Ask the user to provide the object with the surface used as a reference
+object_surface = RDK.ItemUserPick("Select Surface Object to project features", ITEM_TYPE_OBJECT)
+if not object_surface.Valid():
+    quit()
+
+# Create a duplicate copy of the surface object
+object_surface.Copy()
+new_object = RDK.Paste(object_surface.Parent())
+new_object.setName("Recalculated Normals")
+new_object.setVisible(True)
+
+# Hide the objects used to build the new object with the desired curves
+object_features.setVisible(False)
+object_surface.setVisible(False)
+
+# Turn Off rendering (faster)
+RDK.Render(False)
+
+# Add all curves, projected as desired (iterate through all curves until no more curves are found)
+curve_id = 0
+while True:
+    # Retrieve the curve points
+    curve_points, name_feature = object_features.GetPoints(FEATURE_CURVE, curve_id)
+    print(name_feature)
+    curve_id = curve_id + 1
+    npoints = len(curve_points)
+    if npoints == 0:
+        break
+
+    print("Adding curve %s with %i points" % (name_feature, npoints))
+    curve_points_proj = RDK.ProjectPoints(curve_points, object_surface, ProjectionType)
+
+    # Optionally flip the normals (ijk vector)
+    if FlipNormals:
+        for ci in range(len(curve_points_proj)):
+            x,y,z,i,j,k = curve_points_proj[ci]
+            curve_points_proj[ci] = [x,y,z,-i,-j,-k]
+
+    RDK.AddCurve(curve_points_proj, new_object, True, PROJECTION_NONE)
+
+# Add all points projected
+point_list, name_feature = object_features.GetPoints(FEATURE_POINT)
+npoints = len(point_list)
+print("Adding %i points" % npoints)
+if npoints &gt; 0:    
+    #RDK.AddPoints(point_list, new_object, True, PROJECTION_ALONG_NORMAL_RECALC)
+    point_list_proj = RDK.ProjectPoints(point_list, object_surface, ProjectionType)
+    RDK.AddPoints(point_list_proj, new_object, True, PROJECTION_NONE)
+    #RDK.AddCurve(curve_points, new_object, True, PROJECTION_NONE)
+
+# Set the curve width
+new_object.setValue('DISPLAY','LINEW=2')
+# Set the curve color
+new_object.setColorCurve([0.0,0.5,0.5])
+
+# Turn On rendering (Optional)
+RDK.Render(True)
+print("Done")</pre>
+<h4>ex14:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># Enter the size of the average filter, in number of samples.
+# If this value is set to -1 it will popup a message asking the user to enter a value
+FilterNormalSamples = -1 # in samples
+
+# Enter the distance, in mm, to filter close points.
+# For example, if we want one point each 2 mm at most, we should enter 2.
+# Set to -1 to not filter the number of points.
+FilterPointDistance = -1 # in mm
+
+# ------------------------------------------------------
+# Start the RoboDK API
+from robolink import *    # RoboDK API
+from robodk import *      # Robot toolbox
+RDK = Robolink()
+
+# Ask the user to select the object
+obj = RDK.ItemUserPick("Select the object or the tool to filter curves") # we can optionally filter by ITEM_TYPE_OBJECT or ITEM_TYPE_TOOL (not both)
+# Exit if the user selects cancel
+if not obj.Valid():
+    quit()
+
+# Ask the user to enter the filter size
+if FilterNormalSamples &lt;= 0:
+    str_avg_filter = mbox("Enter the filter size (the number of points/normals used for the average filter).\nFor example, if the filter size is 10 units, the 10 closest normals are used to average each individual normal.", entry="10")
+    if not str_avg_filter:
+        # The user selected cancel
+        quit()
+    # Convert the user input to an integer
+    FilterNormalSamples = int(str_avg_filter)
+    if FilterNormalSamples &lt;=0:
+        RDK.ShowMessage("Invalid Filter value. Enter a value &gt;= 1", False)
+        raise Exception(msg)
+
+# Iterate through all object curves, extract the curve points and average the normals
+curve_id = 0
+obj_filtered = None
+while True:
+    points, name_feature = obj.GetPoints(FEATURE_CURVE, curve_id)
+    # points is a double array of float with np points and xyzijk data for each point
+    # point[np] = [x,y,z,i,j,k] # where xyz is the position and ijk is the tool orientation (Z axis, usually the normal to the surface)
+    np = len(points)
+    # when curve_id is out of bounds, an empty double array is returned
+    if np == 0 or len(points[0]) &lt; 6:
+        break
+        
+    msg = "Filtering: " + name_feature
+    print(msg)
+    RDK.ShowMessage(msg, False)
+    curve_id = curve_id + 1
+    
+    # For each point, average the normals in the range of points [-FilterNormalSamples/2 ; +FilterNormalSamples/2] 
+    new_normals = []
+    for i in range(np):
+        id_avg_from = round(max(0, i - 0.5*FilterNormalSamples))
+        id_avg_to = round(min(np-1, i + 0.5*FilterNormalSamples))
+
+        # Make sure we account for the start and end sections (navg is usually FilterNormalSamples, except near the borders)
+        n_avg = id_avg_to - id_avg_from
+        normal_i = [0,0,0]
+        for j in range(id_avg_from, id_avg_to):
+            ni = points[j][3:6]
+            normal_i = add3(normal_i, ni)
+
+        # Divide the object
+        normal_i = mult3(normal_i, 1.0/n_avg)
+        
+        # Add the new normal to the list
+        new_normals.append(normal_i)
+
+    # Combine the normals with the list of points
+    for i in range(np):
+        points[i][3:6] = new_normals[i][0:3]
+
+    # Filter points, if desired
+    if FilterPointDistance &gt; 0:
+        lastp = None
+        points_filtered = []
+        points_filtered.append(points[0])
+        lastp = points[0]
+
+        for i in range(1,np):
+            if distance(lastp, points[i]) &gt; FilterPointDistance:
+                points_filtered.append(points[i])
+                lastp = points[i]
+                
+        points = points_filtered
+
+    # For the first curve: create a new object, rename it and place it in the same location of the original object
+    if obj_filtered is None:
+        obj_filtered = RDK.AddCurve(points, 0, False, PROJECTION_NONE)
+        obj_filtered.setName(obj.Name() + " Filtered")
+        obj_filtered.setParent(obj.Parent())
+        obj_filtered.setGeometryPose(obj_filtered.GeometryPose())
+
+    else:
+        # After the first curve has been added, add following curves to the same object
+        RDK.AddCurve(points, obj_filtered, True, PROJECTION_NONE)
+
+# Set the curve display width
+obj_filtered.setValue('DISPLAY','LINEW=2')
+# Set the curve color as RGBA values [0-1.0]
+obj_filtered.setColorCurve([0.0,0.5,1.0, 0.8])</pre>
+<h4>ex15:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># This macro allows moving a robot using the keyboard
+# Note: This works on console mode only, you must run the PY file separately
+#
+# More information about the RoboDK API here:
+# https://robodk.com/doc/en/RoboDK-API.html
+# Type help("robolink") or help("robodk") for more information
+
+from robolink import *    # API to communicate with RoboDK
+from robodk import *      # basic matrix operations
+RDK = Robolink()
+
+# Arrow keys program example
+
+# get a robot
+robot = RDK.Item('', ITEM_TYPE_ROBOT)
+if not robot.Valid():
+    print("No robot in the station. Load a robot first, then run this program.")
+    pause(5)
+    raise Exception("No robot in the station!")
+
+print('Using robot: %s' % robot.Name())
+print('Use the arrows (left, right, up, down), Q and A keys to move the robot')
+print('Note: This works on console mode only, you must run the PY file separately')
+
+# define the move increment
+move_speed = 10
+
+from msvcrt import getch
+while True:
+    key = (ord(getch()))
+    move_direction = [0,0,0]
+    # print(key)
+    if key == 75:
+        print('arrow left (Y-)')
+        move_direction = [0,-1,0]
+    elif key == 77:
+        print('arrow right (Y+)')
+        move_direction = [0,1,0]
+    elif key == 72:
+        print('arrow up (X-)')
+        move_direction = [-1,0,0]
+    elif key == 80:
+        print('arrow down (X+)')
+        move_direction = [1,0,0]
+    elif key == 113:
+        print('Q (Z+)')
+        move_direction = [0,0,1]
+    elif key == 97:
+        print('A (Z-)')
+        move_direction = [0,0,-1]
+
+    # make sure that a movement direction is specified
+    if norm(move_direction) &lt;= 0:
+        continue
+
+    # calculate the movement in mm according to the movement speed
+    xyz_move = mult3(move_direction, move_speed)
+
+    # get the robot joints
+    robot_joints = robot.Joints()
+
+    # get the robot position from the joints (calculate forward kinematics)
+    robot_position = robot.SolveFK(robot_joints)
+
+    # get the robot configuration (robot joint state)
+    robot_config = robot.JointsConfig(robot_joints)
+
+    # calculate the new robot position
+    new_robot_position = transl(xyz_move)*robot_position
+
+    # calculate the new robot joints
+    new_robot_joints = robot.SolveIK(new_robot_position)
+    if len(new_robot_joints.tolist()) &lt; 6:
+        print("No robot solution!! The new position is too far, out of reach or close to a singularity")
+        continue
+
+    # calculate the robot configuration for the new joints
+    new_robot_config = robot.JointsConfig(new_robot_joints)
+
+    if robot_config[0] != new_robot_config[0] or robot_config[1] != new_robot_config[1] or robot_config[2] != new_robot_config[2]:
+        print("Warning!! Robot configuration changed!! This will lead to unextected movements!")
+        print(robot_config)
+        print(new_robot_config)
+
+    # move the robot joints to the new position
+    robot.MoveJ(new_robot_joints)
+    #robot.MoveL(new_robot_joints)</pre>
+<h4>ex15:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *    # API to communicate with RoboDK for simulation and offline/online programming
+from robodk import *      # Robotics toolbox for industrial robots
+
+# Start RoboDK API
+RDK = Robolink()
+
+# gather all robots as item objects
+robots = RDK.ItemList(ITEM_TYPE_ROBOT, False)
+
+# loop through all the robots and connect to the robot
+errors = ''
+count = 0
+for robot in robots:
+    count = count + 1
+    
+    # force disconnect from all robots by simulating a double click
+    #if count == 0:
+    #    robot.Disconnect()
+    #    robot.Disconnect()
+    #    pause(1)
+    
+    # Important, each robot needs a new API connection to allow moving them separately in different threads (if required)
+    rdk = Robolink()
+    robot.link = rdk
+    
+    # Force simulation mode in case we are already connected to the robot. 
+    # Then, gather the joint position of the robots.
+    # This will gather the position of the simulated robot instead of the real robot.
+    rdk.setRunMode(RUNMODE_SIMULATE)
+    jnts = robot.Joints()
+        
+    # connect to the robot:
+    # rdk.setRunMode(RUNMODE_RUN_ROBOT) # not needed because connect will automatically do it
+    # state = robot.ConnectSafe()
+    state = robot.Connect()
+    print(state)   
+    
+    # Check the connection status and message
+    state, msg = robot.ConnectedState()
+    print(state)
+    print(msg)
+    if state != ROBOTCOM_READY:
+        errors = errors + 'Problems connecting: ' + robot.Name() + ': ' + msg + '\n'
+    else:
+        # move to the joint position in the simulator:
+        robot.MoveJ(jnts, False)
+
+# Display connection errors, if any
+if len(errors) &gt; 0:
+    print(errors)
+    raise Exception(errors)
+else:
+    quit(0)</pre>
+<h4>ex16:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># This macro will save a time stamp and robot joints each 50 ms
+from robolink import *    # API to communicate with RoboDK for simulation and offline/online programming
+from robodk import *      # Robotics toolbox for industrial robots
+RDK = Robolink()
+
+robot = RDK.Item('',ITEM_TYPE_ROBOT)
+
+if not robot.Valid():
+    raise Exception("Robot is not available")
+
+file_path = RDK.getParam('PATH_OPENSTATION') + '/joints.txt'
+
+fid = open(file_path,'w')
+tic()
+while True:
+    time = toc()
+    print('Current time (s):' + str(time))
+    joints = str(robot.Joints().tolist())
+    fid.write(str(time) + ', ' + joints[1:-1] + '\n')
+    pause(0.05)
+
+fid.close()</pre>
+<h4>ex17:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *    # API to communicate with RoboDK for offline/online programming
+from robodk import *      # Robotics toolbox for industrial robots
+
+import threading
+import queue
+
+#----------------------------------------------
+# Function definitions and global variable declarations
+
+# Global variables used to synchronize the robot movements
+# These variables are managed by SyncSet() and SynchWait()
+
+SYNC_COUNT = 0
+SYNC_TOTAL = 0
+SYNC_ID = 0
+lock = threading.Lock()
+
+def SyncSet(total_sync):
+    """SyncSet will set the number of total robot programs (threads) that must be synchronized togeter.
+    Every time SyncSet is called SYNC_ID is increased by one."""
+    global SYNC_COUNT
+    global SYNC_TOTAL
+    global SYNC_ID    
+    with lock:
+        SYNC_COUNT = 0
+        SYNC_TOTAL = total_sync
+        SYNC_ID = SYNC_ID + 1
+        #print('SyncSet')
+
+def SyncWait():
+    """SyncWait will block the robot movements for a robot when necessary, synchronizing the movements sequentially.
+    Use SyncSet(nrobots) to define how many robots must be synchronized together."""
+    global SYNC_COUNT
+    # Save a local variable with the sync event id
+    sync_id = SYNC_ID
+    with lock:
+        # Increase the number of threads that are synchronized
+        SYNC_COUNT += 1
+
+    # Move to the next sync event if all threads reached the SyncWait (SYNC_COUNT = SYNC_TOTAL)
+    if SYNC_COUNT &gt;= SYNC_TOTAL:
+        SyncSet(SYNC_TOTAL)
+        return
+
+    # Wait for a SynchSet to move forward
+    while sync_id &gt;= SYNC_ID:
+        time.sleep(0.0001)
+
+
+# Main procedure to move each robot   
+def DoWeld(q, robotname):
+    # Any interaction with RoboDK must be done through Robolink()
+    # Each robot movement requires a new Robolink() object (new link of communication).
+    # Two robots can't be moved by the same communication link.
+    
+    rdk = Robolink()
+
+    # get the robot item:
+    robot = rdk.Item(robotname)
+
+    # get the home joints target
+    home = robot.JointsHome()
+
+    # get the reference welding target:
+    target = rdk.Item('Target')
+
+    # get the reference frame and set it to the robot
+    reference = target.Parent()
+    robot.setPoseFrame(reference)
+
+    # get the pose of the target (4x4 matrix):
+    poseref = target.Pose()
+    pose_approach = poseref*transl(0,0,-100)
+
+    # move the robot to home, then to the center:
+    robot.MoveJ(home)
+    robot.MoveJ(pose_approach)
+    SyncWait()
+    robot.MoveL(target)
+
+    # make an hexagon around the center:
+    for i in range(7):
+        ang = i*2*pi/6 #angle: 0, 60, 120, ...
+        posei = poseref*rotz(ang)*transl(200,0,0)*rotz(-ang)
+        SyncWait()
+        robot.MoveL(posei)
+
+    # move back to the center, then home:
+    SyncWait()
+    robot.MoveL(target)
+    robot.MoveL(pose_approach)
+    robot.MoveJ(home)
+    q.put('Robot %s finished' % robotname)
+
+#----------------------------------------
+# Python program start 
+    
+# retrieve all available robots in the RoboDK station (as a list of names)
+RDK = Robolink()
+robots = RDK.ItemList(ITEM_TYPE_ROBOT)
+print(robots)
+
+# retrieve the number of robots to synchronize together
+nrobots = len(robots)
+SyncSet(nrobots)
+
+# the queue allows sharing messages between threads
+q = queue.Queue()
+
+# Start the DoWeld program for all robots. Each robot will run on a separate thread.
+threads = []
+for i in range(nrobots):
+    robotname = robots[i]
+    t = threading.Thread(target=DoWeld, args = (q, robotname))
+    t.daemon = True
+    t.start()
+    threads.append(t)
+
+# wait for every thead to finish
+for x in threads:
+    x.join()
+    print(q.get())
+
+print('Main program finished')</pre>
+<h4>ex18:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *    # API to communicate with RoboDK for simulation and offline/online programming
+from robodk import *      # Robotics toolbox for industrial robots
+
+#----------------------------------------------
+# Function definitions
+
+def FK_Robot(dh_table, joints):
+    """Computes the forward kinematics of the robot.
+    dh_table must be in mm and radians, the joints array must be given in degrees."""
+    Habs = []
+    Hrel = []    
+    nlinks = len(dh_table)
+    HiAbs = eye(4)
+    for i in range(nlinks):
+        [rz,tx,tz,rx] = dh_table[i]
+        rz = rz + joints[i]*pi/180
+        Hi = dh(rz,tx,tz,rx)
+        HiAbs = HiAbs*Hi
+        Hrel.append(Hi)
+        Habs.append(HiAbs)
+
+    return [HiAbs, Habs, Hrel]
+
+def Frames_setup_absolute(frameparent, nframes):
+    """Adds nframes reference frames to frameparent"""
+    frames = []
+    for i in range(nframes):
+        newframe = frameparent.RDK().AddFrame('frame %i' % (i+1), frameparent)
+        newframe.setPose(transl(0,0,100*i))
+        frames.append(newframe)
+
+    return frames
+
+def Frames_setup_relative(frameparent, nframes):
+    """Adds nframes reference frames cascaded to frameparent"""
+    frames = []
+    parent = frameparent
+    for i in range(nframes):
+        newframe = frameparent.RDK().AddFrame('frame %i' % (i+1), parent)
+        parent = newframe
+        newframe.setPose(transl(0,0,100))
+        frames.append(newframe)
+
+    return frames
+
+def Set_Items_Pose(itemlist, poselist):
+    """Sets the pose (3D position) of each item in itemlist"""
+    for item, pose in zip(itemlist,poselist):
+        item.setPose(pose)
+
+def are_equal(j1, j2):
+    """Returns True if j1 and j2 are equal, False otherwise"""
+    if j1 is None or j2 is None:
+        return False
+    sum_diffs_abs = sum(abs(a - b) for a, b in zip(j1, j2))
+    if sum_diffs_abs &gt; 1e-3:
+        return False
+    return True
+        
+#----------------------------------------------------------
+# The program starts here:
+RDK = Robolink()        
+        
+#-----------------------------------------------------
+# DH table of the robot: ABB IRB 120-3/0.6
+DH_Table = []
+#                 rZ (theta),   tX,   tZ,   rX (alpha)
+DH_Table.append([          0,    0,  290,  -90*pi/180])
+DH_Table.append([ -90*pi/180,  270,    0,           0])
+DH_Table.append([          0,   70,    0,  -90*pi/180])
+DH_Table.append([          0,    0,  302,   90*pi/180])
+DH_Table.append([          0,    0,    0,  -90*pi/180])
+DH_Table.append([ 180*pi/180,    0,   72,           0])
+
+# degrees of freedom: (6 for ABB IRB 120-3/0.6)
+DOFs = len(DH_Table)
+
+# get the robot:
+robot = RDK.Item('ABB IRB 120-3/0.6')
+
+# cleanup of all items containing "Mirror tests" from previous tests
+while True:
+    todelete = RDK.Item('Robot base')
+    # make sure an item was found
+    if not todelete.Valid():
+        break
+    # delete only frames
+    if todelete.Type() == ITEM_TYPE_FRAME:
+        print('Deleting: ' + todelete.Name())
+        todelete.Delete()
+
+# setup the parent frames for the test:
+parent_frameabs = RDK.AddFrame('Robot base (absolute frames)')
+parent_framerel = RDK.AddFrame('Robot base (relative frames)')
+
+# setup the child frames for the test:
+frames_abs = Frames_setup_absolute(parent_frameabs, DOFs)
+frames_rel = Frames_setup_relative(parent_framerel, DOFs)
+
+# remember the last robot joints to update when necessary
+last_joints = None
+
+# infinite loop
+while True:
+    # get the current robot joints as a float array (list)
+    joints = robot.Joints().tolist()
+
+    # do not update if joints are the same as before
+    if are_equal(joints, last_joints):
+        continue
+
+    # if joints changed, compute the forward kinematics for this position
+    [Hrobot, HabsList, HrelList] = FK_Robot(DH_Table, joints)
+
+    # turn off rendering while we update all frames:
+    RDK.Render(False)
+    # update all frames
+    Set_Items_Pose(frames_abs, HabsList)
+    Set_Items_Pose(frames_rel, HrelList)
+    
+    # render and turn on rendering
+    RDK.Render(True)
+
+    # remember the last robot joints
+    last_joints = joints
+
+    print('Current robot joints:')    
+    print(joints)
+    print('Pose of the robot (forward kinematics):')
+    print(Hrobot)
+    print('\n\n')</pre>
 <p></p><br />W6 << <a href='W6.html'>Previous</a> <a href='分組專題.html'>Next</a> >> 分組專題</div>
         
     <!-- footer -->
