@@ -354,11 +354,25 @@ if __name__ == "__main__":
 <p style="padding-left: 30px;"><a href="https://github.com/OpenFOAM">https://github.com/OpenFOAM</a></p>
 <p style="padding-left: 30px;">有限元素分析法教科書: <a href="http://web.mit.edu/kjb/www/Books/FEP_2nd_Edition_4th_Printing.pdf">http://web.mit.edu/kjb/www/Books/FEP_2nd_Edition_4th_Printing.pdf</a></p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/kGJ8fKWfWU8" title="YouTube video player" width="560"></iframe></p><h2>W6</h2>
+<h4>教學目標:</h4>
+<p style="padding-left: 30px;">W1-W5 除了熟悉利用 <a href="http://mde.tw/cd2021/content/SSH%20%E4%BA%86%E6%B2%92.html">SSH</a> 與 <a href="https://github.com/mdecourse/cmstemplate">https://github.com/mdecourse/cmstemplate</a> 建立網站外, 也希望透過學校教務主機的資料擷取, 讓學員應用 <a href="https://mde.tw/cp2020">https://mde.tw/cp2020</a> 中的 Python 程式擷取網際資料, 練習自行編寫網際 Python 程式. 並將程式部署至 <a href="https://www.heroku.com/">Heroku</a>. (包括靜態網站與動態網站, Heroku 參考資料 <a href="http://mde.tw/lab/content/Heroku.html">1</a>, <a href="http://mde.tw/cp2020/content/Heroku.html">2</a>)</p>
+<p style="padding-left: 30px;">自 W6 開始則將逐步引導學員以 Robotics 機電資整合系統為例, 利用 Python 程式操控 <a href="https://robodk.com">RoboDK</a> 模擬平台上的系統模型, 以了解各項機電資產品設計的核心包含 Mechanics 中的 Kinematics 與 Dynamics, 以及零組件 CAD 模型建立, 轉換以及自動控制. (<a href="http://mde.tw/cad2020/content/W10-W14.html">機械設計相關參考資料</a>)</p>
+<p style="padding-left: 30px;">網際內容管理課程將以 <a href="https://robodk.com">RoboDK</a> 為例, <a href="https://www.coppeliarobotics.com">CoppeliaSim</a> 與 <a href="https://cyberbotics.com/">Webots</a> 則將在電腦輔助設計實習與協同產品設計實習課程中使用.</p>
+<h4>Robot 適用場合:</h4>
+<p style="padding-left: 30px;"><a href="https://robodk.com/blog/10-perfect-pick-and-place-tasks-for-a-robot/">https://robodk.com/blog/10-perfect-pick-and-place-tasks-for-a-robot/</a>, 堆疊, 分類, 包裝, 感測揀選, 品質管控, 上貨架, 下貨架, 製造輔助, 組立, 物品佈置.</p>
 <h4>KMOLab 使用的機電資模擬套件:</h4>
 <ol>
 <li><a href="https://robodk.com">RoboDK</a> (<a href="https://robodk.com/pricing">Free Trial version</a>) <a href="https://portableapps.com/apps/music_video/obs-studio-portable">OBS</a> + Youtube Live + Web based Python API</li>
 <li><a href="https://www.coppeliarobotics.com">CoppeliaSim</a> (<a href="https://www.coppeliarobotics.com/helpFiles/en/licensing.htm">Free Educational version</a>) Image sensor streamming + Web based Python remote API</li>
 <li><a href="https://cyberbotics.com/">Webots</a> (<a href="https://cyberbotics.com/doc/guide/webots-license-agreement">Free Apache 2.0 version</a>) <a href="https://www.cyberbotics.com/doc/guide/web-interface">Web based ready</a></li>
+</ol>
+<p>進階延伸套件開發:</p>
+<p style="padding-left: 30px;">從 <a href="http://a.kmol.info:88/Robot_stl.7z">Robot_stl.7z</a> 下載 Robot stl ASCII 檔案, 並利用 <a href="https://github.com/mdecourse/RobotSimulator">https://github.com/mdecourse/RobotSimulator</a> 程式架構, 結合 <a href="https://github.com/bulletphysics/bullet3">https://github.com/bulletphysics/bullet3</a> (可以利用 <a href="http://a.kmol.info:88/fall2020_v3.1_pybullet.7z">http://a.kmol.info:88/fall2020_v3.1_pybullet.7z</a> 可攜程式環境) 建立 Robotics oriented 開源套件.</p>
+<h4 style="padding-left: 30px;">執行步驟:</h4>
+<ol>
+<li>將 Robot 所有零件 (STL ASCII 格式) 輸入 RoboDK 5.2.2, 透過 Utilities - Model Mechanism or Robot 功能與 Robot 對應的 xml 檔案資訊, 建立所屬 Robot 模型.</li>
+<li>參考 <a href="http://mde.tw/virtualkossel/,">http://mde.tw/virtualkossel/</a> (<a href="https://github.com/mdecourse/virtualkossel">https://github.com/mdecourse/virtualkossel</a>), 將 Robot STL 零組件檔案轉入 <a href="https://threejs.org/">https://threejs.org/</a> 網際環境.</li>
+<li>嘗試利用 Javascript 或 <a href="https://brython.info/">Brython</a> 操控上述 Robot.</li>
 </ol>
 <h4>離線模擬的準確性:</h4>
 <p style="padding-left: 30px;"><a href="https://robodk.com/blog/robot-calibration-offline-programming/">https://robodk.com/blog/robot-calibration-offline-programming/</a></p>
@@ -395,11 +409,26 @@ if __name__ == "__main__":
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/45J9Rr1VOt0" title="YouTube video player" width="560"></iframe></p>
 <p>測試是否可以將 Solvespace 建立的 Robot 存為 RoboDK 的 .robot 格式.</p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/wZQ0uriwApY" title="YouTube video player" width="560"></iframe></p>
-<p>參考資料:</p>
+<h4>參考資料:</h4>
 <p style="padding-left: 30px;"><a href="http://mde.tw/cad2020/content/Robot.html">http://mde.tw/cad2020/content/Robot.html</a></p>
 <p style="padding-left: 30px;"><a href="/downloads/UR3_IntroRobotics.pdf">UR3_IntroRobotics.pdf</a></p>
 <p style="padding-left: 30px;"><a href="/downloads/RoboDK-Doc-EN-Getting-Started.pdf">RoboDK-Doc-EN-Getting-Started.pdf</a></p>
-<p style="padding-left: 30px;"><a href="https://wiredworkers.io/product/ur10/">https://wiredworkers.io/product/ur10/</a> </p><h2>分組專題</h2>
+<p style="padding-left: 30px;"><a href="https://wiredworkers.io/product/ur10/">https://wiredworkers.io/product/ur10/</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/Multi-Robot Collaboration.pdf">Multi-Robot Collaboration.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/Semi-Automatic Robot Welding for Workshops.pdf">Semi-Automatic Robot Welding for Workshops.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/UR5_User_Manual_en_US-3.5.5.pdf">UR5_User_Manual_en_US-3.5.5.pdf</a> (<a href="/downloads/UR5_scriptManual-3.5.4.pdf">UR5_scriptManual-3.5.4.pdf</a>, <a href="/downloads/UR5_ik_coppeliaSim.7z">UR5_ik_coppeliaSim.7z</a>)</p>
+<p style="padding-left: 30px;"><a href="https://robodk.com/Python-API-examples">https://robodk.com/Python-API-examples</a></p>
+<p style="padding-left: 30px;"><a href="https://github.com/aikorea/awesome-rl">https://github.com/aikorea/awesome-rl</a></p>
+<p style="padding-left: 30px;"><a href="http://www.cs.rhul.ac.uk/home/chrisw/new_thesis.pdf">Learning from delayed rewards.pdf</a></p>
+<p style="padding-left: 30px;"><a href="https://www.ias.informatik.tu-darmstadt.de/uploads/Publications/Kober_IJRR_2013.pdf">Reinforcement learning in robotics, a survey.pdf</a></p>
+<p style="padding-left: 30px;"><a href="https://spiral.imperial.ac.uk/bitstream/10044/1/12051/4/2300000021-Deisenroth-Vol2-ROB-021_published.pdf">A survey on policy search for Robotics.pdf</a></p>
+<p style="padding-left: 30px;"><a href="https://projekter.aau.dk/projekter/files/306588269/IRL_VT4.pdf">Robot Learning From a Human ExpertUsing Inverse Reinforcement Learning.pdf</a></p><h2>RoboDK</h2>
+<p><a href="https://robodk.com/">https://robodk.com/</a> 源自 <a href="http://www.etsmtl.ca/unites-de-recherche/coro/accueil,">http://www.etsmtl.ca/unites-de-recherche/coro/accueil,</a> 最早的程式位於 <a href="https://www.parallemic.org/RoKiSim.html">https://www.parallemic.org/RoKiSim.html</a> (<a href="http://a.kmol.info:88/RoKiSim.7z">http://a.kmol.info:88/RoKiSim.7z</a>), 相關介紹: <a href="https://en.wikipedia.org/wiki/RoboDK">https://en.wikipedia.org/wiki/RoboDK</a>.</p>
+<p>RoboDK API 為開源套件: <a href="https://github.com/mdecourse/RoboDK-API">https://github.com/mdecourse/RoboDK-API</a></p>
+<p>以下在 RoboDK 的啟發下, 可以利用下列工具建立開源 Robotics 套件:</p>
+<p style="padding-left: 30px;">從 <a href="http://a.kmol.info:88/Robot_stl.7z">Robot_stl.7z</a> 下載 Robot stl ASCII 檔案, 並利用 <a href="https://github.com/mdecourse/RobotSimulator">https://github.com/mdecourse/RobotSimulator</a> 程式架構, 結合 <a href="https://github.com/bulletphysics/bullet3">https://github.com/bulletphysics/bullet3</a> (可以利用 <a href="http://a.kmol.info:88/fall2020_v3.1_pybullet.7z">http://a.kmol.info:88/fall2020_v3.1_pybullet.7z</a> 可攜程式環境) 建立 Robotics oriented 開源套件.</p>
+<p></p>
+<p></p><h2>分組專題</h2>
 <h4>Solvespace 3D 參數設計繪圖建立零組件 (<a href="https://solvespace.com">Solvespace</a> 編譯與<a href="http://www.farwire.net/SolveSpace-LearningGuide.htm">應用</a>):</h4>
 <ol>
 <li>轉入 <a href="https://www.coppeliarobotics.com/">CoppeliaSim</a> 組合為機電系統 (<a href="/downloads/stl_format.pdf">STL 零件格式</a>, <a href="https://en.wikipedia.org/wiki/STL_(file_format)">STL file format</a>, <a href="/downloads/stl-viewer_python_tkinter_pygame.7z">STL viewer in Tkinter and Pygame.7z</a>, <a href="/downloads/STL-3D-Rasterer_pygame_opengl.7z">STL-3D-Rasterer_pygame_opengl.7z</a>, <a href="https://github.com/admesh/python-admesh">ADMesh</a>)</li>
