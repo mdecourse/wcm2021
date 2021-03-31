@@ -142,6 +142,12 @@ img.add_border {
 <li>利用 Heroku 部署網際程式</li>
 <li>利用 Ubuntu 虛擬主機作為伺服器</li>
 </ol>
+<p>先看懂 <a href="https://github.com/mdecourse/scissor-rock-paper2/blob/main/wsgi.py">https://github.com/mdecourse/scissor-rock-paper2/blob/main/wsgi.py</a></p>
+<p style="padding-left: 30px;"><span class="pl-s1">request</span>.<span class="pl-s1">args</span>.<span class="pl-en">get</span>(<span class="pl-s">'user'</span>) 以 GET 方式取得 user 出拳變數值</p>
+<p style="padding-left: 30px;">電腦出拳以亂數取值</p>
+<p style="padding-left: 30px;">兩者比較後傳回超文件顯示比賽結果</p>
+<p style="padding-left: 30px;">部署到 Heroku 需要 <a href="https://raw.githubusercontent.com/mdecourse/scissor-rock-paper2/main/requirements.txt">requirements.txt</a>, <a href="https://raw.githubusercontent.com/mdecourse/scissor-rock-paper2/main/runtime.txt">runtime.txt</a> 與 <a href="https://raw.githubusercontent.com/mdecourse/scissor-rock-paper2/main/Procfile">Procfile</a>.</p>
+<p>接著請試著透過 <a href="http://mde.tw/lab/content/Heroku.html">http://mde.tw/lab/content/Heroku.html</a> 與 <a href="http://mde.tw/cp2020/content/Heroku.html">http://mde.tw/cp2020/content/Heroku.html</a> 的導引, 將 <a href="http://mde.tw/wcm2021/content/Topic%200.html">Topic0</a> 中的機械設計系實驗室排課時間表程式部署到 Heroku. 至於個人 Github 靜態網站也可以同步一份到 Heroku.</p>
 <p>Beautifulsoup 參考教材:</p>
 <p style="padding-left: 30px;"><a href="./../downloads/beautifulsoup.pdf">beautifulsoup.pdf</a></p>
 <p style="padding-left: 30px;"><a href="./../downloads/WebScraping_with_bs4.pdf">WebScraping_with_bs4.pdf</a></p>
@@ -158,7 +164,7 @@ img.add_border {
 <p style="padding-left: 60px;">Python has a feature called decorators to add functionality to an existing code. This is also called metaprogramming because a part of the program tries to modify another part of the program at compile time.</p>
 <p style="padding-left: 60px;">Decorators allow us to wrap another function in order to extend the behavior of the wrapped function, without permanently modifying it.</p>
 <p>Heroku 參考教材:</p>
-<p style="padding-left: 30px;"><a href="http://mde.tw/cp2020/content/Heroku.html">http://mde.tw/cp2020/content/Heroku.html</a> </p>
+<p style="padding-left: 30px;"><a href="http://mde.tw/cp2020/content/Heroku.html">http://mde.tw/cp2020/content/Heroku.html</a></p>
 <p style="padding-left: 30px;"><a href="http://mde.tw/cp2020/content/scissor-rock-paper.html">http://mde.tw/cp2020/content/scissor-rock-paper.html</a> (<a href="https://scissor-rock-paper.herokuapp.com">https://scissor-rock-paper.herokuapp.com</a>)</p>
 <p style="padding-left: 30px;"><a href="https://github.com/mdecourse/scissor-rock-paper2">https://github.com/mdecourse/scissor-rock-paper2</a> (<a href="https://scissor-rock-paper2.herokuapp.com/">https://scissor-rock-paper2.herokuapp.com/</a>)</p>
 <p style="padding-left: 30px;"><a href="./../downloads/heroku.pdf">heroku.pdf</a></p>

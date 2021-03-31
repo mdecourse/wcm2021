@@ -206,6 +206,12 @@
 <li>利用 Heroku 部署網際程式</li>
 <li>利用 Ubuntu 虛擬主機作為伺服器</li>
 </ol>
+<p>先看懂 <a href="https://github.com/mdecourse/scissor-rock-paper2/blob/main/wsgi.py">https://github.com/mdecourse/scissor-rock-paper2/blob/main/wsgi.py</a></p>
+<p style="padding-left: 30px;"><span class="pl-s1">request</span>.<span class="pl-s1">args</span>.<span class="pl-en">get</span>(<span class="pl-s">'user'</span>) 以 GET 方式取得 user 出拳變數值</p>
+<p style="padding-left: 30px;">電腦出拳以亂數取值</p>
+<p style="padding-left: 30px;">兩者比較後傳回超文件顯示比賽結果</p>
+<p style="padding-left: 30px;">部署到 Heroku 需要 <a href="https://raw.githubusercontent.com/mdecourse/scissor-rock-paper2/main/requirements.txt">requirements.txt</a>, <a href="https://raw.githubusercontent.com/mdecourse/scissor-rock-paper2/main/runtime.txt">runtime.txt</a> 與 <a href="https://raw.githubusercontent.com/mdecourse/scissor-rock-paper2/main/Procfile">Procfile</a>.</p>
+<p>接著請試著透過 <a href="http://mde.tw/lab/content/Heroku.html">http://mde.tw/lab/content/Heroku.html</a> 與 <a href="http://mde.tw/cp2020/content/Heroku.html">http://mde.tw/cp2020/content/Heroku.html</a> 的導引, 將 <a href="http://mde.tw/wcm2021/content/Topic%200.html">Topic0</a> 中的機械設計系實驗室排課時間表程式部署到 Heroku. 至於個人 Github 靜態網站也可以同步一份到 Heroku.</p>
 <p>Beautifulsoup 參考教材:</p>
 <p style="padding-left: 30px;"><a href="/downloads/beautifulsoup.pdf">beautifulsoup.pdf</a></p>
 <p style="padding-left: 30px;"><a href="/downloads/WebScraping_with_bs4.pdf">WebScraping_with_bs4.pdf</a></p>
@@ -222,7 +228,7 @@
 <p style="padding-left: 60px;">Python has a feature called decorators to add functionality to an existing code. This is also called metaprogramming because a part of the program tries to modify another part of the program at compile time.</p>
 <p style="padding-left: 60px;">Decorators allow us to wrap another function in order to extend the behavior of the wrapped function, without permanently modifying it.</p>
 <p>Heroku 參考教材:</p>
-<p style="padding-left: 30px;"><a href="http://mde.tw/cp2020/content/Heroku.html">http://mde.tw/cp2020/content/Heroku.html</a> </p>
+<p style="padding-left: 30px;"><a href="http://mde.tw/cp2020/content/Heroku.html">http://mde.tw/cp2020/content/Heroku.html</a></p>
 <p style="padding-left: 30px;"><a href="http://mde.tw/cp2020/content/scissor-rock-paper.html">http://mde.tw/cp2020/content/scissor-rock-paper.html</a> (<a href="https://scissor-rock-paper.herokuapp.com">https://scissor-rock-paper.herokuapp.com</a>)</p>
 <p style="padding-left: 30px;"><a href="https://github.com/mdecourse/scissor-rock-paper2">https://github.com/mdecourse/scissor-rock-paper2</a> (<a href="https://scissor-rock-paper2.herokuapp.com/">https://scissor-rock-paper2.herokuapp.com/</a>)</p>
 <p style="padding-left: 30px;"><a href="/downloads/heroku.pdf">heroku.pdf</a></p>
@@ -433,15 +439,19 @@ if __name__ == "__main__":
 <h4>Tips:</h4>
 <p style="padding-left: 30px;">從 <a href="https://robodk.com/forum/attachment.php?aid=502">https://robodk.com/forum/attachment.php?aid=502</a> 應該有機會將 RoboDK 執行畫面串流至網際伺服器.</p>
 <p style="padding-left: 30px;">tool_item = robot.AddTool(robodk.Mat(mat))<br/> shape = RDK.AddShape(triangles)<br/> tool_item.AddGeometry(shape, robodk.eye())<br/> shape.Delete()</p>
-<p style="padding-left: 30px;">##########</p>
+<hr/>
 <p style="padding-left: 30px;">csvdata = LoadList(strfile, ',')<br/>values = []<br/>for i in range(len(csvdata)):<br/>    print(csvdata[i])<br/>    values.append(csvdata[i])<br/>  <br/># We can also save the list back to a CSV file<br/># SaveList(csvdata, strfile, ',')</p>
-<h4>RoboDK Python API ex1:</h4>
+<hr/>
+<p style="padding-left: 30px;">在 RoboDK 中雙點擊 robot 即可開啟控制 Panel.</p>
+<hr/>
+<p style="padding-left: 30px;">Tool -Trace -Active 若為綠色, 表示 end-effector 移動將會留下軌跡, 若為紅色則不會留下軌跡, reset 可抹除先前留下的運行軌跡.</p>
+<h4><a href="/downloads/robodk_ex1.7z">robodk_ex1.7z</a></h4>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *              # import the robolink library (bridge with RoboDK)
 from robodk import *                # import the robodk library (robotics toolbox)
 
 RDK = Robolink()                    # establish a link with the simulator
 robot = RDK.Item('KUKA KR210')      # retrieve the robot by name
-robot.setJoints([0,90,-90,0,0,0])   # set the robot to the home position
+robot.setJoints([0,-90,90,0,0,0])   # set the robot to the home position
 
 target = robot.Pose()               # retrieve the current target as a pose (position of the active tool with respect to the active reference frame)
 xyzabc = Pose_2_KUKA(target)        # Convert the 4x4 pose matrix to XYZABC position and orientation angles (mm and deg)
@@ -451,7 +461,7 @@ xyzabc2 = [x,y,z+50,a,b,c+45]
 target2 = KUKA_2_Pose(xyzabc2)      # Convert the XYZABC array to a pose (4x4 matrix)
 
 robot.MoveJ(target2)                # Make a linear move to the calculated position</pre>
-<h4>ex2:</h4>
+<h4><a href="/downloads/robodk_ex2.7z">robodk_ex2.7z</a></h4>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *                  # import the robolink library
 from robodk import *                    # import the robodk library
 
@@ -481,53 +491,69 @@ pose2 = KUKA_2_Pose(XYZABC2)            # Convert the XYZABC array to a pose (4x
 
 robot.MoveJ(pose2)                      # Make a joint move to the new position
 # target.setPose(pose2)                  # We can also update the pose to targets, tools, reference frames, objects, ...</pre>
-<h4>ex3:</h4>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">name = mbox('Enter your name', entry=True)
-name = mbox('Enter your name', entry='default')
-if name:
-    print("Value: " + name)
+<h4><a href="/downloads/robodk_ex3.7z">robodk_ex3.7z</a></h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *                  # import the robolink library
+from robodk import *                    # import the robodk library
 
-value = mbox('Male or female?', ('male', 'm'), ('female', 'f'))
-mbox('Process done')</pre>
-<h4>ex4:</h4>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># This macro shows an example to draw a polygon of radius R and n_sides vertices using the RoboDK API for Python
-from robolink import *    # API to communicate with RoboDK for simulation and offline/online programming
-from robodk import *      # Robotics toolbox for industrial robots
+angle = int(mbox('Enter your angle (0-45)', entry=True))
 
-# Any interaction with RoboDK must be done through RDK:
-RDK = Robolink()
+RDK = Robolink()                        # connect to the RoboDK API
+robot  = RDK.Item('', ITEM_TYPE_ROBOT)  # Retrieve a robot available in RoboDK
+#target  = RDK.Item('Target 1')         # Retrieve a target (example)
+ 
+ 
+pose = robot.Pose()                     # retrieve the current robot position as a pose (position of the active tool with respect to the active reference frame)
+# target = target.Pose()                # the same can be applied to targets (taught position)
+ 
+# Read the 4x4 pose matrix as [X,Y,Z , A,B,C] Euler representation (mm and deg): same representation as KUKA robots
+XYZABC = Pose_2_KUKA(pose)
+print(XYZABC)
+ 
+# Read the 4x4 pose matrix as [X,Y,Z, q1,q2,q3,q4] quaternion representation (position in mm and orientation in quaternion): same representation as ABB robots (RAPID programming)
+xyzq1234 = Pose_2_ABB(pose)
+print(xyzq1234)
+ 
+# Read the 4x4 pose matrix as [X,Y,Z, u,v,w] representation (position in mm and orientation vector in radians): same representation as Universal Robots
+xyzuvw = Pose_2_UR(pose)
+print(xyzuvw)
+ 
+x,y,z,a,b,c = XYZABC                    # Use the KUKA representation (for example) and calculate a new pose based on the previous pose
+XYZABC2 = [x,y,z+50,a,b,c+angle]
+pose2 = KUKA_2_Pose(XYZABC2)            # Convert the XYZABC array to a pose (4x4 matrix)
+ 
+robot.MoveJ(pose2)                      # Make a joint move to the new position
+# target.setPose(pose2)                  # We can also update the pose to targets, tools, reference frames, objects, ...</pre>
+<h4><a href="/downloads/robodk_ex4.7z">robodk_ex4.7z</a></h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *                  # import the robolink library
+from robodk import *                    # import the robodk library
 
-# Select a robot (popup is displayed if more than one robot is available)
-robot = RDK.ItemUserPick('Select a robot', ITEM_TYPE_ROBOT)
-if not robot.Valid():
-    raise Exception('No robot selected or available')
-
-    
+RDK = Robolink()                        # connect to the RoboDK API
+robot  = RDK.Item('', ITEM_TYPE_ROBOT)  # Retrieve a robot available in RoboDK
 # get the current position of the TCP with respect to the reference frame:
 # (4x4 matrix representing position and orientation)
 target_ref = robot.Pose()
 pos_ref = target_ref.Pos()
 print("Drawing a polygon around the target: ")
 print(Pose_2_TxyzRxyz(target_ref))
-
-
+ 
+ 
 # move the robot to the first point:
 robot.MoveJ(target_ref)
-
+ 
 # It is important to provide the reference frame and the tool frames when generating programs offline
 robot.setPoseFrame(robot.PoseFrame())
 robot.setPoseTool(robot.PoseTool())
 robot.setZoneData(10) # Set the rounding parameter (Also known as: CNT, APO/C_DIS, ZoneData, Blending radius, cornering, ...)
 robot.setSpeed(200) # Set linear speed in mm/s
-
+ 
 # Set the number of sides of the polygon:
 n_sides = 6
-R = 100
-
+R = 400
+ 
 # make a hexagon around reference target:
 for i in range(n_sides+1):
     ang = i*2*pi/n_sides #angle: 0, 60, 120, ...
-
+ 
     #-----------------------------
     # Movement relative to the reference frame
     # Create a copy of the target
@@ -539,15 +565,15 @@ for i in range(n_sides+1):
     print("Moving to target %i: angle %.1f" % (i, ang*180/pi))
     print(str(Pose_2_TxyzRxyz(target_i)))
     robot.MoveL(target_i)
-    
+     
     #-----------------------------
     # Post multiply: relative to the tool
     #target_i = target_ref * rotz(ang) * transl(R,0,0) * rotz(-ang)
     #robot.MoveL(target_i)
-
+ 
 # move back to the center, then home:
 robot.MoveL(target_ref)
-
+ 
 print('Done')</pre>
 <h4>ex5:</h4>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># Move a robot along a line given a start and end point by steps
