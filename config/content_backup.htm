@@ -445,6 +445,14 @@ if __name__ == "__main__":
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">REM for heroku login
 set HTTP_PROXY=http://[2001:288:6004:17::53]:3128
 set HTTPS_PROXY=http://[2001:288:6004:17::53]:3128</pre>
+<p>針對利用 Heroku 同步 Github Pages 上的網站內容, 只需要透過 git remote add (Heroku 指令為 heroku git:remote -a heroku_倉儲_名稱, 之後只要在 heroku login 狀態下, 可以直接利用 git push) 在近端設定一個連線到 Heroku 倉儲的代號, 就能在每次更新 Github Pages 倉儲後, 再將內容同步至 Heroku. 網際內容管理課程將使用兩種 Heroku app 設定, 也就是靜態網頁與動態網頁:</p>
+<p>靜態網頁 - 採用 php 方式部署, 讓 Heroku 將靜態網頁視為 PHP 程式, 利用 index.php 跳轉到 index.html</p>
+<p>動態網頁 - 讓 Heroku 執行 cmsimde/wsgi.py 的方式進行雲端伺服.</p>
+<p>指令操作步驟:</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># 以 interactive 模式登入 Heroku, 完成後產生 y:\home_ipv6\_netrc
+heroku login -i
+# 針對已經登入的 Heroku 帳號下的 taiwan-01 app, 設為此倉儲的 remote 同步倉儲, 且在倉儲中會自建名稱為 heroku 的 remoate site.
+heroku git:remote -a taiwan-no1</pre>
 <p></p><h2>RoboDK</h2>
 <p>2015 年 <a href="https://robodk.com/">https://robodk.com/</a> 從 <a href="http://www.etsmtl.ca/unites-de-recherche/coro/accueil,">http://www.etsmtl.ca/unites-de-recherche/coro/accueil</a> spin off 創立公司, 最早開發的程式位於 <a href="https://www.parallemic.org/RoKiSim.html">https://www.parallemic.org/RoKiSim.html</a> (<a href="http://a.kmol.info:88/RoKiSim.7z">http://a.kmol.info:88/RoKiSim.7z</a>), 至今已經支援超過 500 型工業用機械手臂的離線與在線控制, 且支援 STL, STEP, IGES, WRML, 3DS and OBJ 的零件格式輸入. 相關介紹: <a href="https://en.wikipedia.org/wiki/RoboDK">https://en.wikipedia.org/wiki/RoboDK</a>.</p>
 <p>RoboDK API 為開源套件: <a href="https://github.com/mdecourse/RoboDK-API">https://github.com/mdecourse/RoboDK-API</a></p>

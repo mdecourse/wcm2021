@@ -149,9 +149,15 @@ img.add_border {
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">REM for heroku login
 set HTTP_PROXY=http://[2001:288:6004:17::53]:3128
 set HTTPS_PROXY=http://[2001:288:6004:17::53]:3128</pre>
-<p>針對利用 Heroku 同步 Github Pages 上的網站內容, 只需要透過 git remote add 在近端設定一個連線到 Heroku 倉儲的代號, 就能在每次更新 Github Pages 倉儲後, 再將內容同步至 Heroku. 網際內容管理課程將使用兩種 Heroku app 設定, 也就是靜態網頁與動態網頁:</p>
+<p>針對利用 Heroku 同步 Github Pages 上的網站內容, 只需要透過 git remote add (Heroku 指令為 heroku git:remote -a heroku_倉儲_名稱, 之後只要在 heroku login 狀態下, 可以直接利用 git push) 在近端設定一個連線到 Heroku 倉儲的代號, 就能在每次更新 Github Pages 倉儲後, 再將內容同步至 Heroku. 網際內容管理課程將使用兩種 Heroku app 設定, 也就是靜態網頁與動態網頁:</p>
 <p>靜態網頁 - 採用 php 方式部署, 讓 Heroku 將靜態網頁視為 PHP 程式, 利用 index.php 跳轉到 index.html</p>
-<p>動態網頁 - 讓 Heroku 執行 cmsimde/wsgi.py 的方式進行雲端伺服.</p><br />W6 << <a href='W6.html'>Previous</a> <a href='RoboDK.html'>Next</a> >> RoboDK</div>
+<p>動態網頁 - 讓 Heroku 執行 cmsimde/wsgi.py 的方式進行雲端伺服.</p>
+<p>指令操作步驟:</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># 以 interactive 模式登入 Heroku, 完成後產生 y:\home_ipv6\_netrc
+heroku login -i
+# 針對已經登入的 Heroku 帳號下的 taiwan-01 app, 設為此倉儲的 remote 同步倉儲, 且在倉儲中會自建名稱為 heroku 的 remoate site.
+heroku git:remote -a taiwan-no1</pre>
+<p>上述步驟完成後的 Heroku 網站: <a href="https://taiwan-no1.herokuapp.com">https://taiwan-no1.herokuapp.com</a> </p><br />W6 << <a href='W6.html'>Previous</a> <a href='RoboDK.html'>Next</a> >> RoboDK</div>
         
     <!-- footer -->
       <div class="container">
