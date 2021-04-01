@@ -2,7 +2,6 @@
         <head>
         <title>WCM2021</title>
         <meta charset="utf-8">
-<meta property="head" content="H2">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700,900" rel="stylesheet">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
@@ -150,6 +149,42 @@ img.add_border {
 <p style="padding-left: 30px;">在 RoboDK 中雙點擊 robot 即可開啟控制 Panel.</p>
 <hr/>
 <p style="padding-left: 30px;">Tool -Trace -Active 若為綠色, 表示 end-effector 移動將會留下軌跡, 若為紅色則不會留下軌跡, reset 可抹除先前留下的運行軌跡.</p>
+<hr/>
+<p style="padding-left: 30px;"><code>from robolink import *<br/> <br/> # make sure opencv for python is available<br/> import_install("cv2", "opencv-python")<br/> <br/> # Load OpenCV<br/> import cv2</code></p>
+<hr/>
+<h4>create part</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># Type help("robolink") or help("robodk") for more information
+# Press F5 to run the script
+# Note: you do not need to keep a copy of this file, your python script is saved with the station
+from robolink import *    # API to communicate with RoboDK
+from robodk import *      # basic matrix operations
+import random
+RDK = Robolink()
+
+PART_NAME = 'box100mm'
+CONVEYOR_REF = 'MovingRef'
+
+SIZE_BOX = RDK.getParam('SizeBox')
+
+SIZE_BOX_XYZ = [float(x.replace(' ','')) for x in SIZE_BOX.split(',')]
+[SIZE_BOX_X, SIZE_BOX_Y, SIZE_BOX_Z] = SIZE_BOX_XYZ
+
+# Create a new part and place it on top of the conveyor, adjusting the height
+part = RDK.Item(PART_NAME, ITEM_TYPE_OBJECT)
+conveyor_ref = RDK.Item(CONVEYOR_REF, ITEM_TYPE_FRAME)
+part_pos = part.PoseAbs()
+part.Copy()
+newpart = conveyor_ref.Paste()
+newpart.setPoseAbs(part_pos*transl(0,0,SIZE_BOX_Z/2))
+newpart.setName('Part')
+newpart.Scale([SIZE_BOX_X/100, SIZE_BOX_Y/100, SIZE_BOX_Z/100]) #scale with respect to the reference object (100mm cube)
+color = random.uniform(0.1 , 0.9)
+newpart.Recolor([1-color, color, 0.2, 1]) #set RGBA color
+newpart.setVisible(True, False) #make item visible but hide the reference frame
+
+
+
+</pre>
 <h4><a href="./../downloads/robodk_ex1.7z">robodk_ex1.7z</a></h4>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *              # import the robolink library (bridge with RoboDK)
 from robodk import *                # import the robodk library (robotics toolbox)

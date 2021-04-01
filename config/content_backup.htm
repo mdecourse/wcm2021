@@ -430,7 +430,7 @@ if __name__ == "__main__":
 <p style="padding-left: 30px;"><a href="https://www.ias.informatik.tu-darmstadt.de/uploads/Publications/Kober_IJRR_2013.pdf">Reinforcement learning in robotics, a survey.pdf</a></p>
 <p style="padding-left: 30px;"><a href="https://spiral.imperial.ac.uk/bitstream/10044/1/12051/4/2300000021-Deisenroth-Vol2-ROB-021_published.pdf">A survey on policy search for Robotics.pdf</a></p>
 <p style="padding-left: 30px;"><a href="https://projekter.aau.dk/projekter/files/306588269/IRL_VT4.pdf">Robot Learning From a Human ExpertUsing Inverse Reinforcement Learning.pdf</a></p>
-<h3>Heroku 實作</h3>
+<h3>Heroku-實作</h3>
 <p><span style="background-color: #ffff99;">步驟一:</span> (<span style="background-color: #ccffcc;">建立 Heroku 帳號</span>) 進入 <a href="https://heroku.com">https://heroku.com</a>, 利用學校配發的 @gm 登記一個 Heroku 帳號, 關鍵在於密碼設定必須要至少 8 個字元, 且字元中必須包含符號, 英文字母及數字,  並且登記後要進入 @gm 帳號進行確認後才能開通 Heroku 帳號.</p>
 <p>完成帳號登記後, 必須知道目前 Heroku 只允許免費建立五個應用程式, 且每個程式的最大容量為 500MB.</p>
 <p><span style="background-color: #ffff99;">步驟二:</span> (<span style="background-color: #ccffcc;">建立 Heroku app</span>) 登入 Heroku 後, 先以 s + 學號 建立第一個 app, 完成後, 將可至 https://s學號.herokuapp.com 連線取得網站最初內容.</p>
@@ -470,6 +470,39 @@ heroku git:remote -a taiwan-no1</pre>
 <p style="padding-left: 30px;">在 RoboDK 中雙點擊 robot 即可開啟控制 Panel.</p>
 <hr/>
 <p style="padding-left: 30px;">Tool -Trace -Active 若為綠色, 表示 end-effector 移動將會留下軌跡, 若為紅色則不會留下軌跡, reset 可抹除先前留下的運行軌跡.</p>
+<h4>create part</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># Type help("robolink") or help("robodk") for more information
+# Press F5 to run the script
+# Note: you do not need to keep a copy of this file, your python script is saved with the station
+from robolink import *    # API to communicate with RoboDK
+from robodk import *      # basic matrix operations
+import random
+RDK = Robolink()
+
+PART_NAME = 'box100mm'
+CONVEYOR_REF = 'MovingRef'
+
+SIZE_BOX = RDK.getParam('SizeBox')
+
+SIZE_BOX_XYZ = [float(x.replace(' ','')) for x in SIZE_BOX.split(',')]
+[SIZE_BOX_X, SIZE_BOX_Y, SIZE_BOX_Z] = SIZE_BOX_XYZ
+
+# Create a new part and place it on top of the conveyor, adjusting the height
+part = RDK.Item(PART_NAME, ITEM_TYPE_OBJECT)
+conveyor_ref = RDK.Item(CONVEYOR_REF, ITEM_TYPE_FRAME)
+part_pos = part.PoseAbs()
+part.Copy()
+newpart = conveyor_ref.Paste()
+newpart.setPoseAbs(part_pos*transl(0,0,SIZE_BOX_Z/2))
+newpart.setName('Part')
+newpart.Scale([SIZE_BOX_X/100, SIZE_BOX_Y/100, SIZE_BOX_Z/100]) #scale with respect to the reference object (100mm cube)
+color = random.uniform(0.1 , 0.9)
+newpart.Recolor([1-color, color, 0.2, 1]) #set RGBA color
+newpart.setVisible(True, False) #make item visible but hide the reference frame
+
+
+
+</pre>
 <h4><a href="/downloads/robodk_ex1.7z">robodk_ex1.7z</a></h4>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *              # import the robolink library (bridge with RoboDK)
 from robodk import *                # import the robodk library (robotics toolbox)
