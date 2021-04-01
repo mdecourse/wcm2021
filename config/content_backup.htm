@@ -431,29 +431,30 @@ if __name__ == "__main__":
 <p style="padding-left: 30px;"><a href="https://spiral.imperial.ac.uk/bitstream/10044/1/12051/4/2300000021-Deisenroth-Vol2-ROB-021_published.pdf">A survey on policy search for Robotics.pdf</a></p>
 <p style="padding-left: 30px;"><a href="https://projekter.aau.dk/projekter/files/306588269/IRL_VT4.pdf">Robot Learning From a Human ExpertUsing Inverse Reinforcement Learning.pdf</a></p>
 <h3>Heroku 實作</h3>
-<p>進入 <a href="https://heroku.com">https://heroku.com</a>, 利用學校配發的 @gm 登記一個 Heroku 帳號, 關鍵在於密碼設定必須要至少 8 個字元, 且字元中必須包含符號, 英文字母及數字,  並且登記後要進入 @gm 帳號進行確認後才能開通 Heroku 帳號.</p>
+<p><span style="background-color: #ffff99;">步驟一:</span> (<span style="background-color: #ccffcc;">建立 Heroku 帳號</span>) 進入 <a href="https://heroku.com">https://heroku.com</a>, 利用學校配發的 @gm 登記一個 Heroku 帳號, 關鍵在於密碼設定必須要至少 8 個字元, 且字元中必須包含符號, 英文字母及數字,  並且登記後要進入 @gm 帳號進行確認後才能開通 Heroku 帳號.</p>
 <p>完成帳號登記後, 必須知道目前 Heroku 只允許免費建立五個應用程式, 且每個程式的最大容量為 500MB.</p>
-<p>登入 Heroku 後, 先以 s + 學號 建立第一個 app, 完成後, 將可至 https://s學號.herokuapp.com 連線取得網站最初內容.</p>
-<p>從 <a href="http://a.kmol.info:88/heroku.7z">http://a.kmol.info:88/heroku.7z</a> 下載 Heroku cli 程式檔案, 解開至隨身碟 Y: 所在位置或者是 Hybrid 設定的位置.</p>
-<p>修改隨身系統的啟動批次檔案, 讓 Windows 的命令視窗中可以執行 heroku.exe, 或者稱作"設法將 heroku.exe 所在目錄位置, 設為 Windows 搜尋路徑之一".</p>
+<p><span style="background-color: #ffff99;">步驟二:</span> (<span style="background-color: #ccffcc;">建立 Heroku app</span>) 登入 Heroku 後, 先以 s + 學號 建立第一個 app, 完成後, 將可至 https://s學號.herokuapp.com 連線取得網站最初內容.</p>
+<p><span style="background-color: #ffff99;">步驟三:</span> (下載 Heroku CLI) 從 <a href="http://a.kmol.info:88/heroku.7z">http://a.kmol.info:88/heroku.7z</a> 下載 Heroku cli 程式檔案, 解開至隨身碟 Y: 所在位置或者是 Hybrid 設定的位置.</p>
+<p><span style="background-color: #ffff99;">步驟四:</span> (<span style="background-color: #ccffcc;">修改命令搜尋路徑</span>) 修改隨身系統的啟動批次檔案, 讓 Windows 的命令視窗中可以執行 heroku.exe, 或者稱作"設法將 heroku.exe 所在目錄位置, 設為 Windows 搜尋路徑之一".</p>
 <p>重新啟動已經納入可執行 heroku.exe 的隨身碟 start_ipv6.bat 或 start_ipv4.bat</p>
-<p>測試是否能夠在修改後的命令列中執行 heroku.exe, 輸入 heroku version 若回應所使用的版本表示上述路徑設定已經成功.</p>
-<p>先前我們已經知道網路的應用包含 client 與 server, 不同 client 採用不同的 proxy 設定與 server 連線, 其中 firefox 作為 WWW 網路協定的 client, 有其自己的網路 Proxy 設定, 也可以直接使用操作系統的 Proxy 設定.</p>
+<p><span style="background-color: #ffff99;">步驟五:</span> (<span style="background-color: #ccffcc;">測試 heroku 執行</span>) 測試是否能夠在修改後的命令列中執行 heroku.exe, 輸入 heroku version 若回應所使用的版本表示上述路徑設定已經成功.</p>
+<p><span style="background-color: #ffff99;">步驟六:</span> (<span style="background-color: #ccffcc;">設定 heroku 代理主機</span>) 先前我們已經知道網路的應用包含 client 與 server, 不同 client 採用不同的 proxy 設定與 server 連線, 其中 firefox 作為 WWW 網路協定的 client, 有其自己的網路 Proxy 設定, 也可以直接使用操作系統的 Proxy 設定.</p>
 <p>Chrome 作為 WWW 網路協定的 client, 目前 Windows 下的最新版, 只能使用操作系統的 Proxy 設定.</p>
 <p>而 git 作為 git client 與 github server 連線的 Proxy 設定, 則寫在 y:\home_ipv6 下的 .giconfig 中,  以 git config --global http.proxy "http://your_proxy:port" 進行設定.</p>
 <p>相同的道理 heroku cli 作為 <a href="https://heroku.com">https://heroku.com</a> 伺服器的 client 端, 也有其 Proxy 的設定方式, 也就是在 start_ipv6.bat 中加入:</p>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">REM for heroku login
 set HTTP_PROXY=http://[2001:288:6004:17::53]:3128
 set HTTPS_PROXY=http://[2001:288:6004:17::53]:3128</pre>
-<p>針對利用 Heroku 同步 Github Pages 上的網站內容, 只需要透過 git remote add (Heroku 指令為 heroku git:remote -a heroku_倉儲_名稱, 之後只要在 heroku login 狀態下, 可以直接利用 git push) 在近端設定一個連線到 Heroku 倉儲的代號, 就能在每次更新 Github Pages 倉儲後, 再將內容同步至 Heroku. 網際內容管理課程將使用兩種 Heroku app 設定, 也就是靜態網頁與動態網頁:</p>
+<p><span style="background-color: #ffff99;">步驟七:</span> (<span style="background-color: #ccffcc;">設定同步倉儲</span>) 針對利用 Heroku 同步 Github Pages 上的網站內容, 只需要透過 git remote add (Heroku 指令為 heroku git:remote -a heroku_倉儲_名稱, 之後只要在 heroku login 狀態下, 可以直接利用 git push) 在近端設定一個連線到 Heroku 倉儲的代號, 就能在每次更新 Github Pages 倉儲後, 再將內容同步至 Heroku. 網際內容管理課程將使用兩種 Heroku app 設定, 也就是靜態網頁與動態網頁:</p>
 <p>靜態網頁 - 採用 php 方式部署, 讓 Heroku 將靜態網頁視為 PHP 程式, 利用 index.php 跳轉到 index.html</p>
 <p>動態網頁 - 讓 Heroku 執行 cmsimde/wsgi.py 的方式進行雲端伺服.</p>
+<p><span style="background-color: #ffff99;">步驟八:</span> (<span style="background-color: #ccffcc;">以 git 進行提交推送</span>) 利用 heroku git:remote -a 設定的同步倉儲其推送名稱內定為 "heroku", 使用者只要使用 git push heroku 就可以將改版內容推送到對應的 Heroku app 倉儲.</p>
 <p>指令操作步驟:</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># 以 interactive 模式登入 Heroku, 完成後產生 y:\home_ipv6\_netrc
 heroku login -i
 # 針對已經登入的 Heroku 帳號下的 taiwan-01 app, 設為此倉儲的 remote 同步倉儲, 且在倉儲中會自建名稱為 heroku 的 remoate site.
 heroku git:remote -a taiwan-no1</pre>
-<p>上述步驟完成後的 Heroku 網站: <a href="https://taiwan-no1.herokuapp.com">https://taiwan-no1.herokuapp.com</a> </p><h2>RoboDK</h2>
+<p>上述步驟完成後的 Heroku 網站: <a href="https://taiwan-no1.herokuapp.com">https://taiwan-no1.herokuapp.com</a></p><h2>RoboDK</h2>
 <p>2015 年 <a href="https://robodk.com/">https://robodk.com/</a> 從 <a href="http://www.etsmtl.ca/unites-de-recherche/coro/accueil,">http://www.etsmtl.ca/unites-de-recherche/coro/accueil</a> spin off 創立公司, 最早開發的程式位於 <a href="https://www.parallemic.org/RoKiSim.html">https://www.parallemic.org/RoKiSim.html</a> (<a href="http://a.kmol.info:88/RoKiSim.7z">http://a.kmol.info:88/RoKiSim.7z</a>), 至今已經支援超過 500 型工業用機械手臂的離線與在線控制, 且支援 STL, STEP, IGES, WRML, 3DS and OBJ 的零件格式輸入. 相關介紹: <a href="https://en.wikipedia.org/wiki/RoboDK">https://en.wikipedia.org/wiki/RoboDK</a>.</p>
 <p>RoboDK API 為開源套件: <a href="https://github.com/mdecourse/RoboDK-API">https://github.com/mdecourse/RoboDK-API</a></p>
 <p style="padding-left: 30px;"><a href="https://robodk.com/doc/en/PythonAPI/index.html">https://robodk.com/doc/en/PythonAPI/index.html</a></p>
