@@ -454,7 +454,13 @@ set HTTPS_PROXY=http://[2001:288:6004:17::53]:3128</pre>
 heroku login -i
 # 針對已經登入的 Heroku 帳號下的 taiwan-01 app, 設為此倉儲的 remote 同步倉儲, 且在倉儲中會自建名稱為 heroku 的 remoate site.
 heroku git:remote -a taiwan-no1</pre>
-<p>上述步驟完成後的 Heroku 網站: <a href="https://taiwan-no1.herokuapp.com">https://taiwan-no1.herokuapp.com</a></p><h2>RoboDK</h2>
+<p>上述步驟完成後的 Heroku 網站: <a href="https://taiwan-no1.herokuapp.com">https://taiwan-no1.herokuapp.com</a></p><h2>W7</h2>
+<h4>各組開始執行期中分組專題</h4>
+<p>在上週 <a href="http://mde.tw/wcm2021/content/Heroku-%E5%AF%A6%E4%BD%9C.html">Heroku 實作</a>中, 使用 heroku5 AT mde 建立了 <a href="https://taiwan-no1.herokuapp.com">https://taiwan-no1.herokuapp.com</a> (與 <a href="https://github.com/heroku5/taiwan-no1">https://github.com/heroku5/taiwan-no1</a> Github Pages 的的靜態內容同步).</p>
+<p>接下來我們要將執行一項<a href="http://mde.tw/wcm2021/content/%E7%B6%B2%E9%9A%9B%E7%A8%8B%E5%BC%8F%E9%96%8B%E7%99%BC.html">網際程式開發</a>, 也就是以分組架構在期中考週前完成<a href="http://mde.tw/wcm2021/content/W4.html">分組專題的製作</a>.</p>
+<p>其中必須要先設法完成 <a href="http://mde.tw/wcm2021/content/Topic%200.html">Topic0</a> 中的程式練習, 學會如何從教務主機中取出機械設計工程系各實習實驗室的排課時間表後, 再設法部署到 Heroku.</p>
+<p>W9 週各組將要利用 ShareX 上台使用 Reveal 網際簡報錄製分組專題報告,</p>
+<p></p><h2>RoboDK</h2>
 <p>2015 年 <a href="https://robodk.com/">https://robodk.com/</a> 從 <a href="http://www.etsmtl.ca/unites-de-recherche/coro/accueil,">http://www.etsmtl.ca/unites-de-recherche/coro/accueil</a> spin off 創立公司, 最早開發的程式位於 <a href="https://www.parallemic.org/RoKiSim.html">https://www.parallemic.org/RoKiSim.html</a> (<a href="http://a.kmol.info:88/RoKiSim.7z">http://a.kmol.info:88/RoKiSim.7z</a>), 至今已經支援超過 500 型工業用機械手臂的離線與在線控制, 且支援 STL, STEP, IGES, WRML, 3DS and OBJ 的零件格式輸入. 相關介紹: <a href="https://en.wikipedia.org/wiki/RoboDK">https://en.wikipedia.org/wiki/RoboDK</a>.</p>
 <p>RoboDK API 為開源套件: <a href="https://github.com/mdecourse/RoboDK-API">https://github.com/mdecourse/RoboDK-API</a></p>
 <p style="padding-left: 30px;"><a href="https://robodk.com/doc/en/PythonAPI/index.html">https://robodk.com/doc/en/PythonAPI/index.html</a></p>
@@ -470,6 +476,9 @@ heroku git:remote -a taiwan-no1</pre>
 <p style="padding-left: 30px;">在 RoboDK 中雙點擊 robot 即可開啟控制 Panel.</p>
 <hr/>
 <p style="padding-left: 30px;">Tool -Trace -Active 若為綠色, 表示 end-effector 移動將會留下軌跡, 若為紅色則不會留下軌跡, reset 可抹除先前留下的運行軌跡.</p>
+<hr/>
+<p style="padding-left: 30px;"><code>from robolink import *<br/> <br/> # make sure opencv for python is available<br/> import_install("cv2", "opencv-python")<br/> <br/> # Load OpenCV<br/> import cv2</code></p>
+<hr/>
 <h4>create part</h4>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># Type help("robolink") or help("robodk") for more information
 # Press F5 to run the script

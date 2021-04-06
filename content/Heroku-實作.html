@@ -122,7 +122,7 @@ img.add_border {
                             <li><a href="./../blog/index.html">blog</a></li>
                         </ul>
                       </li>
-                     <li class='has-children'><a href='About.html'>About</a><ul class='dropdown'><li><a href='三道牆理論.html'>三道牆理論</a><li><a href='機械工程師.html'>機械工程師</a><li><a href='Programming.html'>Programming</a><li><a href='Heroku.html'>Heroku</a></li></ul><li class='has-children'><a href='Topics.html'>Topics</a><ul class='dropdown'><li class='has-children'><a href='W1-W2.html'>W1-W2</a><ul class='dropdown'><li><a href='網頁除錯.html'>網頁除錯</a></li></ul><li class='has-children'><a href='W4.html'>W4</a><ul class='dropdown'><li><a href='W4 教學.html'>W4 教學</a></li></ul><li class='has-children'><a href='W5.html'>W5</a><ul class='dropdown'><li><a href='W5 教學影片.html'>W5 教學影片</a><li><a href='創新教育.html'>創新教育</a><li><a href='網際程式開發.html'>網際程式開發</a><li><a href='開放教科書.html'>開放教科書</a></li></ul><li class='has-children'><a href='W6.html'>W6</a><ul class='dropdown'><li><a href='Heroku-實作.html'>Heroku-實作</a></li></ul><li><a href='RoboDK.html'>RoboDK</a><li><a href='分組專題.html'>分組專題</a><li><a href='Topic 0.html'>Topic 0</a><li><a href='Topic 1.html'>Topic 1</a><li><a href='輔助工具.html'>輔助工具</a></li></ul><li><a href='WSL.html'>WSL</a><li class='has-children'><a href='Projects.html'>Projects</a><ul class='dropdown'><li><a href='Delta Printer.html'>Delta Printer</a><li><a href='CMSiMDE.html'>CMSiMDE</a><li><a href='Fossil scm.html'>Fossil scm</a><li><a href='CDiMDE.html'>CDiMDE</a><li><a href='Discourse.html'>Discourse</a></li>
+                     <li class='has-children'><a href='About.html'>About</a><ul class='dropdown'><li><a href='三道牆理論.html'>三道牆理論</a><li><a href='機械工程師.html'>機械工程師</a><li><a href='Programming.html'>Programming</a><li><a href='Heroku.html'>Heroku</a></li></ul><li class='has-children'><a href='Topics.html'>Topics</a><ul class='dropdown'><li class='has-children'><a href='W1-W2.html'>W1-W2</a><ul class='dropdown'><li><a href='網頁除錯.html'>網頁除錯</a></li></ul><li class='has-children'><a href='W4.html'>W4</a><ul class='dropdown'><li><a href='W4 教學.html'>W4 教學</a></li></ul><li class='has-children'><a href='W5.html'>W5</a><ul class='dropdown'><li><a href='W5 教學影片.html'>W5 教學影片</a><li><a href='創新教育.html'>創新教育</a><li><a href='網際程式開發.html'>網際程式開發</a><li><a href='開放教科書.html'>開放教科書</a></li></ul><li class='has-children'><a href='W6.html'>W6</a><ul class='dropdown'><li><a href='Heroku-實作.html'>Heroku-實作</a></li></ul><li><a href='W7.html'>W7</a><li><a href='RoboDK.html'>RoboDK</a><li><a href='分組專題.html'>分組專題</a><li><a href='Topic 0.html'>Topic 0</a><li><a href='Topic 1.html'>Topic 1</a><li><a href='輔助工具.html'>輔助工具</a></li></ul><li><a href='WSL.html'>WSL</a><li class='has-children'><a href='Projects.html'>Projects</a><ul class='dropdown'><li><a href='Delta Printer.html'>Delta Printer</a><li><a href='CMSiMDE.html'>CMSiMDE</a><li><a href='Fossil scm.html'>Fossil scm</a><li><a href='CDiMDE.html'>CDiMDE</a><li><a href='Discourse.html'>Discourse</a></li>
                       </ul>
                 </nav>
               </div>
@@ -133,7 +133,7 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">W6 << <a href='W6.html'>Previous</a> <a href='RoboDK.html'>Next</a> >> RoboDK<br /><h1>Heroku-實作</h1>
+    <div id="tipue_search_content">W6 << <a href='W6.html'>Previous</a> <a href='W7.html'>Next</a> >> W7<br /><h1>Heroku-實作</h1>
 <p><span style="background-color: #ffff99;">步驟一:</span> (<span style="background-color: #ccffcc;">建立 Heroku 帳號</span>) 進入 <a href="https://heroku.com">https://heroku.com</a>, 利用學校配發的 @gm 登記一個 Heroku 帳號, 關鍵在於密碼設定必須要至少 8 個字元, 且字元中必須包含符號, 英文字母及數字,  並且登記後要進入 @gm 帳號進行確認後才能開通 Heroku 帳號.</p>
 <p>完成帳號登記後, 必須知道目前 Heroku 只允許免費建立五個應用程式, 且每個程式的最大容量為 500MB.</p>
 <p><span style="background-color: #ffff99;">步驟二:</span> (<span style="background-color: #ccffcc;">建立 Heroku app</span>) 登入 Heroku 後, 先以 s + 學號 建立第一個 app, 完成後, 將可至 https://s學號.herokuapp.com 連線取得網站最初內容.</p>
@@ -157,7 +157,7 @@ set HTTPS_PROXY=http://[2001:288:6004:17::53]:3128</pre>
 heroku login -i
 # 針對已經登入的 Heroku 帳號下的 taiwan-01 app, 設為此倉儲的 remote 同步倉儲, 且在倉儲中會自建名稱為 heroku 的 remoate site.
 heroku git:remote -a taiwan-no1</pre>
-<p>上述步驟完成後的 Heroku 網站: <a href="https://taiwan-no1.herokuapp.com">https://taiwan-no1.herokuapp.com</a></p><br />W6 << <a href='W6.html'>Previous</a> <a href='RoboDK.html'>Next</a> >> RoboDK</div>
+<p>上述步驟完成後的 Heroku 網站: <a href="https://taiwan-no1.herokuapp.com">https://taiwan-no1.herokuapp.com</a></p><br />W6 << <a href='W6.html'>Previous</a> <a href='W7.html'>Next</a> >> W7</div>
         
     <!-- footer -->
       <div class="container">
