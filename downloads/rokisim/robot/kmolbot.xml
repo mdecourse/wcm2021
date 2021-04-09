@@ -1,0 +1,24 @@
+<robot_definition>
+<robot_dk name=kmolbot1>
+<axis id="Base" maxvalue="0" minvalue="0" alpha="0" a="0" theta="0" d="0"/>
+<axis id="Joint1" limsup="16.000" liminf="-16.000" alpha="0.000" a="0.000" theta="0.000" d="290.000"/>
+<axis id="Joint2" limsup="110.000" liminf="-110.000" alpha="-90.000" a="0.000" theta="-90.000" d="0.000"/>
+<axis id="Joint3" limsup="70.000" liminf="-90.000" alpha="0.000" a="270.000" theta="0.000" d="0.000"/>
+<axis id="Joint4" limsup="160.000" liminf="-160.000" alpha="-90.000" a="70.000" theta="0.000" d="302.000"/>
+<axis id="Joint5" limsup="120.000" liminf="-120.000" alpha="90.000" a="0.000" theta="0.000" d="0.000"/>
+<axis id="Joint6" limsup="400.000" liminf="-400.000" alpha="-90.000" a="0.000" theta="180.000" d="72.000"/>
+</robot_dk>
+<robot_geometry>
+<geometry geo="basea" name="Base"/>
+<geometry geo="kmolbota-1a" name="Joint1"/>
+<geometry geo="kmolbot1-2" name="Joint2"/>
+<geometry geo="kmolbot1-3" name="Joint3"/>
+<geometry geo="kmolbot1-4" name="Joint4"/>
+<geometry geo="kmolbot1-5" name="Joint5"/>
+<geometry geo="kmolbot1-6" name="Joint6"/>
+</robot_geometry>
+<CAD_base x="0.000" y="0.000" z="0.000" rx="0.000" ry="0.000" rz="0.000"/>
+<CAD_scale FACTOR="10.000000000"/>
+<CAD_offsets cad_theta1="0.000" cad_theta2="0.000" cad_theta3="0.000" cad_theta4="0.000" cad_theta5="0.000" cad_theta6="0.000"/>
+<Angle_Type id="1"/>
+</robot_definition>
