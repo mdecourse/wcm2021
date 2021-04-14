@@ -460,7 +460,15 @@ heroku git:remote -a taiwan-no1</pre>
 <p>接下來我們要將執行一項<a href="http://mde.tw/wcm2021/content/%E7%B6%B2%E9%9A%9B%E7%A8%8B%E5%BC%8F%E9%96%8B%E7%99%BC.html">網際程式開發</a>, 也就是以分組架構在期中考週前完成<a href="http://mde.tw/wcm2021/content/W4.html">分組專題的製作</a>.</p>
 <p>其中必須要先設法完成 <a href="http://mde.tw/wcm2021/content/Topic%200.html">Topic0</a> 中的程式練習, 學會如何從教務主機中取出機械設計工程系各實習實驗室的排課時間表後, 再設法部署到 Heroku.</p>
 <p>W9 週各組將要利用 ShareX 上台使用 Reveal 網際簡報錄製分組專題報告, 相關分組報告影片可參考協同產品設計實習 <a href="https://drive.google.com/drive/folders/1t38qYM30FeKw37F49nd0DAD5EMQseDnj">Stage1 簡報影片</a>.</p>
-<p></p><h2>RoboDK</h2>
+<p></p><h2>W8</h2>
+<p>英文 - 擴大文獻搜尋與閱讀範圍.</p>
+<p>數學 - 透過數值分析與模擬, 在原型實作之前, 確認已經完成最佳化設計與環境配置.</p>
+<p>電腦 - 提供數位抽象化環境 (各種檔案格式內容儲存與處理), 可快速進行精確運算之設計之有效工具.</p>
+<p>網路 - 連結分散在不同地理位置的電腦, 快速傳遞各種訊息, 可用於分散式版次管理與協同產品設計.</p>
+<p><a href="https://www.epfl.ch">https://www.epfl.ch</a></p>
+<h4 style="padding-left: 30px;">FEM</h4>
+<p style="padding-left: 60px;"><a href="https://www.epfl.ch/labs/lsms/wp-content/uploads/2018/10/akantu_ug_v2.3.pdf">https://www.epfl.ch/labs/lsms/wp-content/uploads/2018/10/akantu_ug_v2.3.pdf</a> </p>
+<h3>RoboDK</h3>
 <p>2015 年 <a href="https://robodk.com/">https://robodk.com/</a> 從 <a href="http://www.etsmtl.ca/unites-de-recherche/coro/accueil,">http://www.etsmtl.ca/unites-de-recherche/coro/accueil</a> spin off 創立公司, 最早開發的程式位於 <a href="https://www.parallemic.org/RoKiSim.html">https://www.parallemic.org/RoKiSim.html</a> (<a href="http://a.kmol.info:88/RoKiSim.7z">http://a.kmol.info:88/RoKiSim.7z</a>), 至今已經支援超過 500 型工業用機械手臂的離線與在線控制, 且支援 STL, STEP, IGES, WRML, 3DS and OBJ 的零件格式輸入. 相關介紹: <a href="https://en.wikipedia.org/wiki/RoboDK">https://en.wikipedia.org/wiki/RoboDK</a>.</p>
 <p>RoboDK API 為開源套件: <a href="https://github.com/mdecourse/RoboDK-API">https://github.com/mdecourse/RoboDK-API</a></p>
 <p style="padding-left: 30px;"><a href="https://robodk.com/doc/en/PythonAPI/index.html">https://robodk.com/doc/en/PythonAPI/index.html</a></p>
@@ -2394,8 +2402,7 @@ win_id = RDK.Command("CamWinID", str(cam_id))
 path_library = RDK.getParam("PATH_LIBRARY")
 file_shader_fragment = path_library + '/Macros/Camera-Shaders/shader_fragment.glsl'
 file_shader_vertex = path_library + '/Macros/Camera-Shaders/shader_vertex.glsl'
-cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=2500 SHADER_FRAGMENT=' + file_shader_fragment + ' SHADER_VERTEX=' + file_shader_vertex)</pre>
-<h3>Robotics</h3>
+cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=2500 SHADER_FRAGMENT=' + file_shader_fragment + ' SHADER_VERTEX=' + file_shader_vertex)</pre><h3>Robotics</h3>
 <p><a href="/downloads/Automatic-Denavit-Hartenberg-Parameter-Identification-for-Serial-Manipulators-1.pdf">Automatic-Denavit-Hartenberg-Parameter-Identification-for-Serial-Manipulators-1.pdf</a></p>
 <p><a href="/downloads/Denavit and Hartenberg (DH) Parameters.pdf">Denavit and Hartenberg (DH) Parameters.pdf</a></p>
 <p><a href="/downloads/Identification of Denavit-Hartenberg Parameters of an Industrial Robot.pdf">Identification of Denavit-Hartenberg Parameters of an Industrial Robot.pdf</a></p>
