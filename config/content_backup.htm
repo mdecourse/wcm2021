@@ -634,7 +634,140 @@ if __name__ == '__main__':
 <p><a href="http://mde.tw/wcmj2021/content/W8.html">http://mde.tw/wcmj2021/content/W8.html</a> </p>
 <h4 style="padding-left: 30px;">FEM</h4>
 <p style="padding-left: 60px;"><a href="https://www.epfl.ch/labs/lsms/wp-content/uploads/2018/10/akantu_ug_v2.3.pdf">https://www.epfl.ch/labs/lsms/wp-content/uploads/2018/10/akantu_ug_v2.3.pdf</a></p><h3>期中專案</h3>
-<h3>RoboDK</h3>
+<p>之前的 git 倉儲都是先在 Github 網際平台上建立後, 再設法 git clone 到近端改版, 但是這樣的前提是在 Github 建立倉儲時, 至少新增一個檔案 README.md,  但是假如在 Github 建立一個空倉儲則通常會建議使用者先在近端以 git init 產生一個空的 git 倉儲後, 納入改版資料然後再透過 git remote add 設定與遠端的 Github 倉儲 URL 進行對應.</p>
+<p>以下列 nfumde 近端的 .git/config 設定檔案為例:</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = git@github.com:mdecourse/nfumde.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[remote "heroku"]
+	url = https://git.heroku.com/nfumde.git
+	fetch = +refs/heads/*:refs/remotes/heroku/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main</pre>
+<p>黨使用者在命令列中的特定目錄中以 git init 建立 .git 時, .git/config 中只有:</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true</pre>
+<p>當使用者在該倉儲中, 執行 git remote add origin <a href="mailto:git@github.com:mdecourse/nfumde.git">git@github.com:mdecourse/nfumde.git</a> 後, .git/config 中將增加此一 git remote add 設定資料成為:</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = git@github.com:mdecourse/nfumde.git
+	fetch = +refs/heads/*:refs/remotes/origin/*</pre>
+<p>當使用者在 git push 時執行 git push --set-upstream origin main 或 git push -u origin main 後, .git/config 中將增加 upstream 設定如下:</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[branch "main"]
+	remote = origin
+	merge = refs/heads/main</pre>
+<p>最後若再完成 heroku git:remote -a nfumde, 也就針對 Heroku 中的 nfumde app 設定 git remote add, 則最後的 .git/config 將成為:</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = git@github.com:mdecourse/nfumde.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[remote "heroku"]
+	url = https://git.heroku.com/nfumde.git
+	fetch = +refs/heads/*:refs/remotes/heroku/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main</pre>
+<p>而通常這樣的 git remote add 會以 origin 作為代號.</p>
+<p>現在假如連倉儲的 origin 都要自行設定, 其步驟如下:</p>
+<ol>
+<li>在近端命令視窗中, 以 git init (為了配合使用 main 作為主分支名稱, 可以使用 git config --global init.defaultBranch main 將設定寫入 home_ipv6\.gitconfig) 建立空的倉儲, 取得 Github 空倉儲的 URL 後, 可以採用 https 或 SSH 模式進行 git remote add 的設定.</li>
+<li>假如遠端的 Github 倉儲使用者帳號為 mdecourse, 而空倉儲名稱為 nfumde, 則其 https 的 URL 為 <a href="https://github.com/mdecourse/nfumde">https://github.com/mdecourse/nfumde</a><a href="https://github.com/mdecourse/wcm_midterm,">,</a> 若採用 SSH 則其 URL 為 <a href="mailto:git@my_putty_session:mdecourse/nfumde.git">git@my_putty_session:mdecourse/nfumde.git</a></li>
+<li>步驟 2 的指令為 git remote add origin https://github.com/mdecourse/nfumde.git, 或者使用 git remote add origin git@my_putty_session:mdecourse/nfumde.git</li>
+<li>另外若將此一倉儲在近端使用 Heroku 的指令與遠端的 Heroku 名稱為 nfumde 的 app 進行對應設定, 則命令在 heroku login -i 之後, 以 heroku git:remote -a nfumde, 之後就可以透過 git push heroku 將此一倉儲的版本推向 Heroku.</li>
+</ol>
+<p>操作過程, 第一時間在近端以 git init 建立空倉儲時發現仍使用 master 作為主分支名稱, 因此利用 git config --global init.defaultBranch main 將設定存入 home_ipv6\.gitconfig 中, 主分支名稱設為 main. 畫面如下:</p>
+<p><img alt="" height="418" src="/images/nfumde_heroku_app.png" width="800"/></p>
+<p>以上所完成的 Heroku 網際程式: <a href="http://nfumde.herokuapp.com/table">http://nfumde.herokuapp.com/table</a></p>
+<p>假如要將上列網際程式改為 AJAX 模式, 可以參考下列程式碼, 以 button 的方式送出 AJAX 所需的 POST 變數:</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from flask import (Flask, request, jsonify)
+                   
+app = Flask(__name__)
+
+html_page = """&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Rough AJAX Test&lt;/title&gt;
+&lt;script&gt;
+    function loadXMLDoc()
+    {
+        var req = new XMLHttpRequest()
+        req.onreadystatechange = function()
+        {
+            if (req.readyState == 4)
+            {
+                if (req.status != 200)
+                {
+                    //error handling code here
+                }
+                else
+                {
+                    var response = JSON.parse(req.responseText)
+                    document.getElementById('myDiv').innerHTML = response.username
+                }
+            }
+        }
+    
+        req.open('POST', '/ajax')
+        req.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        var un = document.getElementById('scname').value
+        var sec = document.getElementById('secret').value
+        var postVars = 'username='+un+'&amp;secret='+sec
+        req.send(postVars)
+        
+        return false
+    }
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Flask AJAX Test&lt;/h1&gt;
+&lt;form action="" method="POST"&gt;
+&lt;input type="text" name="scname" id="scname"&gt;
+&lt;input type="hidden" name="secret" id="secret" value="shhh"&gt;
+&lt;input type="button" value="Submit" onclick="return loadXMLDoc()"&gt;
+&lt;/form&gt;
+&lt;div id="myDiv"&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;"""
+
+@app.route('/')
+def index():
+    return html_page
+        
+        
+@app.route('/ajax', methods = ['POST'])
+def ajax_request():
+    username = request.form['username']
+    return jsonify(username=username)
+    
+    
+if __name__ == "__main__":
+    app.run(debug = True)</pre>
+<p></p><h3>RoboDK</h3>
 <p>2015 年 <a href="https://robodk.com/">https://robodk.com/</a> 從 <a href="http://www.etsmtl.ca/unites-de-recherche/coro/accueil,">http://www.etsmtl.ca/unites-de-recherche/coro/accueil</a> spin off 創立公司, 最早開發的程式位於 <a href="https://www.parallemic.org/RoKiSim.html">https://www.parallemic.org/RoKiSim.html</a> (<a href="http://a.kmol.info:88/RoKiSim.7z">http://a.kmol.info:88/RoKiSim.7z</a>), 至今已經支援超過 500 型工業用機械手臂的離線與在線控制, 且支援 STL, STEP, IGES, WRML, 3DS and OBJ 的零件格式輸入. 相關介紹: <a href="https://en.wikipedia.org/wiki/RoboDK">https://en.wikipedia.org/wiki/RoboDK</a>.</p>
 <p>RoboDK API 為開源套件: <a href="https://github.com/mdecourse/RoboDK-API">https://github.com/mdecourse/RoboDK-API</a></p>
 <p style="padding-left: 30px;"><a href="https://robodk.com/doc/en/PythonAPI/index.html">https://robodk.com/doc/en/PythonAPI/index.html</a></p>

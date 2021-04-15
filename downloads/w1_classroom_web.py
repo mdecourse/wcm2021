@@ -58,8 +58,21 @@ def timeTableList():
     # 根據輸出設定, 取出 class='tbcls' 的 table 資料
     table = soup.find('table', {'class': 'tbcls'})
 
+    # ########## 以下程式碼用來計算排課節數 ##########
+    # 以下取出 td 標註資料
+    table_data = [i.text for i in table.find_all('td')]
+    #print(table_data)
+    timeTable = []
+    # 去除非排課欄位資料內容
+    for i in table_data:
+        if not "虎尾科技" in i and not "節" in i and not "\xa0" in i:
+            timeTable.append(i)
+    #print(len(timeTable))
+    totalNum = len(timeTable)
+    # ########## 以上程式碼用來計算排課節數 ##########
+
     # 重建 table, 設定邊線為 1 pixel
-    output = "<table border='1'>"
+    output = "總排課節數: " + str(totalNum) + "<br /><br /><table border='1'>"
 
     for i in table.contents:
         # 利用 replace 復原 &nbsp;
