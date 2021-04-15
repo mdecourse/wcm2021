@@ -635,6 +635,7 @@ if __name__ == '__main__':
 <h4 style="padding-left: 30px;">FEM</h4>
 <p style="padding-left: 60px;"><a href="https://www.epfl.ch/labs/lsms/wp-content/uploads/2018/10/akantu_ug_v2.3.pdf">https://www.epfl.ch/labs/lsms/wp-content/uploads/2018/10/akantu_ug_v2.3.pdf</a></p><h3>期中專案</h3>
 <p>之前的 git 倉儲都是先在 Github 網際平台上建立後, 再設法 git clone 到近端改版, 但是這樣的前提是在 Github 建立倉儲時, 至少新增一個檔案 README.md,  但是假如在 Github 建立一個空倉儲則通常會建議使用者先在近端以 git init 產生一個空的 git 倉儲後, 納入改版資料然後再透過 git remote add 設定與遠端的 Github 倉儲 URL 進行對應.</p>
+<p>而通常針對特定倉儲的 defualt 遠端 URL 連結的 git remote add 會以 origin 作為代號.</p>
 <p>以下列 nfumde 近端的 .git/config 設定檔案為例:</p>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[core]
 	repositoryformatversion = 0
@@ -652,7 +653,7 @@ if __name__ == '__main__':
 [branch "main"]
 	remote = origin
 	merge = refs/heads/main</pre>
-<p>黨使用者在命令列中的特定目錄中以 git init 建立 .git 時, .git/config 中只有:</p>
+<p>當使用者在命令列中的特定目錄中以 git init 建立 .git 目錄時, .git/config 中只會有以下資料, 表示此目錄為 git 空倉儲, 尚未與遠端 Github 有任何對應:</p>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[core]
 	repositoryformatversion = 0
 	filemode = false
@@ -660,7 +661,7 @@ if __name__ == '__main__':
 	logallrefupdates = true
 	symlinks = false
 	ignorecase = true</pre>
-<p>當使用者在該倉儲中, 執行 git remote add origin <a href="mailto:git@github.com:mdecourse/nfumde.git">git@github.com:mdecourse/nfumde.git</a> 後, .git/config 中將增加此一 git remote add 設定資料成為:</p>
+<p>當使用者在該倉儲中, 執行 git remote add origin <a href="mailto:git@github.com:mdecourse/nfumde.git">git@github.com:mdecourse/nfumde.git</a> 後, .git/config 中將增加此一 git remote add 設定資料而成為:</p>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[core]
 	repositoryformatversion = 0
 	filemode = false
@@ -671,11 +672,11 @@ if __name__ == '__main__':
 [remote "origin"]
 	url = git@github.com:mdecourse/nfumde.git
 	fetch = +refs/heads/*:refs/remotes/origin/*</pre>
-<p>當使用者在 git push 時執行 git push --set-upstream origin main 或 git push -u origin main 後, .git/config 中將增加 upstream 設定如下:</p>
+<p>當使用者在執行 git push --set-upstream origin main 或 git push -u origin main 時, 由於附加設定內建的 upstream 為 main 分支, 因此之後的 git push 與 git pull 若從 orgin 存取版本資料, 可以不用宣告分支, git 會假定存取 main 分支, 意即 git push 就是指 git push origin main. 此時.git/config 中將增加以下 upstream 設定:</p>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[branch "main"]
 	remote = origin
 	merge = refs/heads/main</pre>
-<p>最後若再完成 heroku git:remote -a nfumde, 也就針對 Heroku 中的 nfumde app 設定 git remote add, 則最後的 .git/config 將成為:</p>
+<p>最後若再執行 heroku login -i 以及 heroku git:remote -a nfumde, 也就是針對 Heroku 中的 nfumde app 設定 git remote add, 則最後的 .git/config 將成為:</p>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[core]
 	repositoryformatversion = 0
 	filemode = false
@@ -692,15 +693,14 @@ if __name__ == '__main__':
 [branch "main"]
 	remote = origin
 	merge = refs/heads/main</pre>
-<p>而通常這樣的 git remote add 會以 origin 作為代號.</p>
-<p>現在假如連倉儲的 origin 都要自行設定, 其步驟如下:</p>
+<p>現在假如連倉儲的 origin url 都選擇自行設定, 其步驟如下:</p>
 <ol>
-<li>在近端命令視窗中, 以 git init (為了配合使用 main 作為主分支名稱, 可以使用 git config --global init.defaultBranch main 將設定寫入 home_ipv6\.gitconfig) 建立空的倉儲, 取得 Github 空倉儲的 URL 後, 可以採用 https 或 SSH 模式進行 git remote add 的設定.</li>
-<li>假如遠端的 Github 倉儲使用者帳號為 mdecourse, 而空倉儲名稱為 nfumde, 則其 https 的 URL 為 <a href="https://github.com/mdecourse/nfumde">https://github.com/mdecourse/nfumde</a><a href="https://github.com/mdecourse/wcm_midterm,">,</a> 若採用 SSH 則其 URL 為 <a href="mailto:git@my_putty_session:mdecourse/nfumde.git">git@my_putty_session:mdecourse/nfumde.git</a></li>
-<li>步驟 2 的指令為 git remote add origin https://github.com/mdecourse/nfumde.git, 或者使用 git remote add origin git@my_putty_session:mdecourse/nfumde.git</li>
+<li>在近端命令視窗中, 以 git init (為了配合使用 main 作為主分支名稱, 可以使用 git config --global init.defaultBranch main 將設定寫入 home_ipv6\.gitconfig 中) 建立空的倉儲, 取得 Github 空倉儲的 url 後, 可以採用 https 或 SSH 模式進行 git remote add 的設定.</li>
+<li>假如遠端的 Github 倉儲使用者帳號為 mdecourse, 而空倉儲名稱為 nfumde, 則其 https 的 url 為 <a href="https://github.com/mdecourse/nfumde">https://github.com/mdecourse/nfumde</a><a href="https://github.com/mdecourse/wcm_midterm,">,</a> 若採用 SSH 則其 url 為 <a href="mailto:git@my_putty_session:mdecourse/nfumde.git">git@my_putty_session:mdecourse/nfumde.git</a></li>
+<li>步驟 2. 的指令為 git remote add origin https://github.com/mdecourse/nfumde.git, 或者使用 git remote add origin git@my_putty_session:mdecourse/nfumde.git</li>
 <li>另外若將此一倉儲在近端使用 Heroku 的指令與遠端的 Heroku 名稱為 nfumde 的 app 進行對應設定, 則命令在 heroku login -i 之後, 以 heroku git:remote -a nfumde, 之後就可以透過 git push heroku 將此一倉儲的版本推向 Heroku.</li>
 </ol>
-<p>操作過程, 第一時間在近端以 git init 建立空倉儲時發現仍使用 master 作為主分支名稱, 因此利用 git config --global init.defaultBranch main 將設定存入 home_ipv6\.gitconfig 中, 主分支名稱設為 main. 畫面如下:</p>
+<p>操作過程, 第一時間在近端以 git init 建立空倉儲時發現仍使用 master 作為主分支名稱, 因此利用 git config --global init.defaultBranch main 將設定存入 home_ipv6\.gitconfig 中, 將主分支名稱設為 main. 畫面如下:</p>
 <p><img alt="" height="418" src="/images/nfumde_heroku_app.png" width="800"/></p>
 <p>以上所完成的 Heroku 網際程式: <a href="http://nfumde.herokuapp.com/table">http://nfumde.herokuapp.com/table</a></p>
 <p>假如要將上列網際程式改為 AJAX 模式, 可以參考下列程式碼, 以 button 的方式送出 AJAX 所需的 POST 變數:</p>
@@ -767,6 +767,7 @@ def ajax_request():
     
 if __name__ == "__main__":
     app.run(debug = True)</pre>
+<p>以上的 html 原始碼可以利用 <a href="https://html-online.com/editor/">https://html-online.com/editor/</a> 進行編輯.</p>
 <p></p><h3>RoboDK</h3>
 <p>2015 年 <a href="https://robodk.com/">https://robodk.com/</a> 從 <a href="http://www.etsmtl.ca/unites-de-recherche/coro/accueil,">http://www.etsmtl.ca/unites-de-recherche/coro/accueil</a> spin off 創立公司, 最早開發的程式位於 <a href="https://www.parallemic.org/RoKiSim.html">https://www.parallemic.org/RoKiSim.html</a> (<a href="http://a.kmol.info:88/RoKiSim.7z">http://a.kmol.info:88/RoKiSim.7z</a>), 至今已經支援超過 500 型工業用機械手臂的離線與在線控制, 且支援 STL, STEP, IGES, WRML, 3DS and OBJ 的零件格式輸入. 相關介紹: <a href="https://en.wikipedia.org/wiki/RoboDK">https://en.wikipedia.org/wiki/RoboDK</a>.</p>
 <p>RoboDK API 為開源套件: <a href="https://github.com/mdecourse/RoboDK-API">https://github.com/mdecourse/RoboDK-API</a></p>
@@ -2711,7 +2712,10 @@ cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=2500 SHADER_FRA
 <p style="padding-left: 30px;"><a href="/downloads/2016_Teaching Robotics in Primary School.pdf">2016_Teaching Robotics in Primary School.pdf</a></p>
 <p style="padding-left: 30px;"><a href="/downloads/2020_Trends_and_Developments_in_Artificial_Intelligence.pdf">2020_Trends_and_Developments_in_Artificial_Intelligence.pdf</a></p>
 <p style="padding-left: 30px;"><a href="/downloads/Automating-Society-Report-2020.pdf">Automating-Society-Report-2020.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/2020_The Penetration of Internet of Things in Robotics Towards a Web ofRobotic Things.pdf">2020_The Penetration of Internet of Things in Robotics Towards a Web ofRobotic Things.pdf</a></p>
 <h4>其他參考資料:</h4>
+<p style="padding-left: 30px;"><a href="/downloads/marty_robot_build_guide.pdf">marty_robot_build_guide.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/Designing a robotic platform.pdf">Designing a robotic platform.pdf</a></p>
 <p style="padding-left: 30px;"><a href="/downloads/Robot_dynamics_Textbook.pdf">Robot Dynamics and Control textbook.pdf</a></p>
 <p style="padding-left: 30px;"><a href="/downloads/Denavit and Hartenberg (DH) Parameters.pdf">Denavit and Hartenberg (DH) Parameters.pdf</a></p>
 <p style="padding-left: 30px;"><a href="/downloads/FORWARD_KINEMATICS_THE_DENAVIT-HARTENBERG_CONVENTION.pdf">FORWARD_KINEMATICS_THE_DENAVIT-HARTENBERG_CONVENTION.pdf</a></p>
