@@ -533,11 +533,99 @@ os.system("start file:///" + str(filePath) + "\\" + fileName)</pre>
 <p>4. 因此只需要針對上列程式納入"學期代號"與"實驗室編號"等兩個 GET 網際 URL 變數後, 即可將此網際程式部署至 Heroku, 若再設法建立一個網際表格 (Table) 頁面, 分別放入綜一館 6F-9F 各實習實驗室的相關按鈕, 就可以讓使用者直接在網際頁面點擊實驗室按鈕, 查詢排課時間表.</p>
 <p>5. 完成上述流程後, 若能再透過 Beatifulsoup 取得的各實習實驗室排課時間表, 將各 TD 標註的內容取出, 並判斷是否排入課程, 將可利用迴圈統計各實習實驗室每週的排課總時數.</p>
 <p>6. 最後, 假如能夠在學期開始階段從教務主機取出各實習實驗室的既定排課時間表,  並將此資料納入資料庫, 並採網際模式建立 Oauth2 登入介面, 讓各實習實驗室管理者負責處理各實習實驗室的調課或借用事宜, 將可更進一步提升網際內容管理的應用範圍. (若要將此網際程式部署到 Heroku, 需要 <a href="https://devcenter.heroku.com/articles/heroku-postgresql">PostgreSQL</a> 與 <a href="http://docs.peewee-orm.com/en/latest/">peewee</a> 的搭配, 相關內容可以參考 <a href="https://github.com/chiamingyen/pygrouf">https://github.com/chiamingyen/pygrouf</a> 與 <a href="http://mde.tw/cp2018/content/Pygrouf%20%E8%A7%A3%E6%9E%90.html">Pygrouf 解析</a>)</p>
+<p>經過初步改為網際程式後, 共有六個修改步驟如下:</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
+import bs4
+# for os.environ and os.system
+import os
+# for geting html file path
+import pathlib
+# 以下因應改為 Heroku based 程式所需導入模組,  修改步驟 1/6
+from flask import Flask, request 
+from flask_cors import CORS
+
+
+# 修改步驟 2/6 , 加入 Flask 相關物件設定
+app = Flask(__name__)
+# 此一設定可以讓程式跨網域擷取資料
+CORS(app)
+
+# for pythn 3.9,  在近端測試時仍需要設定 proxy, 若使用 Python 3.8 執行則會自動使用系統的 Proxy 設定
+proxy = 'http://[2001:288:6004:17::69]:3128'
+
+os.environ['http_proxy'] = proxy 
+os.environ['HTTP_PROXY'] = proxy
+os.environ['https_proxy'] = proxy
+os.environ['HTTPS_PROXY'] = proxy
+'''
+url:  'jclassroom_ajax.php',
+data: { pselyr: pselyr, pselclssroom: pselclssroom },
+'''
+
+# 修改步驟 3/6, 試著將程式改為網際模式, 需要套用 Flask 的網際 decorator
+@app.route('/')
+def timeTableList():
+    semester = '1092'
+    classroomno = 'BGA0810'
+    column = True
+
+    if semester == None:
+        semester = '1092'
+    if classroomno == None:
+        # BGA0810 電腦輔助設計室
+        classroomno = 'BGA0810'
+        
+    headers = {'X-Requested-With': 'XMLHttpRequest'}
+
+    url = 'https://qry.nfu.edu.tw/jclassroom_ajax.php'
+    post_var = {'pselyr': semester, 'pselclssroom': classroomno}
+
+    result = requests.post(url, data = post_var, headers = headers)
+
+    soup = bs4.BeautifulSoup(result.content, 'lxml')
+
+    # 先除掉所有 anchor
+    for a in soup.findAll('a'):
+        # bs3 語法
+        #a.replaceWithChildren()
+        # bs4 語法, 將標註與內容拆開
+        a.unwrap()
+
+    # 根據輸出設定, 取出 class='tbcls' 的 table 資料
+    table = soup.find('table', {'class': 'tbcls'})
+
+    # 重建 table, 設定邊線為 1 pixel
+    output = "&lt;table border='1'&gt;"
+
+    for i in table.contents:
+        # 利用 replace 復原  
+        output += str(i).replace("&amp;nbsp", " ")
+    output += "&lt;/table&gt;"
+    #print(output)
+    # 修改步驟 5/6 , 因為已經將原先可列印出程式的步驟改為 function, 因此必須以 return 將擷取到的網頁資料傳回
+    return output
+    
+# 修改步驟 4/6 , 因為改寫為網際程式後, 下列將內容存檔並自動呼叫 Firefox 的程式碼不再適用, 必須蓋掉
+'''
+# 將 output 寫入 w1_classroom.html
+fileName = "w1_classroom.html"
+with open(fileName, "w", encoding="utf-8") as file:
+    file.write(output)
+# 利用 os.system() 以 default browser 開啟 w1_class_local.html
+filePath = pathlib.Path(__file__).parent.absolute()
+#print(filePath)
+# set firefox as default browser and start url to open html file
+os.system("start file:///" + str(filePath) + "\\" + fileName)
+'''
+
+# 修改步驟 6/6, 配合網際程式啟動,  以及 Python 程式執行與納入其他程式執行的特定進行配置
+
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=8080, debug=True)</pre>
 <p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p><h2>W8</h2>
+<h3>SSH 設定</h3>
+<p><a href="http://mde.tw/cd2021/content/SSH 了沒.html">http://mde.tw/cd2021/content/SSH 了沒.html</a> 中若使用者在公用電腦中啟動可攜系統時, 可以透過 start_ipv6.bat 中的 regedit.exe /S y:\myseesion.reg將先前設定好的登錄檔案 .reg 匯入, 確定連線 session 指到正確的 .ppk 位置.</p>
+<p>而此 mysession.reg 乃利用命令列中的 regedit.exe 進入系統登錄檔案 [HKEY_CURRENT_USER\SOFTWARE\SimonTatham] 將 registry 設定匯出存為 y:\mysession.reg, 將此檔案存在 y:\ 的原因是希望每次啟動可攜系統後都能擷取到這個檔案, 不會因為可攜系統隨身碟在操作系統的代號差異而受影響.</p><h2>W8</h2>
 <p>英文 - 擴大文獻搜尋與閱讀範圍.</p>
 <p>數學 - 透過數值分析與模擬, 在原型實作之前, 確認已經完成最佳化設計與環境配置.</p>
 <p>電腦 - 提供數位抽象化環境 (各種檔案格式內容儲存與處理), 可快速進行精確運算之設計之有效工具.</p>
@@ -2480,18 +2568,27 @@ path_library = RDK.getParam("PATH_LIBRARY")
 file_shader_fragment = path_library + '/Macros/Camera-Shaders/shader_fragment.glsl'
 file_shader_vertex = path_library + '/Macros/Camera-Shaders/shader_vertex.glsl'
 cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=2500 SHADER_FRAGMENT=' + file_shader_fragment + ' SHADER_VERTEX=' + file_shader_vertex)</pre><h3>Robotics</h3>
-<p><a href="/downloads/Robot_dynamics_Textbook.pdf">Robot Dynamics and Control textbook.pdf</a></p>
-<p><a href="/downloads/Denavit and Hartenberg (DH) Parameters.pdf">Denavit and Hartenberg (DH) Parameters.pdf</a></p>
-<p><a href="/downloads/FORWARD_KINEMATICS_THE_DENAVIT-HARTENBERG_CONVENTION.pdf">FORWARD_KINEMATICS_THE_DENAVIT-HARTENBERG_CONVENTION.pdf</a></p>
-<p><a href="/downloads/Identification of Denavit-Hartenberg Parameters of an Industrial Robot.pdf">Identification of Denavit-Hartenberg Parameters of an Industrial Robot.pdf</a></p>
-<p><a href="/downloads/robotics05dh.pdf">robotics05dh.pdf</a></p>
-<p><a href="/downloads/Automatic-Denavit-Hartenberg-Parameter-Identification-for-Serial-Manipulators-1.pdf">Automatic-Denavit-Hartenberg-Parameter-Identification-for-Serial-Manipulators-1.pdf</a></p>
-<p><a href="https://www.youtube.com/user/asodemann3/videos">https://www.youtube.com/user/asodemann3/videos</a></p>
-<p><a href="https://en.wikipedia.org/wiki/Denavit%E2%80%93Hartenberg_parameters">https://en.wikipedia.org/wiki/Denavit%E2%80%93Hartenberg_parameters</a></p>
-<p><a href="https://pypi.org/project/visual-kinematics/">https://pypi.org/project/visual-kinematics/</a></p>
-<p><a href="https://sajidnisar.github.io/posts/python_kinematics_dh">https://sajidnisar.github.io/posts/python_kinematics_dh</a></p>
-<p><a href="https://blog.robotiq.com/how-to-calculate-a-robots-forward-kinematics-in-5-easy-steps">https://blog.robotiq.com/how-to-calculate-a-robots-forward-kinematics-in-5-easy-steps</a></p>
-<p><a href="https://www.programmersought.com/article/37296265100/">https://www.programmersought.com/article/37296265100/</a></p>
+<h4>基礎知識:</h4>
+<p style="padding-left: 30px;"><a href="/downloads/Algorithms.pdf">Algorithms.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/Calculus_for_Robotics.pdf">Calculus_for_Robotics.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/Understanding_ICT_Standardization.pdf">Understanding_ICT_Standardization.pdf</a></p>
+<h4>Trends:</h4>
+<p style="padding-left: 30px;"><a href="/downloads/2015_A Literature Review on New Robotics Automation from Loveto War.pdf">2015_A Literature Review on New Robotics Automation from Loveto War.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/2016_Teaching Robotics in Primary School.pdf">2016_Teaching Robotics in Primary School.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/2020_Trends_and_Developments_in_Artificial_Intelligence.pdf">2020_Trends_and_Developments_in_Artificial_Intelligence.pdf</a></p>
+<h4>其他參考資料:</h4>
+<p style="padding-left: 30px;"><a href="/downloads/Robot_dynamics_Textbook.pdf">Robot Dynamics and Control textbook.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/Denavit and Hartenberg (DH) Parameters.pdf">Denavit and Hartenberg (DH) Parameters.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/FORWARD_KINEMATICS_THE_DENAVIT-HARTENBERG_CONVENTION.pdf">FORWARD_KINEMATICS_THE_DENAVIT-HARTENBERG_CONVENTION.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/Identification of Denavit-Hartenberg Parameters of an Industrial Robot.pdf">Identification of Denavit-Hartenberg Parameters of an Industrial Robot.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/robotics05dh.pdf">robotics05dh.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/Automatic-Denavit-Hartenberg-Parameter-Identification-for-Serial-Manipulators-1.pdf">Automatic-Denavit-Hartenberg-Parameter-Identification-for-Serial-Manipulators-1.pdf</a></p>
+<p style="padding-left: 30px;"><a href="https://www.youtube.com/user/asodemann3/videos">https://www.youtube.com/user/asodemann3/videos</a></p>
+<p style="padding-left: 30px;"><a href="https://en.wikipedia.org/wiki/Denavit%E2%80%93Hartenberg_parameters">https://en.wikipedia.org/wiki/Denavit%E2%80%93Hartenberg_parameters</a></p>
+<p style="padding-left: 30px;"><a href="https://pypi.org/project/visual-kinematics/">https://pypi.org/project/visual-kinematics/</a></p>
+<p style="padding-left: 30px;"><a href="https://sajidnisar.github.io/posts/python_kinematics_dh">https://sajidnisar.github.io/posts/python_kinematics_dh</a></p>
+<p style="padding-left: 30px;"><a href="https://blog.robotiq.com/how-to-calculate-a-robots-forward-kinematics-in-5-easy-steps">https://blog.robotiq.com/how-to-calculate-a-robots-forward-kinematics-in-5-easy-steps</a></p>
+<p style="padding-left: 30px;"><a href="https://www.programmersought.com/article/37296265100/">https://www.programmersought.com/article/37296265100/</a></p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/S1JZfWhZFsI" title="YouTube video player" width="560"></iframe></p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/V6TKocmc9k8" title="YouTube video player" width="560"></iframe></p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/qZB3_gKBwf8" title="YouTube video player" width="560"></iframe></p>

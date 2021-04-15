@@ -623,8 +623,9 @@ os.system("start file:///" + str(filePath) + "\\" + fileName)
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)</pre>
 <p></p>
-<p></p>
-<p></p><h2>W8</h2>
+<h3>SSH 設定</h3>
+<p><a href="http://mde.tw/cd2021/content/SSH 了沒.html">http://mde.tw/cd2021/content/SSH 了沒.html</a> 中若使用者在公用電腦中啟動可攜系統時, 可以透過 start_ipv6.bat 中的 regedit.exe /S y:\myseesion.reg將先前設定好的登錄檔案 .reg 匯入, 確定連線 session 指到正確的 .ppk 位置.</p>
+<p>而此 mysession.reg 乃利用命令列中的 regedit.exe 進入系統登錄檔案 [HKEY_CURRENT_USER\SOFTWARE\SimonTatham] 將 registry 設定匯出存為 y:\mysession.reg, 將此檔案存在 y:\ 的原因是希望每次啟動可攜系統後都能擷取到這個檔案, 不會因為可攜系統隨身碟在操作系統的代號差異而受影響.</p><h2>W8</h2>
 <p>英文 - 擴大文獻搜尋與閱讀範圍.</p>
 <p>數學 - 透過數值分析與模擬, 在原型實作之前, 確認已經完成最佳化設計與環境配置.</p>
 <p>電腦 - 提供數位抽象化環境 (各種檔案格式內容儲存與處理), 可快速進行精確運算之設計之有效工具.</p>
@@ -2567,18 +2568,28 @@ path_library = RDK.getParam("PATH_LIBRARY")
 file_shader_fragment = path_library + '/Macros/Camera-Shaders/shader_fragment.glsl'
 file_shader_vertex = path_library + '/Macros/Camera-Shaders/shader_vertex.glsl'
 cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=2500 SHADER_FRAGMENT=' + file_shader_fragment + ' SHADER_VERTEX=' + file_shader_vertex)</pre><h3>Robotics</h3>
-<p><a href="/downloads/Robot_dynamics_Textbook.pdf">Robot Dynamics and Control textbook.pdf</a></p>
-<p><a href="/downloads/Denavit and Hartenberg (DH) Parameters.pdf">Denavit and Hartenberg (DH) Parameters.pdf</a></p>
-<p><a href="/downloads/FORWARD_KINEMATICS_THE_DENAVIT-HARTENBERG_CONVENTION.pdf">FORWARD_KINEMATICS_THE_DENAVIT-HARTENBERG_CONVENTION.pdf</a></p>
-<p><a href="/downloads/Identification of Denavit-Hartenberg Parameters of an Industrial Robot.pdf">Identification of Denavit-Hartenberg Parameters of an Industrial Robot.pdf</a></p>
-<p><a href="/downloads/robotics05dh.pdf">robotics05dh.pdf</a></p>
-<p><a href="/downloads/Automatic-Denavit-Hartenberg-Parameter-Identification-for-Serial-Manipulators-1.pdf">Automatic-Denavit-Hartenberg-Parameter-Identification-for-Serial-Manipulators-1.pdf</a></p>
-<p><a href="https://www.youtube.com/user/asodemann3/videos">https://www.youtube.com/user/asodemann3/videos</a></p>
-<p><a href="https://en.wikipedia.org/wiki/Denavit%E2%80%93Hartenberg_parameters">https://en.wikipedia.org/wiki/Denavit%E2%80%93Hartenberg_parameters</a></p>
-<p><a href="https://pypi.org/project/visual-kinematics/">https://pypi.org/project/visual-kinematics/</a></p>
-<p><a href="https://sajidnisar.github.io/posts/python_kinematics_dh">https://sajidnisar.github.io/posts/python_kinematics_dh</a></p>
-<p><a href="https://blog.robotiq.com/how-to-calculate-a-robots-forward-kinematics-in-5-easy-steps">https://blog.robotiq.com/how-to-calculate-a-robots-forward-kinematics-in-5-easy-steps</a></p>
-<p><a href="https://www.programmersought.com/article/37296265100/">https://www.programmersought.com/article/37296265100/</a></p>
+<h4>基礎知識:</h4>
+<p style="padding-left: 30px;"><a href="/downloads/Algorithms.pdf">Algorithms.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/Calculus_for_Robotics.pdf">Calculus_for_Robotics.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/Understanding_ICT_Standardization.pdf">Understanding_ICT_Standardization.pdf</a></p>
+<h4>Trends:</h4>
+<p style="padding-left: 30px;"><a href="/downloads/2015_A Literature Review on New Robotics Automation from Loveto War.pdf">2015_A Literature Review on New Robotics Automation from Loveto War.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/2016_Teaching Robotics in Primary School.pdf">2016_Teaching Robotics in Primary School.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/2020_Trends_and_Developments_in_Artificial_Intelligence.pdf">2020_Trends_and_Developments_in_Artificial_Intelligence.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/Automating-Society-Report-2020.pdf">Automating-Society-Report-2020.pdf</a></p>
+<h4>其他參考資料:</h4>
+<p style="padding-left: 30px;"><a href="/downloads/Robot_dynamics_Textbook.pdf">Robot Dynamics and Control textbook.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/Denavit and Hartenberg (DH) Parameters.pdf">Denavit and Hartenberg (DH) Parameters.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/FORWARD_KINEMATICS_THE_DENAVIT-HARTENBERG_CONVENTION.pdf">FORWARD_KINEMATICS_THE_DENAVIT-HARTENBERG_CONVENTION.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/Identification of Denavit-Hartenberg Parameters of an Industrial Robot.pdf">Identification of Denavit-Hartenberg Parameters of an Industrial Robot.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/robotics05dh.pdf">robotics05dh.pdf</a></p>
+<p style="padding-left: 30px;"><a href="/downloads/Automatic-Denavit-Hartenberg-Parameter-Identification-for-Serial-Manipulators-1.pdf">Automatic-Denavit-Hartenberg-Parameter-Identification-for-Serial-Manipulators-1.pdf</a></p>
+<p style="padding-left: 30px;"><a href="https://www.youtube.com/user/asodemann3/videos">https://www.youtube.com/user/asodemann3/videos</a></p>
+<p style="padding-left: 30px;"><a href="https://en.wikipedia.org/wiki/Denavit%E2%80%93Hartenberg_parameters">https://en.wikipedia.org/wiki/Denavit%E2%80%93Hartenberg_parameters</a></p>
+<p style="padding-left: 30px;"><a href="https://pypi.org/project/visual-kinematics/">https://pypi.org/project/visual-kinematics/</a></p>
+<p style="padding-left: 30px;"><a href="https://sajidnisar.github.io/posts/python_kinematics_dh">https://sajidnisar.github.io/posts/python_kinematics_dh</a></p>
+<p style="padding-left: 30px;"><a href="https://blog.robotiq.com/how-to-calculate-a-robots-forward-kinematics-in-5-easy-steps">https://blog.robotiq.com/how-to-calculate-a-robots-forward-kinematics-in-5-easy-steps</a></p>
+<p style="padding-left: 30px;"><a href="https://www.programmersought.com/article/37296265100/">https://www.programmersought.com/article/37296265100/</a></p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/S1JZfWhZFsI" title="YouTube video player" width="560"></iframe></p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/V6TKocmc9k8" title="YouTube video player" width="560"></iframe></p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/qZB3_gKBwf8" title="YouTube video player" width="560"></iframe></p>

@@ -89,6 +89,10 @@ def timeTableList():
     #print(output)
     # 修改步驟 5/6 , 因為已經將原先可列印出程式的步驟改為 function, 因此必須以 return 將擷取到的網頁資料傳回
     return output
+
+@app.route('/table')
+def timeTable():
+    return "<a href='http://www.google.com'>google</a>"
     
 # 修改步驟 4/6 , 因為改寫為網際程式後, 下列將內容存檔並自動呼叫 Firefox 的程式碼不再適用, 必須蓋掉
 '''
