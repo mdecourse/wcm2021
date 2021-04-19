@@ -133,32 +133,44 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">W9 << <a href='W9.html'>Previous</a> <a href='Topic 0.html'>Next</a> >> Topic 0<br /><h1>分組專題</h1>
-<h4>Solvespace 3D 參數設計繪圖建立零組件 (<a href="https://solvespace.com">Solvespace</a> 編譯與<a href="http://www.farwire.net/SolveSpace-LearningGuide.htm">應用</a>):</h4>
-<ol>
-<li>轉入 <a href="https://www.coppeliarobotics.com/">CoppeliaSim</a> 組合為機電系統 (<a href="./../downloads/stl_format.pdf">STL 零件格式</a>, <a href="https://en.wikipedia.org/wiki/STL_(file_format)">STL file format</a>, <a href="./../downloads/stl-viewer_python_tkinter_pygame.7z">STL viewer in Tkinter and Pygame.7z</a>, <a href="./../downloads/STL-3D-Rasterer_pygame_opengl.7z">STL-3D-Rasterer_pygame_opengl.7z</a>, <a href="https://github.com/admesh/python-admesh">ADMesh</a>)</li>
-<li>利用 Lua script 進行 Kinematic and Dynamic 控制 (<a href="https://www.coppeliarobotics.com/">CoppeliaSim</a>, <a href="https://www.coppeliarobotics.com/helpFiles/en/xmlFormat.htm">XML 格式</a>)</li>
-<li>利用 Python remote API 進行 Kinematic and Dynamic 控制 (<a href="./../downloads/UR5_ik_coppeliaSim.7z">UR5_ik_coppeliaSim.7z</a>)</li>
-<li>利用 <a href="https://ubuntu.com/">Ubuntu</a> 建立 Web based server 進行機電資系統控制 (<a href="https://uwsgi-docs.readthedocs.io/en/latest/">uwsgi,</a> <a href="https://nginx.org/">nginx</a>, <a href="https://www.stunnel.org/">stunnel</a>)</li>
-<li>利用 <a href="https://ubuntu.com/">Ubuntu</a> 建立 Fossil SCM 分散式版次控制系統 (<a href="https://git-scm.com/book/en/v2">Git</a>, <a href="https://fossil-scm.org">Fossil SCM</a>, <a href="https://www.heroku.com/">Heroku</a> and <a href="https://github.com/mdecourse/cmsimde">CMSiMDE</a>)</li>
-</ol>
-<h4>Solvespace 編譯:</h4>
-<p style="padding-left: 30px;">利用 MSYS2 編譯 Solvespace, 需要 install cmake<br/><br/>pacman -S mingw-w64-x86_64-cmake<br/><br/>而且必須 rename Y:\msys64\usr\bin\sh.exe 換成其他名稱.<br/><br/>cd solvespace<br/>mkdir build<br/>cd build<br/>cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release<br/>make<br/><br/>need libwinpthread-1.dll to execute solvespace.exe<br/>上述<a href="https://www.youtube.com/watch?v=OHyeZz6XE8A">流程影片</a>編譯時間約需 19 分鐘, 完成的 <a href="https://drive.google.com/file/d/1tMy9ir-gIuXSYbUKTFQ0W5hd00pRozEM/view?usp=sharing">solvespace 可執行檔案下載</a></p>
-<p>以 Msys2 編譯 Solvespace:</p>
-<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/OHyeZz6XE8A" title="YouTube video player" width="560"></iframe></p>
-<p>根據 svg 檔案資料, 以 Python 驅動機械手臂繪圖. <a href="./../downloads/ABB-IRB-4600-20-2.50_draw.7z">ABB-IRB-4600-20-2.50_draw.7z</a></p>
-<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/dkRaf5n3OKs" title="YouTube video player" width="560"></iframe></p>
-<p>利用 Python 程式控制 robot 執行 Pick and Place. <a href="./../downloads/pick_and_place.7z">pick_and_place.7z</a></p>
-<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/45J9Rr1VOt0" title="YouTube video player" width="560"></iframe></p>
-<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/gybeOY6PiFs" title="YouTube video player" width="560"></iframe></p>
-<p>以網際內容管理系統整理自動控制系統設計流程:</p>
-<p style="padding-left: 30px;"><a href="./../downloads/control/controller design for magnetic levitation system.pdf">Controller design for magnetic levitation system.pdf</a> (以 <a href="https://www.coppeliarobotics.com/">Coppeliasim</a> 或 <a href="https://cyberbotics.com/">Webots</a> 實現)</p>
-<p style="padding-left: 30px;"><a href="https://github.com/mdecourse/vrep_inverted_pendulum">https://github.com/mdecourse/vrep_inverted_pendulum</a></p>
-<p style="padding-left: 30px;"><a href="https://github.com/mdecourse/RobotSimulator">https://github.com/mdecourse/RobotSimulator</a></p>
-<p style="padding-left: 30px;"><a href="https://ctmakro.github.io/site/on_learning/rl/vrep.html">https://ctmakro.github.io/site/on_learning/rl/vrep.html</a></p>
-<p style="padding-left: 30px;"><a href="https://medium.com/pytorch/robotic-assembly-using-deep-reinforcement-learning-dfd9916c5ad7">https://medium.com/pytorch/robotic-assembly-using-deep-reinforcement-learning-dfd9916c5ad7</a></p>
-<p style="padding-left: 30px;"><a href="https://www.toptal.com/deep-learning/pytorch-reinforcement-learning-tutorial">https://www.toptal.com/deep-learning/pytorch-reinforcement-learning-tutorial</a></p>
-<p></p><br />W9 << <a href='W9.html'>Previous</a> <a href='Topic 0.html'>Next</a> >> Topic 0</div>
+    <div id="tipue_search_content">Database << <a href='Database.html'>Previous</a> <a href='MySQL.html'>Next</a> >> MySQL<br /><h1>PostgreSQL</h1>
+<h4>SQL:</h4>
+<p style="padding-left: 30px;"><a href="https://link.springer.com/book/10.1007/978-1-4842-3576-8">SQL Primer 電子書</a> (在校內網路下載)</p>
+<p style="padding-left: 30px;"><a href="https://link.springer.com/book/10.1007/978-1-4842-1955-3">Beginning SQL Queries</a> (在校內網路下載)</p>
+<p style="padding-left: 30px;"><a href="https://link.springer.com/book/10.1007/978-1-4302-0800-6">The Programmer's Guide to SQL</a> (在校內網路下載)</p>
+<h4>PostgreSQL:</h4>
+<p style="padding-left: 30px;">下載由 <a href="https://mde.tw">KMOLab</a> 所製作的 <a href="https://drive.google.com/file/d/1gtrN9TqWDX0OIGyaHhdZyum6zZg832jY/view?usp=sharing">postgresql13_portable.7z</a></p>
+<p style="padding-left: 30px;"><a href="https://link.springer.com/book/10.1007/978-1-4302-0018-5">Beginning Database with PostgreSQL</a> (在校內網路下載)</p>
+<h4>MongoDB:</h4>
+<p style="padding-left: 30px;"><a href="https://link.springer.com/content/pdf/10.1007%2F978-3-658-24549-8.pdf">SQL and NoSQL Databases</a> (在校內網路下載)</p>
+<p style="padding-left: 30px;"><a href="https://link.springer.com/book/10.1007/978-1-4842-1182-3">The Definitive Guide to MongoDB</a> (在校內網路下載)</p>
+<h4>Flask PostgreSQL 實作:</h4>
+<p>在 Windows 10 操作系統中使用 PostgreSQL 的第一步就是<a href="/get_page/PostgreSQL/postgresql13_portable.7z">取得 PostgreSQL 的可攜套件</a>, 然後將 postgresql13\bin 納入命令執行搜尋路徑, 並且設定 PostgreSQL 的環境變數:</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">REM 加入 postgresql13 command path
+set path_postgresql=%Disk%:\postgresql13\bin;
+
+REM 將 %path_postgresql% 加入 path 變數中
+
+path=%Disk%:;%path_python%;%path_git%;%path_msys2%;%path_miketex%;%path_flutter%;%path_node%;%path_tcc%;%path_heroku%;%path_postgresql%;%path%;
+
+REM 加入 PostgreSQL 所需的環境變數設定
+
+@SET PGDATA=%Disk%:\postgresql13\data
+@SET PGDATABASE=postgres
+@SET PGUSER=postgres
+@SET PGPORT=5432
+@SET PGLOCALEDIR=%Disk%:\postgresql13\share\locale                   </pre>
+<p>設定後重新啟動隨身系統, 在命令列中執行 postgres 指令時, 表示要啟動 PostgreSQL 伺服器, 若跳出防火牆視窗, 詢問是否允許 postgres 通過防火牆擷取資料, 即表示上述設定已經生效.</p>
+<p>一旦 PostgreSQL 啟動, 就可以在另一個命令列視窗中輸入 psql -U postgres, 表示要從 client 端連線到 postgres 伺服器, 由於上述 <a href="https://drive.google.com/file/d/1gtrN9TqWDX0OIGyaHhdZyum6zZg832jY/view?usp=sharing">postgresql13_portable.7z</a> 可攜系統將 postgres 伺服器的管理密碼設為 postgres, 因此輸入密碼後即登入 postgres 伺服器, 若要登出則輸入 exit, 命令列執行畫面如下:</p>
+<p><img alt="" height="228" src="./../images/postgresql_psql_connect.png" width="600"/></p>
+<p>接下來就可以根據 <a href="https://github.com/LintangWisesa/CRUD_Flask_PostgreSQL">https://github.com/LintangWisesa/CRUD_Flask_PostgreSQL</a> 中的說明, 在 PostgreSQL 中建立所需的資料庫與資料表.</p>
+<h4>參考範例:</h4>
+<p style="padding-left: 30px;"><a href="https://github.com/Azure-Samples/flask-postgresql-app">https://github.com/Azure-Samples/flask-postgresql-app</a></p>
+<p style="padding-left: 30px;"><a href="https://github.com/czmpacheco/python-flask-postgresql">https://github.com/czmpacheco/python-flask-postgresql</a></p>
+<p style="padding-left: 30px;"><a href="https://github.com/LintangWisesa/CRUD_Flask_PostgreSQL">https://github.com/LintangWisesa/CRUD_Flask_PostgreSQL</a></p>
+<p></p>
+<p></p>
+<p></p><br />Database << <a href='Database.html'>Previous</a> <a href='MySQL.html'>Next</a> >> MySQL</div>
         
     <!-- footer -->
       <div class="container">
