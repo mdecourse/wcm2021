@@ -454,7 +454,11 @@ set HTTPS_PROXY=http://[2001:288:6004:17::53]:3128</pre>
 heroku login -i
 # 針對已經登入的 Heroku 帳號下的 taiwan-01 app, 設為此倉儲的 remote 同步倉儲, 且在倉儲中會自建名稱為 heroku 的 remoate site.
 heroku git:remote -a taiwan-no1</pre>
-<p>上述步驟完成後的 Heroku 網站: <a href="https://taiwan-no1.herokuapp.com">https://taiwan-no1.herokuapp.com</a></p><h2>W7</h2>
+<p>上述步驟完成後的 Heroku 網站: <a href="https://taiwan-no1.herokuapp.com">https://taiwan-no1.herokuapp.com</a></p>
+<h4>參考資料:</h4>
+<p style="padding-left: 30px;"><a href="https://github.com/twtrubiks/Deploying-Flask-To-Heroku">https://github.com/twtrubiks/Deploying-Flask-To-Heroku</a></p>
+<p style="padding-left: 30px;"><a href="https://gist.github.com/bradtraversy/0029d655269c8a972df726ed0ac56b88">https://gist.github.com/bradtraversy/0029d655269c8a972df726ed0ac56b88</a></p>
+<p style="padding-left: 30px;"><a href="https://github.com/gmolveau/flask-sqlalchemy-heroku">https://github.com/gmolveau/flask-sqlalchemy-heroku</a> </p><h2>W7</h2>
 <h4>各組開始執行期中分組專題</h4>
 <p>在上週 <a href="http://mde.tw/wcm2021/content/Heroku-%E5%AF%A6%E4%BD%9C.html">Heroku 實作</a>中, 使用 heroku5 AT mde 建立了 <a href="https://taiwan-no1.herokuapp.com">https://taiwan-no1.herokuapp.com</a> (與 <a href="https://github.com/heroku5/taiwan-no1">https://github.com/heroku5/taiwan-no1</a> Github Pages 的靜態內容同步).</p>
 <p>接下來我們要將執行一項<a href="http://mde.tw/wcm2021/content/%E7%B6%B2%E9%9A%9B%E7%A8%8B%E5%BC%8F%E9%96%8B%E7%99%BC.html">網際程式開發</a>, 也就是以分組架構在期中考週前完成<a href="http://mde.tw/wcm2021/content/W4.html">分組專題的製作</a>.</p>
@@ -3197,8 +3201,15 @@ for dname, dirs, files in os.walk("path_name"):
 <p style="padding-left: 30px;">NGSolve</p>
 <p style="padding-left: 60px;"><a href="https://ngsolve.org/">https://ngsolve.org/</a></p><h1>Database</h1>
 <p>資料庫 (Database) 是電腦程式有系統將資料內容存入特定格式的檔案資料後, 能夠透過 SQL (Structure Query Language) 對其存取的資料架構. Microsoft Office 套件中的 <a href="https://zh.wikipedia.org/wiki/Microsoft_Access">MS Access</a> 與 <a href="https://www.sqlite.org">SQLite</a> 都是採用近端檔案格式儲存的較小型資料庫, 而 <a href="https://www.microsoft.com/zh-tw/sql-server/sql-server-downloads">MS SQL</a>, <a href="https://www.mysql.com/">MySQL</a>, <a href="https://www.postgresql.org/">PostgreSQL</a>, <a href="https://www.oracle.com/tw/database/technologies/">Oracle</a> 則是可以跨伺服器存取資料內容的較常見中大型型資料庫.</p>
-<p>A database is nothing but a collection of organized data. It doesn’t have to be in a digital format to be called a database. A telephone directory is a good example, which stores data about people and organizations with a contact number. A to-do list is also a rudimentary form of a database. With ever-larger amounts of data being collected about even the most mundane of processes, digital databases have become increasingly important since their inception in the 1960s. </p>
-<p>Software that is used to manage a digital database is called a Database Management System (DBMS). When you hear someone talking about PostgreSQL or MySQL, they are referring to a DBMS. A database is what is created when you use the DBMS software to store data about topics that make sense to you or your organization. For example, your company may use PostgreSQL to store inventory information about cellular phones – the product that you sell. In this case, you have created an inventory databaseusing PostgreSQL as your DBMS. (from <a href="https://link.springer.com/book/10.1007/978-1-4842-3576-8">SQL Primer</a>) .</p>
+<p>A database is nothing but a collection of organized data. It doesn’t have to be in a digital format to be called a database. A telephone directory is a good example, which stores data about people and organizations with a contact number. A to-do list is also a rudimentary form of a database. With ever-larger amounts of data being collected about even the most mundane of processes, digital databases have become increasingly important since their inception in the 1960s (from <a href="https://link.springer.com/book/10.1007/978-1-4842-3576-8">SQL Primer</a>, page 14).</p>
+<p>Software that is used to manage a digital database is called a Database Management System (DBMS). When you hear someone talking about PostgreSQL or MySQL, they are referring to a DBMS. A database is what is created when you use the DBMS software to store data about topics that make sense to you or your organization. For example, your company may use PostgreSQL to store inventory information about cellular phones – the product that you sell. In this case, you have created an inventory databaseusing PostgreSQL as your DBMS (from <a href="https://link.springer.com/book/10.1007/978-1-4842-3576-8">SQL Primer</a>, page 14).</p>
+<p>Advantages of Using SQL (from <a href="https://link.springer.com/book/10.1007/978-1-4842-3576-8">SQL Primer</a>, page 17):</p>
+<ol>
+<li>It is standardized – no matter which relational database you choose, it will have an SQL query interpreter built in. The sheer popularity of SQL makes it worth everyone’s time who interacts with a data system.</li>
+<li>It has a reasonable English-like syntax. None of the painstaking detail of programming languages like C or Java have to be specified when using SQL. It is concise, easy to understand, and easy to write database queries with. It is declarative in nature, meaning you only have to declare what you want to achieve rather than going over the steps to achieve the results.</li>
+<li>It allows a uniform way to query and administer a relational database. Many of the database administration commands are standard SQL commands making the transfer of skills much easier.</li>
+<li>It is mature – SQL has been around for over 35 years. While many new features have been added to it, the core of SQL has largely been unchanged. You can derive a lot of utility knowing a few basic SQL concepts and commands, and they will serve you well into the future.</li>
+</ol>
 <p>當 Cloud Server 數量逐年增多後, 除了上述 SQL based 資料庫系統外, 也出現所謂的 NoSQL 資料庫, 例如: <a href="https://www.microsoft.com/zh-tw/sql-server/sql-server-downloads">mongoDB</a>, NoSQL 資料庫的主要特徵是 the database that has no concept of tables, schemas, SQL, or rows. It doesn’t have transactions, ACID compliance, joins, foreign keys. In short, MongoDB is a very different database than you’re probably used to, especially if you’ve used a relational database management system (RDBMS) in the past (from <a href="https://link.springer.com/book/10.1007/978-1-4842-1182-3">The Definitive Guide to mongoDB</a>).</p>
 <p>在網際內容管理課程中將以 <a href="https://www.sqlite.org">SQLite</a>, <a href="https://www.mysql.com/">MySQL</a> 與 <a href="https://www.postgresql.org/">PostgreSQL</a> 在 Flask 網際程式的應用為主, 並介紹如何將網際 SQL based 程式部署到 <a href="https://www.heroku.com/">Heroku</a>.</p>
 <h4>MySQL and PostgreSQL on Heroku:</h4>
@@ -3223,7 +3234,13 @@ for dname, dirs, files in os.walk("path_name"):
 <p style="padding-left: 30px;"><a href="https://gist.github.com/bradtraversy/0029d655269c8a972df726ed0ac56b88">Python Heroku deployment </a></p>
 <h4>Flask peewee:</h4>
 <p style="padding-left: 30px;"><a href="https://github.com/coleifer/flask-peewee">https://github.com/coleifer/flask-peewee</a></p>
-<p style="padding-left: 30px;"><a href="http://docs.peewee-orm.com/en/latest/peewee/example.html">http://docs.peewee-orm.com/en/latest/peewee/example.html</a></p><h2>PostgreSQL</h2>
+<p style="padding-left: 30px;"><a href="http://docs.peewee-orm.com/en/latest/peewee/example.html">http://docs.peewee-orm.com/en/latest/peewee/example.html</a></p>
+<h4>參考資料:</h4>
+<p style="padding-left: 30px;"><a href="https://fossil-scm.org/home/doc/tip/www/tech_overview.wiki">https://fossil-scm.org/home/doc/tip/www/tech_overview.wiki</a> (Fossil SCM 使用 SQLite 格式儲存資料)</p>
+<p style="padding-left: 30px;"><a href="https://en.wikipedia.org/wiki/Fossil_(software)">Fossil SCM 採用 C 與 SQL 語言建立</a></p>
+<p style="padding-left: 30px;"><a href="https://fossil-scm.org/home/doc/trunk/www/theory1.wiki">有關 Fossil SCM 設計的一些想法</a></p>
+<p style="padding-left: 30px;"><a href="https://nedbatchelder.com/blog/201001/d_richard_hipps_software_universe.html">Richard Hipp's Software Universe</a> (<a href="http://www.hwaci.com/sw/lemon/">LEMON</a>, <a href="https://sqlite.org">SQLite</a> and <a href="https://fossil-scm.org">Fossil SCM</a>)</p>
+<p style="padding-left: 30px;"><a href="https://wiki.tcl-lang.org/page/Fossil">Fossil SCM 與 TCL</a></p><h2>PostgreSQL</h2>
 <h4>SQL:</h4>
 <p style="padding-left: 30px;"><a href="https://link.springer.com/book/10.1007/978-1-4842-3576-8">SQL Primer 電子書</a> (在校內網路下載)</p>
 <p style="padding-left: 30px;"><a href="https://link.springer.com/book/10.1007/978-1-4842-1955-3">Beginning SQL Queries</a> (在校內網路下載)</p>
@@ -3253,7 +3270,7 @@ REM 加入 PostgreSQL 所需的環境變數設定
 <p>設定後重新啟動隨身系統, 在命令列中執行 postgres 指令時, 表示要啟動 PostgreSQL 伺服器, 若跳出防火牆視窗, 詢問是否允許 postgres 通過防火牆擷取資料, 即表示上述設定已經生效.</p>
 <p>一旦 PostgreSQL 啟動, 就可以在另一個命令列視窗中輸入 psql -U postgres, 表示要從 client 端連線到 postgres 伺服器, 由於上述 <a href="https://drive.google.com/file/d/1gtrN9TqWDX0OIGyaHhdZyum6zZg832jY/view?usp=sharing">postgresql13_portable.7z</a> 可攜系統將 postgres 伺服器的管理密碼設為 postgres, 因此輸入密碼後即登入 postgres 伺服器, 若要登出則輸入 exit, 命令列執行畫面如下:</p>
 <p><img alt="" height="228" src="/images/postgresql_psql_connect.png" width="600"/></p>
-<p><a href="https://github.com/LintangWisesa/CRUD_Flask_PostgreSQL">https://github.com/LintangWisesa/CRUD_Flask_PostgreSQL</a></p>
+<p>接下來就可以根據 <a href="https://github.com/mdecourse/CRUD_Flask_PostgreSQL">https://github.com/mdecourse/CRUD_Flask_PostgreSQL</a> 中的說明, 在 PostgreSQL 中建立所需的資料庫與資料表.</p>
 <h4>參考範例:</h4>
 <p style="padding-left: 30px;"><a href="https://github.com/Azure-Samples/flask-postgresql-app">https://github.com/Azure-Samples/flask-postgresql-app</a></p>
 <p style="padding-left: 30px;"><a href="https://github.com/czmpacheco/python-flask-postgresql">https://github.com/czmpacheco/python-flask-postgresql</a></p>
