@@ -3270,11 +3270,14 @@ REM 加入 PostgreSQL 所需的環境變數設定
 <p>設定後重新啟動隨身系統, 在命令列中執行 postgres 指令時, 表示要啟動 PostgreSQL 伺服器, 若跳出防火牆視窗, 詢問是否允許 postgres 通過防火牆擷取資料, 即表示上述設定已經生效.</p>
 <p>一旦 PostgreSQL 啟動, 就可以在另一個命令列視窗中輸入 psql -U postgres, 表示要從 client 端連線到 postgres 伺服器, 由於上述 <a href="https://drive.google.com/file/d/1gtrN9TqWDX0OIGyaHhdZyum6zZg832jY/view?usp=sharing">postgresql13_portable.7z</a> 可攜系統將 postgres 伺服器的管理密碼設為 postgres, 因此輸入密碼後即登入 postgres 伺服器, 若要登出則輸入 exit, 命令列執行畫面如下:</p>
 <p><img alt="" height="228" src="/images/postgresql_psql_connect.png" width="600"/></p>
-<p>接下來就可以根據 <a href="https://github.com/mdecourse/CRUD_Flask_PostgreSQL">https://github.com/mdecourse/CRUD_Flask_PostgreSQL</a> 中的說明, 在 PostgreSQL 中建立所需的資料庫與資料表.</p>
+<p>接下來就可以根據 <a href="https://github.com/mdecourse/CRUD_Flask_PostgreSQL">https://github.com/mdecourse/CRUD_Flask_PostgreSQL</a> 中的說明, 在 PostgreSQL 中建立所需的資料庫與資料表. 經過修改後部署至 Heroku: <a href="https://flaskg.herokuapp.com">https://flaskg.herokuapp.com</a> </p>
 <h4>參考範例:</h4>
 <p style="padding-left: 30px;"><a href="https://github.com/Azure-Samples/flask-postgresql-app">https://github.com/Azure-Samples/flask-postgresql-app</a></p>
 <p style="padding-left: 30px;"><a href="https://github.com/czmpacheco/python-flask-postgresql">https://github.com/czmpacheco/python-flask-postgresql</a></p>
 <p style="padding-left: 30px;"><a href="https://github.com/LintangWisesa/CRUD_Flask_PostgreSQL">https://github.com/LintangWisesa/CRUD_Flask_PostgreSQL</a></p>
+<p style="padding-left: 30px;"><a href="https://github.com/twtrubiks/Deploying-Flask-To-Heroku">https://github.com/twtrubiks/Deploying-Flask-To-Heroku</a></p>
+<p style="padding-left: 30px;"><a href="https://rg2021.medium.com/flask-with-sqlalchemy-database-39fc0959609c">https://rg2021.medium.com/flask-with-sqlalchemy-database-39fc0959609c</a></p>
+<p style="padding-left: 30px;"><a href="https://medium.com/analytics-vidhya/heroku-deploy-your-flask-app-with-a-database-online-d19274a7a749">https://medium.com/analytics-vidhya/heroku-deploy-your-flask-app-with-a-database-online-d19274a7a749</a></p>
 <p></p>
 <p></p>
 <p></p><h2>MySQL</h2>
