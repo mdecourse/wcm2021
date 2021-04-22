@@ -101,7 +101,11 @@
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/s5ty-MpnK7c" width="560"></iframe></p>
 <p>說明 topic0 執行動機以及自選組員後所衍生相關資料擷取問題的因應及處理</p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/ZHeFGqNRaDw" width="560"></iframe></p>
-<h3>網頁除錯</h3>
+<h3>Hybrid 系統</h3>
+<p>所謂的 Hybrid 可攜隨身程式系統, 是將非個人專屬的可攜程式檔案放在 C:, 而將 home_ipv4, home_ipv6 與 tmp 等存放個人資料倉儲與 SSH 認證或個人屬性設定的檔案 (如 start_ipv6.bat 與 stop.bat) 放在 USB 隨身碟中.</p>
+<p>由於在建立隨身系統過程 pip.exe 與 leo.exe 等原先置於 Python39\Scripts 下的檔案會直接寫入帶有路徑設定的字串, 在 Hybrid 系統下必須將 python.exe 絕對路徑改為相對路徑.</p>
+<p>而且 SciTE.exe 下的 Python 解譯器設定, 也必須一併改為相對路徑.</p>
+<p>修改 pip.exe 與 leo.exe 中的 python.exe 字串, 可以使用 <a href="https://mh-nexus.de/en/hxd/">https://mh-nexus.de/en/hxd/</a></p><h3>網頁除錯</h3>
 <p>利用 08 倉儲作為範例, 說明若近端的 cmsimde 已經弄亂, 可以重新 git clone 遠端倉儲進行除錯<br/><br/>這個影片最後因為 ssh key 設定錯誤因此在下一個影片才能直接進行 acp.bat 之執行示範.</p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/JlM5FIFo-50" width="560"></iframe></p>
 <p>接續上一個影片, 說明若使用最新 cmsimde 版本, 可以進入 cmsimde 目錄 git pull 後, 從 up_dir 複製 <br/>cms.bat<br/>acp.bat<br/>http-server.py<br/>localhost.crt<br/>localhost.key 至倉儲根目錄後, 再回到根目錄進行 acp "提交訊息" 即可.</p>
