@@ -117,6 +117,8 @@ def svg_draw_robot(svg_img, board, pix_ref, item_frame, item_tool, robot):
 #--------------------------------------------------------------------------------
 # Program start
 RDK = Robolink()
+RDK.IP = "140.130.17.106"
+RDK.APPLICATION_DIR = "C:/robodk522/bin/"
 
 # locate and import the svgpy module
 # Old versions of RoboDK required adding required paths to the process path

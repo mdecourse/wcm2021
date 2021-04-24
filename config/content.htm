@@ -2748,7 +2748,11 @@ cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=2500 SHADER_FRA
 <li>利用 ::17 開啟 Ethercalc 表單, 收集各班學員課程期望分數, 將期中期望成績送至教務主機.</li>
 <li>此一 W1-W9 各學員的期望成績, 將與學員的個人與分組倉儲內容進行比較後, 會反應至學員的期末學期成績中, 若實際評量結果與學員期望成績產生一定差距, 將酌予加減各學員應得之課程學期成績.</li>
 <li>各分組進行 6-12 分鐘 (每一組員簡報時間至多 2 分鐘) 的期中網際簡報, 主要說明各組員 W1-W8 所完成的網站內容, 並透過 ShareX 錄製簡報影片 (簡報前後按下 Shift + PrintScreen, 並採全畫面錄影), 之後會將各組簡報影片送到 GDrive 以供參考.</li>
-</ol><h2>分組專題</h2>
+</ol><h2>W10</h2>
+<p><a href="https://mde.tw/wcm2021/content/SQLite.html">SQLite 練習</a></p>
+<p>目的希望能將之前所寫的各實驗室排課表網際程式, 能將所查詢的資料存入 SQLite, 並且部署到 Heroku.</p>
+<p>之後再將資料庫應用至 PostgreSQL, 最後再將網際資料庫程式部署到 Heroku.</p>
+<p>若該網際程式配置 Oauth2 的登入套件, 即可延伸應用至各實驗室上課時段外的實驗室借用管理系統. 若再利用雲端點名系統 RFID 掃描的感應開門, 將可擴大此系統的應用範圍.</p><h2>分組專題</h2>
 <h4>Solvespace 3D 參數設計繪圖建立零組件 (<a href="https://solvespace.com">Solvespace</a> 編譯與<a href="http://www.farwire.net/SolveSpace-LearningGuide.htm">應用</a>):</h4>
 <ol>
 <li>轉入 <a href="https://www.coppeliarobotics.com/">CoppeliaSim</a> 組合為機電系統 (<a href="/downloads/stl_format.pdf">STL 零件格式</a>, <a href="https://en.wikipedia.org/wiki/STL_(file_format)">STL file format</a>, <a href="/downloads/stl-viewer_python_tkinter_pygame.7z">STL viewer in Tkinter and Pygame.7z</a>, <a href="/downloads/STL-3D-Rasterer_pygame_opengl.7z">STL-3D-Rasterer_pygame_opengl.7z</a>, <a href="https://github.com/admesh/python-admesh">ADMesh</a>)</li>
@@ -3240,7 +3244,16 @@ for dname, dirs, files in os.walk("path_name"):
 <p style="padding-left: 30px;"><a href="https://en.wikipedia.org/wiki/Fossil_(software)">Fossil SCM 採用 C 與 SQL 語言建立</a></p>
 <p style="padding-left: 30px;"><a href="https://fossil-scm.org/home/doc/trunk/www/theory1.wiki">有關 Fossil SCM 設計的一些想法</a></p>
 <p style="padding-left: 30px;"><a href="https://nedbatchelder.com/blog/201001/d_richard_hipps_software_universe.html">Richard Hipp's Software Universe</a> (<a href="http://www.hwaci.com/sw/lemon/">LEMON</a>, <a href="https://sqlite.org">SQLite</a> and <a href="https://fossil-scm.org">Fossil SCM</a>)</p>
-<p style="padding-left: 30px;"><a href="https://wiki.tcl-lang.org/page/Fossil">Fossil SCM 與 TCL</a></p><h2>PostgreSQL</h2>
+<p style="padding-left: 30px;"><a href="https://wiki.tcl-lang.org/page/Fossil">Fossil SCM 與 TCL</a></p><h2>SQLite</h2>
+<h4>利用 <a href="https://www.sqlite.org">SQLite</a> 儲存 Flask 網際程式的檔案:</h4>
+<p style="padding-left: 30px;"><a href="https://github.com/mdecourse/lookupdict">https://github.com/mdecourse/lookupdict</a> </p>
+<p style="padding-left: 30px;"><a href="https://github.com/mdecourse/wcms-scrum1">https://github.com/mdecourse/wcms-scrum1</a></p>
+<p>以 <a href="https://www.msys2.org/">Msys2</a> 自行編譯 <a href="https://sqlite.org/src/doc/trunk/README.md">SQLite 原始碼</a>.</p>
+<p>利用 Python 批次建立 Fossil SCM 使用者帳號：</p>
+<p style="padding-left: 30px;"><a href="http://lab.kmol.info/blog/Year-2017-Conclusion.html">http://lab.kmol.info/blog/Year-2017-Conclusion.html</a> (寄信程式必須改為 Gmail API)</p>
+<h4>實習目的:</h4>
+<p style="padding-left: 30px;">利用較簡單的 SQLite 練習 SQL 語法</p>
+<p style="padding-left: 30px;">Python 透過 <a href="https://github.com/coleifer/peewee">peewee</a> <a href="https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping">ORM</a> 連接資料庫</p><h2>PostgreSQL</h2>
 <h4>SQL:</h4>
 <p style="padding-left: 30px;"><a href="https://link.springer.com/book/10.1007/978-1-4842-3576-8">SQL Primer 電子書</a> (在校內網路下載)</p>
 <p style="padding-left: 30px;"><a href="https://link.springer.com/book/10.1007/978-1-4842-1955-3">Beginning SQL Queries</a> (在校內網路下載)</p>
