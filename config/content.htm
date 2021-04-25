@@ -2754,6 +2754,12 @@ cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=2500 SHADER_FRA
 <li>各分組進行 6-12 分鐘 (每一組員簡報時間至多 2 分鐘) 的期中網際簡報, 主要說明各組員 W1-W8 所完成的網站內容, 並透過 ShareX 錄製簡報影片 (簡報前後按下 Shift + PrintScreen, 並採全畫面錄影), 之後會將各組簡報影片送到 GDrive 以供參考.</li>
 &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
 </ol><h2>W10</h2>
+<p>網際內容管理系統下半學期將有以下幾個主要教學目標:</p>
+<ol>
+<li>對 <span style="background-color: #ffff99;">Python Flask 網際程式</span>的架構更加深入, 各學員不僅會利用 <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautifulsoup</a> 從學校教務主機擷取資料, 建立 <a href="https://www.heroku.com/">Heroku</a> 雲端應用程式, 列出各實驗室的排課資訊外, 能計算各實驗室的排課總時數, 同時也能將查得的資料分別存入 SQLite 與 PostgreSQL 資料庫.</li>
+<li>要求學員有能力<span style="background-color: #ffff99;">自行編寫</span>如<a href="https://github.com/mdecourse/scissor-rock-paper2">網際猜拳</a>, <a href="https://github.com/mdecourse/lookupdict">網際英英字典</a> (<a href="http://lookupdict.herokuapp.com/">http://lookupdict.herokuapp.com/</a>), 以及其他與<a href="https://github.com/mdecourse/wcms-scrum1">機械設計較相關的網際程式</a> (包括<a href="https://wcms-scrum1.herokuapp.com/drawflag">猜數字遊戲</a>, <a href="https://wcms-scrum1.herokuapp.com/gear_index">正齒輪齒面寬設計</a>, <a href="https://wcms-scrum1.herokuapp.com/drawflag">2D 繪圖</a>等).</li>
+<li>編寫能夠協助 CMSiMDE <span style="background-color: #ffff99;">分頁</span>錯誤時進行 debug 的<span style="background-color: #ffff99;">輔助程式</span> (擬採用 <a href="https://github.com/PySimpleGUI/PySimpleGUI">https://github.com/PySimpleGUI/PySimpleGUI</a> or <a href="https://github.com/dddomodossola/remi">https://github.com/dddomodossola/remi</a> 進行測試), 假如要讓 CMSiMDE 能夠透過中文斷字 (<a href="https://github.com/fxsjy/jieba">https://github.com/fxsjy/jieba</a>), 試著解讀網際內容管理的關鍵字, 進而了解網站的內容屬性.</li>
+</ol>
 <p><a href="https://mde.tw/wcm2021/content/SQLite.html">SQLite 練習</a></p>
 <p>目的希望能將之前所寫的各實驗室排課表網際程式, 能將所查詢的資料存入 SQLite, 並且部署到 Heroku.</p>
 <p>之後再將資料庫應用至 PostgreSQL, 最後再將網際資料庫程式部署到 Heroku.</p>
