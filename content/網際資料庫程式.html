@@ -136,11 +136,160 @@ img.add_border {
         </header>
     <div id="tipue_search_content">W10 << <a href='W10.html'>Previous</a> <a href='網際機械設計程式.html'>Next</a> >> 網際機械設計程式<br /><h1>網際資料庫程式</h1>
 <h4>下半學期的教學目標之一:</h4>
-<p>對 <span style="background-color: #ffff99;">Python Flask 網際程式</span>的架構更加深入, 各學員不僅會利用 <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautifulsoup</a> 從學校教務主機擷取資料, 建立 <a href="https://www.heroku.com/">Heroku</a> 雲端應用程式, 列出各實驗室的排課資訊外, 能計算各實驗室的排課總時數, 同時也能將查得的資料分別存入 SQLite 與 PostgreSQL 資料庫 (flaskg 範例<a href="https://github.com/mdecourse/flaskg">倉儲</a>與<a href="https://flaskg.herokuapp.com/">網站</a>).</p>
+<p>對 <span style="background-color: #ffff99;">Python Flask 網際程式</span>的架構能夠更加深入了解, 各學員不僅會利用 <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautifulsoup</a> 從學校教務主機擷取資料, 建立 <a href="https://www.heroku.com/">Heroku</a> 雲端應用程式, 列出各實驗室的排課資訊外, 能計算各實驗室的排課總時數, 同時也能將查得的資料分別存入 SQLite 與 PostgreSQL 資料庫 (flaskg 範例<a href="https://github.com/mdecourse/flaskg">倉儲</a>與<a href="https://flaskg.herokuapp.com/">網站</a>).</p>
 <p>請各組練習 <a href="./../downloads/flask-peewee-blogger-example.7z">flask-peewee-blogger-example.7z</a> 中, 將資料存入 SQLite 資料庫中, 並在自行配置的 Virtualbox Windows 10 與 Ubuntu 20.04 中執行. 若要讓 Flask 能更有效率地執行, 在 Ubuntu 中必須設法以 <a href="https://uwsgi-docs.readthedocs.io/en/latest/">uwsgi</a> 方式執行</p>
 <p>ORM 使用: <a href="https://github.com/coleifer/peewee">https://github.com/coleifer/peewee</a></p>
 <p>資料庫使用: <a href="https://www.sqlite.org">https://www.sqlite.org</a></p>
-<p>一旦了解如何將網際資料存入 SQLite 資料庫, 請各組改寫 <a href="https://github.com/mdecourse/nfumde">https://github.com/mdecourse/nfumde</a> 網際程式, 另其能在自架 Virtualbox Ubuntu 20.04 伺服器中執行. 得到與 <a href="http://nfumde.herokuapp.com/tabl">http://nfumde.herokuapp.com/tabl</a>e 相同的結果.</p><br />W10 << <a href='W10.html'>Previous</a> <a href='網際機械設計程式.html'>Next</a> >> 網際機械設計程式</div>
+<p>一旦了解如何將網際資料存入 SQLite 資料庫, 請各組改寫 <a href="https://github.com/mdecourse/nfumde">https://github.com/mdecourse/nfumde</a> 網際程式, 令其能在自架 Virtualbox Ubuntu 20.04 伺服器中執行. 得到與 <a href="http://nfumde.herokuapp.com/tabl">http://nfumde.herokuapp.com/tabl</a>e 相同的結果.</p>
+<h4>以下為希望將電腦輔助設計室排課時段資料存入資料庫的 local 程式版本:</h4>
+<p><a href="./../downloads/w1_classroom_local_db_ready.py">w1_classroom_local_db_ready.py</a></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
+import bs4
+# for os.environ and os.system
+import os
+# for geting html file path
+import pathlib
+import re
+
+# 為了讓程式能夠同時在 Leo Editor 與 SciTE 中執行列印
+# 特別建立 leoprint 函式
+# *args 表示 leoprint 可以接受任意數量的輸入變數
+def leoprint(*args):
+    try:
+        g.es(*args)
+    except:
+        print(*args)
+
+# for pythn 3.9
+proxy = 'http://[2001:288:6004:17::53]:3128'
+
+os.environ['http_proxy'] = proxy 
+os.environ['HTTP_PROXY'] = proxy
+os.environ['https_proxy'] = proxy
+os.environ['HTTPS_PROXY'] = proxy
+
+'''
+url:  'jclassroom_ajax.php',
+data: { pselyr: pselyr, pselclssroom: pselclssroom },
+'''
+semester = '1092'
+classroomno = 'BGA0810'
+column = True
+
+if semester == None:
+    semester = '1092'
+if classroomno == None:
+    # BGA0810 電腦輔助設計室
+    classroomno = 'BGA0810'
+    
+headers = {'X-Requested-With': 'XMLHttpRequest'}
+
+url = 'https://qry.nfu.edu.tw/jclassroom_ajax.php'
+post_var = {'pselyr': semester, 'pselclssroom': classroomno}
+
+result = requests.post(url, data = post_var, headers = headers)
+
+soup = bs4.BeautifulSoup(result.content, 'lxml')
+
+# 先除掉所有 anchor
+for a in soup.findAll('a'):
+    # bs3 語法
+    #a.replaceWithChildren()
+    # bs4 語法, 將標註與內容拆開
+    a.unwrap()
+
+# 根據輸出設定, 取出 class='tbcls' 的 table 資料
+table = soup.find('table', {'class': 'tbcls'})
+
+# 以下要準備能夠輸入資料庫的排課時段資料 #########################
+tds = [row.findAll('td') for row in table.findAll('tr')]
+#leoprint(tds)
+count = 0
+row = 0
+results = {}
+for td in tds:
+    row = row + 1
+    for i in range(len(td)):
+        if i != 0 and td[i].text != "\xa0":
+            leoprint("星期"+str(i), "第"+str(row-2) + "節-", re.sub('&lt;[^&lt;]+?&gt;', '', td[i].text))
+            count = count + 1
+    #leoprint("***************")
+leoprint("total:" + str(count))
+# 以上已經取得能夠輸入資料庫的排課時段資料 ######################
+
+# ########## 以下程式碼用來計算排課節數 ###########################
+# 以下取出 td 標註資料
+table_data = [i.text for i in table.find_all('td')]
+#leoprint(table_data)
+timeTable = []
+# 去除非排課欄位資料內容
+for i in table_data:
+    if not "虎尾科技" in i and not "節" in i and not "\xa0" in i:
+        timeTable.append(i)
+#leoprint(len(timeTable))
+totalNum = len(timeTable)
+# ########## 以上程式碼用來計算排課節數 ##########################
+
+# 重建 table, 設定邊線為 1 pixel
+output = "總排課節數: " + str(totalNum) + "&lt;br /&gt;&lt;br /&gt;&lt;table border='1'&gt;"
+
+for i in table.contents:
+    # 利用 replace 復原  
+    output += str(i).replace("&amp;nbsp", " ")
+output += "&lt;/table&gt;"
+
+#leoprint(output)
+
+'''
+# 將 output 寫入 w1_classroom.html
+fileName = "w1_classroom.html"
+with open(fileName, "w", encoding="utf-8") as file:
+    file.write(output)
+# 利用 os.system() 以 default browser 開啟 w1_class_local.html
+filePath = pathlib.Path(__file__).parent.absolute()
+#print(filePath)
+# set firefox as default browser and start url to open html file
+os.system("start file:///" + str(filePath) + "\\" + fileName)
+'''</pre>
+<h4>執行後的輸出結果為:</h4>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">星期1 第1節- 四設計一甲工廠實習(二)CNC及CAM實習蕭俊卿
+星期3 第1節- 四設計三乙工程設計周榮源
+星期1 第2節- 四設計一甲工廠實習(二)CNC及CAM實習蕭俊卿
+星期2 第2節- 四設計二攜電腦輔助設計實習蕭俊卿
+星期3 第2節- 四設計三乙工程設計周榮源
+星期4 第2節- 四設計一甲網際內容管理嚴家銘
+星期5 第2節- 五精一甲網際內容管理嚴家銘
+星期1 第3節- 四設計一甲工廠實習(二)CNC及CAM實習蕭俊卿
+星期2 第3節- 四設計二攜電腦輔助設計實習蕭俊卿
+星期3 第3節- 四設計三乙工程設計周榮源
+星期4 第3節- 四設計一甲網際內容管理嚴家銘
+星期5 第3節- 五精一甲網際內容管理嚴家銘
+星期2 第4節- 四設計二攜電腦輔助設計實習蕭俊卿
+星期3 第4節- 四設計三乙工程設計周榮源
+星期4 第4節- 四設計一甲網際內容管理嚴家銘
+星期5 第4節- 五精一甲網際內容管理嚴家銘
+星期1 第5節- 五精三甲數控加工實習(二)林啓仁
+星期2 第5節- 四設計三甲工程設計周榮源
+星期3 第5節- 四設計二攜機器動力學黃運琳
+星期4 第5節- 四設計二甲協同產品設計實習嚴家銘
+星期5 第5節- 四設計二乙協同產品設計實習嚴家銘
+星期1 第6節- 五精三甲數控加工實習(二)林啓仁
+星期2 第6節- 四設計三甲工程設計周榮源
+星期3 第6節- 四設計二攜機器動力學黃運琳
+星期4 第6節- 四設計二甲協同產品設計實習嚴家銘
+星期5 第6節- 四設計二乙協同產品設計實習嚴家銘
+星期1 第7節- 五精三甲數控加工實習(二)林啓仁
+星期2 第7節- 四設計三甲工程設計周榮源
+星期3 第7節- 四設計二攜機器動力學黃運琳
+星期4 第7節- 四設計二甲協同產品設計實習嚴家銘
+星期5 第7節- 四設計二乙協同產品設計實習嚴家銘
+星期2 第8節- 四設計三甲工程設計周榮源
+星期4 第8節- 四設計二甲協同產品設計實習嚴家銘
+星期5 第8節- 四設計二乙協同產品設計實習嚴家銘
+total:34</pre>
+<h4>練習題目:</h4>
+<p style="padding-left: 30px;">請各組員嘗試將上述實驗室排課表程式的排課時段查詢結果, 分別存入 SQLite 與 PostgreSQL 資料庫.</p>
+<p></p><br />W10 << <a href='W10.html'>Previous</a> <a href='網際機械設計程式.html'>Next</a> >> 網際機械設計程式</div>
         
     <!-- footer -->
       <div class="container">
