@@ -1,3 +1,6 @@
+
+# 使用 peewee ORM
+from peewee import SqliteDatabase, Model, CharField, TextField, IntegerField, MySQLDatabase
 import requests
 import bs4
 # for os.environ and os.system
@@ -14,7 +17,30 @@ def leoprint(*args):
         g.es(*args)
     except:
         print(*args)
+        
+ormdb = "sqlite"
+
+if ormdb == "sqlite":
+    # 針對 sqlite3 指定資料庫檔案
+    db = SqliteDatabase("./course.db", check_same_thread=False)
+    db.connection()
+
+# 在此建立資料表欄位
+class Course(Model):
+    # peewee 內定 id 為 PrimaryKey
+    #id = PrimaryKey()
+    semester = CharField()
+    classroomno = CharField()
+    week = CharField()
+    session = CharField()
+    content = CharField()
+    memo = TextField()
+
+    class Meta:
+        database = db # This model uses the ./+"course.db" database.   
+
 '''
+# 在 Mac 執行不需要設定  proxy
 # for pythn 3.9
 proxy = 'http://[2001:288:6004:17::53]:3128'
 
@@ -68,6 +94,15 @@ for td in tds:
         if i != 0 and td[i].text != "\xa0":
             leoprint("星期"+str(i), "第"+str(row-2) + "節-", re.sub('<[^<]+?>', '', td[i].text))
             count = count + 1
+            #######
+            #semester
+            #classroomno
+            week = str(i)
+            session = str(row-2)
+            content = re.sub('<[^<]+?>', '', td[i].text)
+            memo = ""
+            data = Course.create(semester=semester, classroomno=classroomno, week=week, session=session, content=content, memo=memo)
+            data.save()
     #leoprint("***************")
 leoprint("total:" + str(count))
 # 以上已經取得能夠輸入資料庫的排課時段資料 ######################
@@ -94,15 +129,5 @@ for i in table.contents:
 output += "</table>"
 
 #leoprint(output)
-
-'''
-# 將 output 寫入 w1_classroom.html
-fileName = "w1_classroom.html"
-with open(fileName, "w", encoding="utf-8") as file:
-    file.write(output)
-# 利用 os.system() 以 default browser 開啟 w1_class_local.html
-filePath = pathlib.Path(__file__).parent.absolute()
-#print(filePath)
-# set firefox as default browser and start url to open html file
-os.system("start file:///" + str(filePath) + "\\" + fileName)
-'''
+db.close()
+leoprint("done")
