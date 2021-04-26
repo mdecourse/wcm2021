@@ -21,11 +21,13 @@ def leoprint(*args):
 ormdb = "sqlite"
 
 if ormdb == "sqlite":
-    # 針對 sqlite3 指定資料庫檔案
+    # 針對 sqlite3 指定資料庫檔案, check_same_thread 設為 False, 表示資料庫可以跨執行緒
     db = SqliteDatabase("./course.db", check_same_thread=False)
     db.connection()
 
 # 在此建立資料表欄位
+# 因為 peewee class Meta 的 legacy_table_names=True, 因此當 class 名稱為 Course
+# peewee 會自動假設資料表的名稱為 course.db
 class Course(Model):
     # peewee 內定 id 為 PrimaryKey
     #id = PrimaryKey()
