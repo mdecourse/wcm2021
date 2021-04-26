@@ -2752,9 +2752,206 @@ cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=2500 SHADER_FRA
 <li>利用 ::17 開啟 Ethercalc 表單, 收集各班學員課程期望分數, 將期中期望成績送至教務主機.</li>
 <li>此一 W1-W9 各學員的期望成績, 將與學員的個人與分組倉儲內容進行比較後, 會反應至學員的期末學期成績中, 若實際評量結果與學員期望成績產生一定差距, 將酌予加減各學員應得之課程學期成績.</li>
 <li>各分組進行 6-12 分鐘 (每一組員簡報時間至多 2 分鐘) 的期中網際簡報, 主要說明各組員 W1-W8 所完成的網站內容, 並透過 ShareX 錄製簡報影片 (簡報前後按下 Shift + PrintScreen, 並採全畫面錄影), 之後會將各組簡報影片送到 GDrive 以供參考.</li>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+</ol><h2>W10</h2>
+<p>網際內容管理系統下半學期將有以下幾個主要教學目標:</p>
+<ol>
+<li>對 <span style="background-color: #ffff99;">Python Flask 網際程式</span>的架構能夠更加深入了解, 各學員不僅會利用 <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautifulsoup</a> 從學校教務主機擷取資料, 建立 <a href="https://www.heroku.com/">Heroku</a> 雲端應用程式, 列出各實驗室的排課資訊外, 能計算各實驗室的排課總時數, 同時也能將查得的資料分別存入 SQLite 與 PostgreSQL 資料庫 (flaskg 範例<a href="https://github.com/mdecourse/flaskg">倉儲</a>與<a href="https://flaskg.herokuapp.com/">網站</a>).</li>
+<li>要求學員有能力<span style="background-color: #ffff99;">自行編寫</span>如<a href="https://github.com/mdecourse/scissor-rock-paper2">網際猜拳</a>, <a href="https://github.com/mdecourse/lookupdict">網際英英字典</a> (<a href="http://lookupdict.herokuapp.com/">http://lookupdict.herokuapp.com</a>, 採 scrum1 At mde 部署), 以及其他與<a href="https://github.com/mdecourse/wcms-scrum1">機械設計較相關的網際程式</a> (包括<a href="https://wcms-scrum1.herokuapp.com/drawflag">猜數字遊戲</a>, <a href="https://wcms-scrum1.herokuapp.com/gear_index">正齒輪齒面寬設計</a>, <a href="https://wcms-scrum1.herokuapp.com/drawflag">2D 繪圖</a>等).</li>
+<li>利用 <a href="https://robodk.com/">RoboDK</a> 作為整合英文, 數學與網際內容管理相關技術的測試工具, 希望能夠透過網際程式控制特定的六軸機械手臂 (<a href="https://robodk.com/blog/online-programming/">參考</a>, <a href="https://robodk.com/doc/en/Basic-Guide.html">Guide</a>).</li>
+<li>編寫能夠協助 CMSiMDE <span style="background-color: #ffff99;">分頁</span>錯誤時進行 debug 的<span style="background-color: #ffff99;">輔助程式</span> (擬採用 <a href="https://github.com/PySimpleGUI/PySimpleGUI">https://github.com/PySimpleGUI/PySimpleGUI</a> or <a href="https://github.com/dddomodossola/remi">https://github.com/dddomodossola/remi</a> 進行測試), 假如要讓 CMSiMDE 能夠透過中文斷字 (<a href="https://github.com/fxsjy/jieba">https://github.com/fxsjy/jieba</a>), 試著解讀網際內容管理的關鍵字, 進而了解網站的內容屬性.</li>
 </ol>
-<p><a href="https://drive.google.com/drive/folders/1OyEy67kGXiNjQSccad3Fd0H_59paqOiU?usp=sharing">分組報告影片</a></p><h2>分組專題</h2>
-<h4>Solvespace 3D 參數設計繪圖建立零組件 (<a href="https://solvespace.com">Solvespace</a> 編譯與<a href="http://www.farwire.net/SolveSpace-LearningGuide.htm">應用</a>):</h4>
+<p>根據下圖所示, 四年前所部署的 <a href="https://wcms-scrum1.herokuapp.com/">https://wcms-scrum1.herokuapp.com/</a> 所使用的 The Heroku-16 stack is deprecated, 意即 <a href="https://help.heroku.com/0S5P41DC/heroku-16-end-of-life-faq">Heroku-16 stack</a> 將要在 2021.06.01 終止 build 功能, 因此部署在此雲端硬體平台的應用程式, 若要持續改版, 必須要在生命週期結束之前搬遷到其他硬體平台上:</p>
+<p><img alt="" height="304" src="/images/heroku-16_deprecated.png" width="600"/></p>
+<p><a href="https://mde.tw/wcm2021/content/SQLite.html">SQLite 練習</a></p>
+<p>目的希望能將之前所寫的各實驗室排課表網際程式, 能將所查詢的資料存入 SQLite, 並且部署到 Heroku.</p>
+<p>之後再將資料庫應用至 PostgreSQL, 最後再將網際資料庫程式部署到 Heroku.</p>
+<p>若該網際程式配置 Oauth2 的登入套件, 即可延伸應用至各實驗室上課時段外的實驗室借用管理系統. 若再利用雲端點名系統 RFID 掃描的感應開門, 將可擴大此系統的應用範圍.</p><h3>網際資料庫程式</h3>
+<h4>下半學期的教學目標之一:</h4>
+<p>對 <span style="background-color: #ffff99;">Python Flask 網際程式</span>的架構能夠更加深入了解, 各學員不僅會利用 <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautifulsoup</a> 從學校教務主機擷取資料, 建立 <a href="https://www.heroku.com/">Heroku</a> 雲端應用程式, 列出各實驗室的排課資訊外, 能計算各實驗室的排課總時數, 同時也能將查得的資料分別存入 SQLite 與 PostgreSQL 資料庫 (flaskg 範例<a href="https://github.com/mdecourse/flaskg">倉儲</a>與<a href="https://flaskg.herokuapp.com/">網站</a>).</p>
+<p>請各組練習 <a href="/downloads/flask-peewee-blogger-example.7z">flask-peewee-blogger-example.7z</a> 中, 將資料存入 SQLite 資料庫中, 並在自行配置的 Virtualbox Windows 10 與 Ubuntu 20.04 中執行. 若要讓 Flask 能更有效率地執行, 在 Ubuntu 中必須設法以 <a href="https://uwsgi-docs.readthedocs.io/en/latest/">uwsgi</a> 方式執行</p>
+<p>ORM 使用: <a href="https://github.com/coleifer/peewee">https://github.com/coleifer/peewee</a></p>
+<p>資料庫使用: <a href="https://www.sqlite.org">https://www.sqlite.org</a></p>
+<p>一旦了解如何將網際資料存入 SQLite 資料庫, 請各組改寫 <a href="https://github.com/mdecourse/nfumde">https://github.com/mdecourse/nfumde</a> 網際程式, 令其能在自架 Virtualbox Ubuntu 20.04 伺服器中執行. 得到與 <a href="http://nfumde.herokuapp.com/tabl">http://nfumde.herokuapp.com/tabl</a>e 相同的結果.</p>
+<h4>以下為希望將電腦輔助設計室排課時段資料存入資料庫的 local 程式版本:</h4>
+<p><a href="/downloads/w1_classroom_local_db_ready.py">w1_classroom_local_db_ready.py</a></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
+import bs4
+# for os.environ and os.system
+import os
+# for geting html file path
+import pathlib
+import re
+
+# 為了讓程式能夠同時在 Leo Editor 與 SciTE 中執行列印
+# 特別建立 leoprint 函式
+# *args 表示 leoprint 可以接受任意數量的輸入變數
+def leoprint(*args):
+    try:
+        g.es(*args)
+    except:
+        print(*args)
+
+# for pythn 3.9
+proxy = 'http://[2001:288:6004:17::53]:3128'
+
+os.environ['http_proxy'] = proxy 
+os.environ['HTTP_PROXY'] = proxy
+os.environ['https_proxy'] = proxy
+os.environ['HTTPS_PROXY'] = proxy
+
+'''
+url:  'jclassroom_ajax.php',
+data: { pselyr: pselyr, pselclssroom: pselclssroom },
+'''
+semester = '1092'
+classroomno = 'BGA0810'
+column = True
+
+if semester == None:
+    semester = '1092'
+if classroomno == None:
+    # BGA0810 電腦輔助設計室
+    classroomno = 'BGA0810'
+    
+headers = {'X-Requested-With': 'XMLHttpRequest'}
+
+url = 'https://qry.nfu.edu.tw/jclassroom_ajax.php'
+post_var = {'pselyr': semester, 'pselclssroom': classroomno}
+
+result = requests.post(url, data = post_var, headers = headers)
+
+soup = bs4.BeautifulSoup(result.content, 'lxml')
+
+# 先除掉所有 anchor
+for a in soup.findAll('a'):
+    # bs3 語法
+    #a.replaceWithChildren()
+    # bs4 語法, 將標註與內容拆開
+    a.unwrap()
+
+# 根據輸出設定, 取出 class='tbcls' 的 table 資料
+table = soup.find('table', {'class': 'tbcls'})
+
+# 以下要準備能夠輸入資料庫的排課時段資料 #########################
+tds = [row.findAll('td') for row in table.findAll('tr')]
+#leoprint(tds)
+count = 0
+row = 0
+results = {}
+for td in tds:
+    row = row + 1
+    for i in range(len(td)):
+        if i != 0 and td[i].text != "\xa0":
+            leoprint("星期"+str(i), "第"+str(row-2) + "節-", re.sub('&lt;[^&lt;]+?&gt;', '', td[i].text))
+            count = count + 1
+    #leoprint("***************")
+leoprint("total:" + str(count))
+# 以上已經取得能夠輸入資料庫的排課時段資料 ######################
+
+# ########## 以下程式碼用來計算排課節數 ###########################
+# 以下取出 td 標註資料
+table_data = [i.text for i in table.find_all('td')]
+#leoprint(table_data)
+timeTable = []
+# 去除非排課欄位資料內容
+for i in table_data:
+    if not "虎尾科技" in i and not "節" in i and not "\xa0" in i:
+        timeTable.append(i)
+#leoprint(len(timeTable))
+totalNum = len(timeTable)
+# ########## 以上程式碼用來計算排課節數 ##########################
+
+# 重建 table, 設定邊線為 1 pixel
+output = "總排課節數: " + str(totalNum) + "&lt;br /&gt;&lt;br /&gt;&lt;table border='1'&gt;"
+
+for i in table.contents:
+    # 利用 replace 復原  
+    output += str(i).replace("&amp;nbsp", " ")
+output += "&lt;/table&gt;"
+
+#leoprint(output)
+
+'''
+# 將 output 寫入 w1_classroom.html
+fileName = "w1_classroom.html"
+with open(fileName, "w", encoding="utf-8") as file:
+    file.write(output)
+# 利用 os.system() 以 default browser 開啟 w1_class_local.html
+filePath = pathlib.Path(__file__).parent.absolute()
+#print(filePath)
+# set firefox as default browser and start url to open html file
+os.system("start file:///" + str(filePath) + "\\" + fileName)
+'''</pre>
+<h4>執行後的輸出結果為:</h4>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">星期1 第1節- 四設計一甲工廠實習(二)CNC及CAM實習蕭俊卿
+星期3 第1節- 四設計三乙工程設計周榮源
+星期1 第2節- 四設計一甲工廠實習(二)CNC及CAM實習蕭俊卿
+星期2 第2節- 四設計二攜電腦輔助設計實習蕭俊卿
+星期3 第2節- 四設計三乙工程設計周榮源
+星期4 第2節- 四設計一甲網際內容管理嚴家銘
+星期5 第2節- 五精一甲網際內容管理嚴家銘
+星期1 第3節- 四設計一甲工廠實習(二)CNC及CAM實習蕭俊卿
+星期2 第3節- 四設計二攜電腦輔助設計實習蕭俊卿
+星期3 第3節- 四設計三乙工程設計周榮源
+星期4 第3節- 四設計一甲網際內容管理嚴家銘
+星期5 第3節- 五精一甲網際內容管理嚴家銘
+星期2 第4節- 四設計二攜電腦輔助設計實習蕭俊卿
+星期3 第4節- 四設計三乙工程設計周榮源
+星期4 第4節- 四設計一甲網際內容管理嚴家銘
+星期5 第4節- 五精一甲網際內容管理嚴家銘
+星期1 第5節- 五精三甲數控加工實習(二)林啓仁
+星期2 第5節- 四設計三甲工程設計周榮源
+星期3 第5節- 四設計二攜機器動力學黃運琳
+星期4 第5節- 四設計二甲協同產品設計實習嚴家銘
+星期5 第5節- 四設計二乙協同產品設計實習嚴家銘
+星期1 第6節- 五精三甲數控加工實習(二)林啓仁
+星期2 第6節- 四設計三甲工程設計周榮源
+星期3 第6節- 四設計二攜機器動力學黃運琳
+星期4 第6節- 四設計二甲協同產品設計實習嚴家銘
+星期5 第6節- 四設計二乙協同產品設計實習嚴家銘
+星期1 第7節- 五精三甲數控加工實習(二)林啓仁
+星期2 第7節- 四設計三甲工程設計周榮源
+星期3 第7節- 四設計二攜機器動力學黃運琳
+星期4 第7節- 四設計二甲協同產品設計實習嚴家銘
+星期5 第7節- 四設計二乙協同產品設計實習嚴家銘
+星期2 第8節- 四設計三甲工程設計周榮源
+星期4 第8節- 四設計二甲協同產品設計實習嚴家銘
+星期5 第8節- 四設計二乙協同產品設計實習嚴家銘
+total:34</pre>
+<h4>練習題目:</h4>
+<p style="padding-left: 30px;">請各組員嘗試將上述實驗室排課表程式的排課時段查詢結果, 分別存入 SQLite 與 PostgreSQL 資料庫.</p>
+<p style="padding-left: 30px;">資料表 (table) 設計:</p>
+<p style="padding-left: 30px;">table 名稱: course</p>
+<p style="padding-left: 30px;">id - 序號</p>
+<p style="padding-left: 30px;">semester - 排課學期</p>
+<p style="padding-left: 30px;">classroomno - 實驗室代號</p>
+<p style="padding-left: 30px;">week - 排課星期</p>
+<p style="padding-left: 30px;">session - 排課節次</p>
+<p style="padding-left: 30px;">content - 排課內容 (包含班級, 教師與課程名稱)</p>
+<p style="padding-left: 30px;">memo - 備註</p><h3>網際機械設計程式</h3>
+<h4>下半學期的教學目標之二:</h4>
+<h4>基本網際程式:</h4>
+<p style="padding-left: 30px;">要求學員有能力<span style="background-color: #ffff99;">自行編寫</span>如<a href="https://github.com/mdecourse/scissor-rock-paper2">網際猜拳</a>, <a href="https://github.com/mdecourse/lookupdict">網際英英字典</a> (<a href="http://lookupdict.herokuapp.com/">http://lookupdict.herokuapp.com</a>, 採 scrum1 At mde 部署), 以及其他與<a href="https://github.com/mdecourse/wcms-scrum1">機械設計較相關的網際程式</a> (包括<a href="https://wcms-scrum1.herokuapp.com/drawflag">猜數字遊戲</a>, <a href="https://wcms-scrum1.herokuapp.com/gear_index">正齒輪齒面寬設計</a>, <a href="https://wcms-scrum1.herokuapp.com/drawflag">2D 繪圖</a>等).</p>
+<h4>參數式機械電腦輔助繪圖程式:</h4>
+<p style="padding-left: 30px;">從 <a href="http://mde.tw/cad2020/content/HW1_SW.html">http://mde.tw/cad2020/content/HW1_SW.html</a> 已知可以利用 Python 與 Solidworks API 操控零件尺寸, 因此可以設法在一台已經安裝 Solidworks 的 Windows 10 電腦上部署 Flask 網際程式, 提供網際零件檔案上傳功能 (可取自 CMSiMDE), 並提供零件尺寸變更表單, 讓使用者透過網際介面操控已經上傳零件的參數尺寸.</p>
+<p style="padding-left: 30px;">相同的網際程式架構, 也可以套用至 AutoDesk Inventor: <a href="http://mde.tw/cad2020/content/HW1_INV.html">http://mde.tw/cad2020/content/HW1_INV.html</a></p>
+<p style="padding-left: 30px;">相同的網際程式架構, 也可以套用至 NX12: <a href="http://mde.tw/cad2020/content/HW1_NX.html">http://mde.tw/cad2020/content/HW1_NX.html</a></p>
+<p style="padding-left: 60px;"><a href="http://mde.tw/cad2019/downloads/NX%20Installation%20Guide%20for%20Linux%20and%20Mac%20OS%20X.pdf">http://mde.tw/cad2019/downloads/NX Installation Guide for Linux and Mac OS X.pdf</a></p><h3>網際 Robot 程式</h3>
+<h4>下半學期的教學目標之三:</h4>
+<p>利用 <a href="https://robodk.com/">RoboDK</a> 作為整合英文, 數學與網際內容管理相關技術的測試工具, 希望能夠透過網際程式控制特定的六軸機械手臂 (<a href="https://robodk.com/blog/online-programming/">參考</a>, <a href="https://robodk.com/doc/en/Basic-Guide.html">Guide</a>).</p>
+<p><a href="https://en.wikipedia.org/wiki/Robotics_simulator">https://en.wikipedia.org/wiki/Robotics_simulator</a></p>
+<p><a href="https://github.com/RoboDK?tab=repositories">https://github.com/RoboDK?tab=repositories</a></p>
+<p><a href="https://robodk.com/doc/en/PythonAPI/">https://robodk.com/doc/en/PythonAPI/</a></p>
+<p><a href="https://robodk.com/offline-programming">https://robodk.com/offline-programming</a></p>
+<p><a href="https://robodk.com/doc/en/PythonAPI/robolink.html">https://robodk.com/doc/en/PythonAPI/robolink.html</a></p>
+<p><a href="https://www.automate.org/news/9-powerful-robodk-features-you-might-not-know-about">https://www.automate.org/news/9-powerful-robodk-features-you-might-not-know-about</a></p>
+<p><a href="/downloads/2019_Multi-Robot Collaboration.pdf">2019_Multi-Robot Collaboration.pdf</a></p>
+<p><a href="https://vmayoral.github.io/robots,/ai,/deep/learning,/rl,/reinforcement/learning/2016/07/06/rl-intro/">https://vmayoral.github.io/robots,/ai,/deep/learning,/rl,/reinforcement/learning/2016/07/06/rl-intro/</a> </p>
+<p></p><h3>CMSiMDE Debug 程式</h3>
+<h4>下半學期的教學目標之四:</h4>
+<p>編寫能夠協助 CMSiMDE <span style="background-color: #ffff99;">分頁</span>錯誤時進行 debug 的<span style="background-color: #ffff99;">輔助程式</span> (擬採用 <a href="https://github.com/PySimpleGUI/PySimpleGUI">https://github.com/PySimpleGUI/PySimpleGUI</a> or <a href="https://github.com/dddomodossola/remi">https://github.com/dddomodossola/remi</a> 進行測試), 假如要讓 CMSiMDE 能夠透過中文斷字 (<a href="https://github.com/fxsjy/jieba">https://github.com/fxsjy/jieba</a>), 試著解讀網際內容管理的關鍵字, 進而了解網站的內容屬性.</p><h2>分組專題</h2>
+<p><a href="https://drive.google.com/drive/folders/1OyEy67kGXiNjQSccad3Fd0H_59paqOiU?usp=sharing">分組報告影片</a></p><h4>Solvespace 3D 參數設計繪圖建立零組件 (<a href="https://solvespace.com">Solvespace</a> 編譯與<a href="http://www.farwire.net/SolveSpace-LearningGuide.htm">應用</a>):</h4>
 <ol>
 <li>轉入 <a href="https://www.coppeliarobotics.com/">CoppeliaSim</a> 組合為機電系統 (<a href="/downloads/stl_format.pdf">STL 零件格式</a>, <a href="https://en.wikipedia.org/wiki/STL_(file_format)">STL file format</a>, <a href="/downloads/stl-viewer_python_tkinter_pygame.7z">STL viewer in Tkinter and Pygame.7z</a>, <a href="/downloads/STL-3D-Rasterer_pygame_opengl.7z">STL-3D-Rasterer_pygame_opengl.7z</a>, <a href="https://github.com/admesh/python-admesh">ADMesh</a>)</li>
 <li>利用 Lua script 進行 Kinematic and Dynamic 控制 (<a href="https://www.coppeliarobotics.com/">CoppeliaSim</a>, <a href="https://www.coppeliarobotics.com/helpFiles/en/xmlFormat.htm">XML 格式</a>)</li>
@@ -3245,7 +3442,23 @@ for dname, dirs, files in os.walk("path_name"):
 <p style="padding-left: 30px;"><a href="https://en.wikipedia.org/wiki/Fossil_(software)">Fossil SCM 採用 C 與 SQL 語言建立</a></p>
 <p style="padding-left: 30px;"><a href="https://fossil-scm.org/home/doc/trunk/www/theory1.wiki">有關 Fossil SCM 設計的一些想法</a></p>
 <p style="padding-left: 30px;"><a href="https://nedbatchelder.com/blog/201001/d_richard_hipps_software_universe.html">Richard Hipp's Software Universe</a> (<a href="http://www.hwaci.com/sw/lemon/">LEMON</a>, <a href="https://sqlite.org">SQLite</a> and <a href="https://fossil-scm.org">Fossil SCM</a>)</p>
-<p style="padding-left: 30px;"><a href="https://wiki.tcl-lang.org/page/Fossil">Fossil SCM 與 TCL</a></p><h2>PostgreSQL</h2>
+<p style="padding-left: 30px;"><a href="https://wiki.tcl-lang.org/page/Fossil">Fossil SCM 與 TCL</a></p><h2>SQLite</h2>
+<h4>利用 <a href="https://www.sqlite.org">SQLite</a> 儲存 Flask 網際程式的檔案:</h4>
+<p style="padding-left: 30px;"><a href="https://github.com/mdecourse/nfumde">https://github.com/mdecourse/nfumde</a> (將各實驗室排課時間表存入資料庫)</p>
+<p style="padding-left: 30px;"><a href="http://nfumde.herokuapp.com/table">http://nfumde.herokuapp.com/table</a> (heroku5 AT mde)</p>
+<p style="padding-left: 30px;"><a href="https://github.com/mdecourse/nfulist">https://github.com/mdecourse/nfulist</a> (將查詢過的修課成員名單存入資料庫)</p>
+<p style="padding-left: 30px;"><a href="https://github.com/mdecourse/scissor-rock-paper2">https://github.com/mdecourse/scissor-rock-paper2</a> (將每一場猜拳結果存入資料庫)</p>
+<p style="padding-left: 30px;"><a href="https://github.com/mdecourse/lookupdict">https://github.com/mdecourse/lookupdict</a> </p>
+<p style="padding-left: 30px;"><a href="https://github.com/mdecourse/wcms-scrum1">https://github.com/mdecourse/wcms-scrum1</a></p>
+<h4 style="padding-left: 30px;">Google Oauth2 登入 in Python Flask:</h4>
+<p style="padding-left: 60px;"><a href="https://myapollo.com.tw/zh-tw/integrating-google-sign-in-into-flask-app/">https://myapollo.com.tw/zh-tw/integrating-google-sign-in-into-flask-app/</a></p>
+<p style="padding-left: 60px;"><a href="https://www.maxlist.xyz/2019/06/29/flask-google-login/">https://www.maxlist.xyz/2019/06/29/flask-google-login/</a> </p>
+<p>以 <a href="https://www.msys2.org/">Msys2</a> 自行編譯 <a href="https://sqlite.org/src/doc/trunk/README.md">SQLite 原始碼</a>.</p>
+<p>利用 Python 批次建立 Fossil SCM 使用者帳號：</p>
+<p style="padding-left: 30px;"><a href="http://lab.kmol.info/blog/Year-2017-Conclusion.html">http://lab.kmol.info/blog/Year-2017-Conclusion.html</a> (寄信程式必須改為 Gmail API)</p>
+<h4>實習目的:</h4>
+<p style="padding-left: 30px;">利用較簡單的 SQLite 練習 SQL 語法</p>
+<p style="padding-left: 30px;">Python 透過 <a href="https://github.com/coleifer/peewee">peewee</a> <a href="https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping">ORM</a> 連接資料庫</p><h2>PostgreSQL</h2>
 <h4>SQL:</h4>
 <p style="padding-left: 30px;"><a href="https://link.springer.com/book/10.1007/978-1-4842-3576-8">SQL Primer 電子書</a> (在校內網路下載)</p>
 <p style="padding-left: 30px;"><a href="https://link.springer.com/book/10.1007/978-1-4842-1955-3">Beginning SQL Queries</a> (在校內網路下載)</p>
@@ -3353,3 +3566,34 @@ REM 加入 PostgreSQL 所需的環境變數設定
 <p style="padding-left: 30px;"><a href="https://emberjs.com/">https://emberjs.com/</a></p>
 <p>PostgreSQL:</p>
 <p style="padding-left: 30px;"><a href="https://www.postgresql.org/">https://www.postgresql.org/</a></p>
+<h2>PPL</h2>
+<h4>Probabilistic Programming Language (PPL) 概率程式語言</h4>
+<p><a href="/downloads/2018_An Introduction to ProbabilisticProgramming.pdf">2018_An Introduction to ProbabilisticProgramming.pdf</a></p>
+<p><a href="/downloads/2015_Applications ofProbabilistic Programming.pdf">2015_Applications ofProbabilistic Programming.pdf</a></p>
+<p><a href="https://methods.co.uk/blog/the-future-of-artificial-intelligence-part-1-probabilistic-programming-languages/">https://methods.co.uk/blog/the-future-of-artificial-intelligence-part-1-probabilistic-programming-languages/</a></p>
+<p><a href="https://www.cs.ubc.ca/~fwood/CS532W-539W/">https://www.cs.ubc.ca/~fwood/CS532W-539W/</a></p>
+<h4>Pyro</h4>
+<p><a href="http://pyro.ai/">http://pyro.ai/</a></p>
+<h4>Scenic</h4>
+<p><a href="/downloads/2019_Scenic A Language for Scenario Specification andScene Generation.pdf">2019_Scenic A Language for Scenario Specification andScene Generation.pdf</a></p>
+<p><a href="https://medium.com/swlh/a-gentle-introduction-to-probabilistic-programming-languages-bf1e19042ab6">https://medium.com/swlh/a-gentle-introduction-to-probabilistic-programming-languages-bf1e19042ab6</a></p>
+<p><a href="https://github.com/mdecourse/Scenic">https://github.com/mdecourse/Scenic</a></p>
+<p><a href="https://cyberbotics.com/">https://cyberbotics.com/</a></p>
+<p><a href="https://github.com/cyberbotics/webots">https://github.com/cyberbotics/webots</a></p>
+<h4>Algorithmic Improvisation:</h4>
+<p><a href="https://people.ucsc.edu/~dfremont/impro.html">https://people.ucsc.edu/~dfremont/impro.html</a></p>
+<p><a href="/downloads/2013_AI Methods in Algorithmic Composition A Comprehensive Survey.pdf">2013_AI Methods in Algorithmic Composition A Comprehensive Survey.pdf</a></p>
+<p><a href="/downloads/2019_Algorithmic Improvisation.pd.pdf">/downloads/2019_Algorithmic Improvisation.pd.pdf</a></p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/ZdTjo0_q2-k" title="YouTube video player" width="560"></iframe></p>
+<h3>Machine Learning</h3>
+<p><a href="/downloads/Reinforcement_Learning_intro.pdf">Reinforcement_Learning_intro.pdf</a></p>
+<p><a href="/downloads/1996_experiments_with_reinforcement_learning_in_problems_with_continuous_state_and_action_spaces.pdf">1996_experiments_with_reinforcement_learning_in_problems_with_continuous_state_and_action_spaces.pdf</a></p>
+<p><a href="/downloads/1998_Learning to Drive a Bicycle using Reinforcement Learning and Shaping.pdf">1998_Learning to Drive a Bicycle using Reinforcement Learning and Shaping.pdf</a></p>
+<p style="padding-left: 30px;"><a href="https://en.wikipedia.org/wiki/State%E2%80%93action%E2%80%93reward%E2%80%93state%E2%80%93action">sarsa-algorithm</a></p>
+<p><a href="/downloads/2013_Reinforcement learning for bicycle control.pdf">2013_Reinforcement learning for bicycle control.pdf</a></p>
+<p style="padding-left: 30px;"><a href="https://github.com/mdecourse/agent-bicycle">https://github.com/mdecourse/agent-bicycle</a></p>
+<p><a href="/downloads/2019_Toward Self-Driving Bicycles Using State-of-the-ArtDeep Reinforcement Learning Algorithms.pdf">2019_Toward Self-Driving Bicycles Using State-of-the-ArtDeep Reinforcement Learning Algorithms.pdf</a></p>
+<p><a href="/downloads/A Distributed Reinforcement Learning Solution With Knowledge Transfer Capability forA Bike Rebalancing Problem.pdf">A Distributed Reinforcement Learning Solution With Knowledge Transfer Capability forA Bike Rebalancing Problem.pdf</a></p>
+<p><a href="https://opendatascience.com/explore-fundamental-concepts-of-reinforcement-learning/">https://opendatascience.com/explore-fundamental-concepts-of-reinforcement-learning/</a></p>
+<p><a href="https://github.com/mdecourse/LearningToRideABike">https://github.com/mdecourse/LearningToRideABike</a></p>
+<p><a href="https://github.com/mdecourse/python-rl">https://github.com/mdecourse/python-rl</a></p>
