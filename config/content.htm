@@ -2766,7 +2766,26 @@ cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=2500 SHADER_FRA
 <p><a href="https://mde.tw/wcm2021/content/SQLite.html">SQLite 練習</a></p>
 <p>目的希望能將之前所寫的各實驗室排課表網際程式, 能將所查詢的資料存入 SQLite, 並且部署到 Heroku.</p>
 <p>之後再將資料庫應用至 PostgreSQL, 最後再將網際資料庫程式部署到 Heroku.</p>
-<p>若該網際程式配置 Oauth2 的登入套件, 即可延伸應用至各實驗室上課時段外的實驗室借用管理系統. 若再利用雲端點名系統 RFID 掃描的感應開門, 將可擴大此系統的應用範圍.</p><h3>網際資料庫程式</h3>
+<p>若該網際程式配置 Oauth2 的登入套件, 即可延伸應用至各實驗室上課時段外的實驗室借用管理系統. 若再利用雲端點名系統 RFID 掃描的感應開門, 將可擴大此系統的應用範圍.</p><h3>Proxy Server</h3>
+<p><a href="http://www.squid-cache.org/">http://www.squid-cache.org/</a> 是一套 Proxy Server, 目前最新版為 4.14 版, 其設定檔案位於 /etc/squid 目錄, 設定檔案為 squid.conf:</p>
+<p>啟動 squid 指令為 sudo /etc/init.d/squid start</p>
+<p>關閉 squid 指令為 sudo /etc/init.d/squid stop</p>
+<p>重新啟動 squid 指令為 sudo /etc/init.d/squid restart</p>
+<h4>Proxy 連線要求輸入帳號密碼:</h4>
+<p>需要安裝建立帳號與密碼的工具: sudo apt install apache2-utils</p>
+<p>之後就可以利用 sudo htpasswd -c /etc/squid/password your_proxy_user_name</p>
+<p>對應 your_proxy_user_name 帳號輸入兩次選擇的密碼後, /etc/squid/password 即建立完成.</p>
+<p>接著必須要將所設定的 password 帳號與密碼檔案, 交由 squid 的 basic_ncsa_auth 進行驗證, 假如要將 Proxy Server 設定為所有連線都必須輸入帳號密碼, 則定義 squid_user 屬於必須要輸入帳號與密碼才能連線的設定, 必須設在其他 IP 範圍限制之前. 表示所以的連線都必須輸入帳號與密碼.</p>
+<p># 以下三行執行設定, 表示要使用 basic_ncsa_auth 進行連線管控, 依照 /etc/squid/password 中所設定的帳號與密碼進行比對, 且需要帳號與密碼的連線群組命名為 squid_user</p>
+<p>auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/password</p>
+<p>auth_param basic realm proxy_authentication_required</p>
+<p>acl squid_user proxy_auth REQUIRED</p>
+<p># 接下來兩行則只允許已經通過帳號與密碼比對成功者進行連線, 其餘連線則一律禁止.</p>
+<p>http_access allow squid_user</p>
+<p>http_access deny all</p>
+<p></p>
+<p></p>
+<p></p><h3>網際資料庫程式</h3>
 <h4>下半學期的教學目標之一:</h4>
 <p>對 <span style="background-color: #ffff99;">Python Flask 網際程式</span>的架構能夠更加深入了解, 各學員不僅會利用 <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautifulsoup</a> 從學校教務主機擷取資料, 建立 <a href="https://www.heroku.com/">Heroku</a> 雲端應用程式, 列出各實驗室的排課資訊外, 能計算各實驗室的排課總時數, 同時也能將查得的資料分別存入 SQLite 與 PostgreSQL 資料庫 (flaskg 範例<a href="https://github.com/mdecourse/flaskg">倉儲</a>與<a href="https://flaskg.herokuapp.com/">網站</a>).</p>
 <p>請各組練習 <a href="/downloads/flask-peewee-blogger-example.7z">flask-peewee-blogger-example.7z</a> 中, 將資料存入 SQLite 資料庫中, 並在自行配置的 Virtualbox Windows 10 與 Ubuntu 20.04 中執行. 若要讓 Flask 能更有效率地執行, 在 Ubuntu 中必須設法以 <a href="https://uwsgi-docs.readthedocs.io/en/latest/">uwsgi</a> 方式執行</p>
