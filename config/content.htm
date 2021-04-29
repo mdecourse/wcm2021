@@ -3526,6 +3526,12 @@ leoprint("done")
 </pre>
 <h4>將從教務主機取回的電腦輔助設計室排課資料寫入上述所建立的 SQLite 資料庫中:</h4>
 <p><a href="/downloads/w1_classroom_local_db.py">w1_classroom_local_db.py</a></p>
+<p>假如 Proxy 設定需要帳號與密碼, 則必須透過外部讀取的方式取得設定, 儘量不要直接將帳號密碼放在倉儲或網站中.</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">with open("./../proxy_setup.txt") as fh:
+    data = fh.readline()
+#print(data)
+proxy = data</pre>
+<p>proxy_setup.txt 的內容則為: http://代理主機帳號:代理主機密碼@[2001:代理主機 IP 位址]:3128</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># 使用 peewee ORM
 from peewee import SqliteDatabase, Model, CharField, TextField, IntegerField, MySQLDatabase
 import requests
