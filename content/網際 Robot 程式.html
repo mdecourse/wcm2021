@@ -152,6 +152,7 @@ img.add_border {
 <p>可附帶安裝 Python 3.7.3, 並安裝 robodk 模組</p>
 <p>會先安裝 vcredist_x64_2017</p>
 <p>安裝版 30 天內可存檔, 必須 IPv4 上網才能取得 free trial 權限.</p>
+<p><a href="./../downloads/Setup and Interfacing of a KUKA RoboticsLab.pdf">Setup and Interfacing of a KUKA RoboticsLab.pdf</a></p>
 <p>RoboDK API for Python:</p>
 <p><a href="https://raw.githubusercontent.com/RoboDK/RoboDK-API/master/Python/robodk.py">https://raw.githubusercontent.com/RoboDK/RoboDK-API/master/Python/robodk.py</a></p>
 <p><a href="https://raw.githubusercontent.com/RoboDK/RoboDK-API/master/Python/robolink.py">https://raw.githubusercontent.com/RoboDK/RoboDK-API/master/Python/robolink.py</a></p>
@@ -170,6 +171,23 @@ from robodk import *                # import the robodk library (robotics toolbo
 approach = target.Pose()*transl(0,0,-100)
 robot.MoveL(approach)               # linear move to the approach position
 '''</pre>
+<p>有關 Python struct: <a href="https://docs.python.org/3/library/struct.html">https://docs.python.org/3/library/struct.html</a></p>
+<p>command line option: <a href="https://robodk.com/doc/en/RoboDK-API-Command-Line-Options.html">https://robodk.com/doc/en/RoboDK-API-Command-Line-Options.html</a></p>
+<p>RDK = Robolink(args='-ADDFRAME "-RENAME=Main Ref " load_object.stl')</p>
+<p>robolink modula: <a href="https://robodk.com/doc/en/PythonAPI/robolink.html#robolink.Robolink.ShowRoboDK">https://robodk.com/doc/en/PythonAPI/robolink.html#robolink.Robolink.ShowRoboDK</a></p>
+<p>RoboDK Mac 最新版安裝檔: <a href="https://robodk.com/downloads/Install-RoboDK.dmg">https://robodk.com/downloads/Install-RoboDK.dmg</a></p>
+<p>RoboDK Linux 最新安裝檔: <a href="https://robodk.com/downloads/install-robodk-64.tar.gz">https://robodk.com/downloads/install-robodk-64.tar.gz</a></p>
+<h4>RoboDK 透過遠端桌面執行:</h4>
+<p>由於顯示卡硬體功能受到限制, 因此透過 remote desktop 執行 RoboDK 時, 必須使用 C:/RoboDK/RoboDK-Safe-Start-VM.bat 啟動 RoboDK, 批次檔案內容如下:</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">cd bin
+set QT_OPENGL=software
+start "" RoboDK-GL2.exe -DEBUG -SKIPINI</pre>
+<h4>RoboDK allow external API:</h4>
+<p>目前 RoboDK 的 <a href="https://raw.githubusercontent.com/RoboDK/RoboDK-API/master/Python/robolink.py">https://raw.githubusercontent.com/RoboDK/RoboDK-API/master/Python/robolink.py</a> 僅支援 IPv4, 必須將 socket 傳送改為 IPv6, 可參考: <a href="https://hub.packtpub.com/ipv6-unix-domain-sockets-and-network-interfaces/">https://hub.packtpub.com/ipv6-unix-domain-sockets-and-network-interfaces/</a></p>
+<p>假如要在電腦輔助設計室中跨網路執行 RoboDK remote API, 可以在 IPv6 環境下創建一個內部 IPv4 群網路進行測試.</p>
+<p>設定 RoboDK remote API 位於 Tools - Options - Other - RoboDK API, 啟動 RoboDK remote API server 後, 必須讓 RoboDK 通過操作系統的防火牆.</p>
+<h4>RoboDK on Virtualbox (<a href="https://robodk.com/forum/Thread-Running-RoboDK-on-an-oracle-Virtual-machine">reference</a>):</h4>
+<p>I recommend you to start RoboDK by selecting:<br/>C:/RoboDK/RoboDK-Safe-Start-VM.bat<br/><br/>Make sure to install graphic card drivers and allocate hardware accelerated GPU with support for OpenGL, if possible.<br/><br/>If it fails, we can better debug this issue by following these steps.<br/><br/>    Start RoboDK by double clicking the file:<br/>    C:/RoboDK/RoboDK-Debug.bat<br/>    Try to reproduce the problem in RoboDK until it crashes.<br/>    Right after the crash, provide the following file:<br/>    C:/RoboDK/bin/RoboDK.debug.txt</p>
 <p></p>
 <p></p>
 <p></p>
