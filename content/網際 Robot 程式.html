@@ -147,6 +147,32 @@ img.add_border {
 <p><a href="./../downloads/2019_Multi-Robot Collaboration.pdf">2019_Multi-Robot Collaboration.pdf</a></p>
 <p><a href="https://vmayoral.github.io/robots,/ai,/deep/learning,/rl,/reinforcement/learning/2016/07/06/rl-intro/">https://vmayoral.github.io/robots,/ai,/deep/learning,/rl,/reinforcement/learning/2016/07/06/rl-intro/</a></p>
 <p><a href="./../downloads/Industrial_robots1.pdf">Industrial_robots1.pdf</a></p>
+<h4>RoboDK 5.2.2 安裝</h4>
+<p>內定安裝於 c:\robodk</p>
+<p>可附帶安裝 Python 3.7.3, 並安裝 robodk 模組</p>
+<p>會先安裝 vcredist_x64_2017</p>
+<p>安裝版 30 天內可存檔, 必須 IPv4 上網才能取得 free trial 權限.</p>
+<p>RoboDK API for Python:</p>
+<p><a href="https://raw.githubusercontent.com/RoboDK/RoboDK-API/master/Python/robodk.py">https://raw.githubusercontent.com/RoboDK/RoboDK-API/master/Python/robodk.py</a></p>
+<p><a href="https://raw.githubusercontent.com/RoboDK/RoboDK-API/master/Python/robolink.py">https://raw.githubusercontent.com/RoboDK/RoboDK-API/master/Python/robolink.py</a></p>
+<p>The robolink module is the bridge between RoboDK and Python. Every object in the RoboDK item tree can be retrieved and it is represented by the object Item. An item can be a robot, a reference frame, a tool, an object or any other item visible in the station tree.</p>
+<p>The following example uses the robodk and robolink libraries to move a robot.</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *              # import the robolink library (bridge with RoboDK)
+RDK = Robolink()                    # establish a link with the simulator
+robot = RDK.Item('ABB IRB 120-3/0.6')      # retrieve the robot by name
+robot.setJoints([0,0,0,0,0,0])      # set all robot axes to zero
+
+target = RDK.Item('Target')         # retrieve the Target item
+robot.MoveJ(target)                 # move the robot to the target
+'''
+# calculate a new approach position 100 mm along the Z axis of the tool with respect to the target
+from robodk import *                # import the robodk library (robotics toolbox)
+approach = target.Pose()*transl(0,0,-100)
+robot.MoveL(approach)               # linear move to the approach position
+'''</pre>
+<p></p>
+<p></p>
+<p></p>
 <p></p><br />網際機械設計程式 << <a href='網際機械設計程式.html'>Previous</a> <a href='CMSiMDE Debug 程式.html'>Next</a> >> CMSiMDE Debug 程式</div>
         
     <!-- footer -->
