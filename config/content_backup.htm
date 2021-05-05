@@ -2959,6 +2959,7 @@ total:34</pre>
 <h4>下半學期的教學目標之三:</h4>
 <p>利用 <a href="https://robodk.com/">RoboDK</a> 作為整合英文, 數學與網際內容管理相關技術的測試工具, 希望能夠透過網際程式控制特定的六軸機械手臂 (<a href="https://robodk.com/blog/online-programming/">參考</a>, <a href="https://robodk.com/doc/en/Basic-Guide.html">Guide</a>).</p>
 <p>RoboDK Forum: <a href="https://robodk.com/forum">https://robodk.com/forum</a></p>
+<p>Euler Angles: <a href="https://www.mecademic.com/en/how-is-orientation-in-space-represented-with-euler-angles">https://www.mecademic.com/en/how-is-orientation-in-space-represented-with-euler-angles</a></p>
 <p><a href="/downloads/RoboDK-Doc-EN-Getting-Started.pdf">RoboDK-Doc-EN-Getting-Started.pdf</a></p>
 <p><a href="https://en.wikipedia.org/wiki/Robotics_simulator">https://en.wikipedia.org/wiki/Robotics_simulator</a></p>
 <p><a href="https://github.com/RoboDK?tab=repositories">https://github.com/RoboDK?tab=repositories</a></p>
@@ -2966,6 +2967,7 @@ total:34</pre>
 <p><a href="https://robodk.com/offline-programming">https://robodk.com/offline-programming</a></p>
 <p><a href="https://robodk.com/doc/en/PythonAPI/robolink.html">https://robodk.com/doc/en/PythonAPI/robolink.html</a></p>
 <p><a href="https://www.automate.org/news/9-powerful-robodk-features-you-might-not-know-about">https://www.automate.org/news/9-powerful-robodk-features-you-might-not-know-about</a></p>
+<p><a href="/downloads/2016_Flapping-wing mechanism for a bird-sizedUAVs  design, modeling and control.pdf">2016_Flapping-wing mechanism for a bird-sizedUAVs design, modeling and control.pdf</a></p>
 <p><a href="/downloads/2018_Implementation of a Simulation System for Additive Task Experiments.pdf">2018_Implementation of a Simulation System for Additive Task Experiments.pdf</a></p>
 <p><a href="/downloads/2019_Multi-Robot Collaboration.pdf">2019_Multi-Robot Collaboration.pdf</a></p>
 <p><a href="/downloads/2019_3D Printing using an Industrial Robotic Arm and a Cellulose based filament.pdf">2019_3D Printing using an Industrial Robotic Arm and a Cellulose based filament.pdf</a></p>
@@ -3025,10 +3027,20 @@ start "" RoboDK-GL2.exe -DEBUG -SKIPINI</pre>
 <p>設定 RoboDK remote API 位於 Tools - Options - Other - RoboDK API, 啟動 RoboDK remote API server 後, 必須讓 RoboDK 通過操作系統的防火牆.</p>
 <h4>RoboDK on Virtualbox (<a href="https://robodk.com/forum/Thread-Running-RoboDK-on-an-oracle-Virtual-machine">reference</a>):</h4>
 <p>I recommend you to start RoboDK by selecting:<br/>C:/RoboDK/RoboDK-Safe-Start-VM.bat<br/><br/>Make sure to install graphic card drivers and allocate hardware accelerated GPU with support for OpenGL, if possible.<br/><br/>If it fails, we can better debug this issue by following these steps.<br/><br/>    Start RoboDK by double clicking the file:<br/>    C:/RoboDK/RoboDK-Debug.bat<br/>    Try to reproduce the problem in RoboDK until it crashes.<br/>    Right after the crash, provide the following file:<br/>    C:/RoboDK/bin/RoboDK.debug.txt</p>
+<h4>Hint:</h4>
+<p>MoveJ(self, target, blocking=True) <a href="https://robodk.com/forum/Thread-Get-robot-pose-while-the-robot-is-moving-to-a-target">reference</a><br/>Moves a robot to a specific target ("Move Joint" mode). self function blocks until the robot finishes its movements.<br/>In  1 : joints/pose/item -&gt; target to move to. It can be the robot joints (Nx1 or 1xN), the pose (4x4) or an item (item pointer)<br/>In  2 (optional): blocking -&gt; True if we want the instruction to wait until the robot finished the movement (default=True)</p>
+<p>add Camera: <a href="https://robodk.com/doc/en/PythonAPI/robolink.html#robolink.Robolink.Cam2D_Add">https://robodk.com/doc/en/PythonAPI/robolink.html#robolink.Robolink.Cam2D_Add</a></p>
+<h4>Set Robot base:</h4>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">RDK = robolink()
+
+robot_base = RDK.Item('Robot Base Name', ITEM_TYPE_FRAME)
+robot_base.setPose(4x4 mat with the position)</pre>
 <p>參考:</p>
 <p style="padding-left: 30px;">提供原始碼的 <a href="http://animatlab.com/">http://animatlab.com/</a></p><h3>CMSiMDE Debug 程式</h3>
 <h4>下半學期的教學目標之四:</h4>
-<p>編寫能夠協助 CMSiMDE <span style="background-color: #ffff99;">分頁</span>錯誤時進行 debug 的<span style="background-color: #ffff99;">輔助程式</span> (擬採用 <a href="https://github.com/PySimpleGUI/PySimpleGUI">https://github.com/PySimpleGUI/PySimpleGUI</a> or <a href="https://github.com/dddomodossola/remi">https://github.com/dddomodossola/remi</a> 進行測試), 假如要讓 CMSiMDE 能夠透過中文斷字 (<a href="https://github.com/fxsjy/jieba">https://github.com/fxsjy/jieba</a>), 試著解讀網際內容管理的關鍵字, 進而了解網站的內容屬性.</p><h2>W11</h2>
+<h4>寫一個用於 cmsimde 除錯工具:</h4>
+<p>編寫能夠協助 CMSiMDE <span style="background-color: #ffff99;">分頁</span>錯誤時進行 debug 的<span style="background-color: #ffff99;">輔助程式</span> (擬採用 <a href="https://github.com/PySimpleGUI/PySimpleGUI">https://github.com/PySimpleGUI/PySimpleGUI</a> or <a href="https://github.com/dddomodossola/remi">https://github.com/dddomodossola/remi</a> 進行測試), 假如要讓 CMSiMDE 能夠透過中文斷字 (<a href="https://github.com/fxsjy/jieba">https://github.com/fxsjy/jieba</a>), 試著解讀網際內容管理的關鍵字, 進而了解網站的內容屬性.</p>
+<p></p><h2>W11</h2>
 <p>為何只有在<a href="http://evds.ucalgary.ca/evds_info/files/evds_info/unitis/courses/EVDS683.81/F2019/EVDS683.81-F2019-syllabus.pdf">建築相關科系</a>, 才許融入哲學思維?</p>
 <p><a href="/downloads/1935_The Work of Art in the Age of Mechanical Reproduction.pdf">1935_The Work of Art in the Age of Mechanical Reproduction.pdf</a> (機械複製時代的藝術作品)</p>
 <p style="padding-left: 30px;">導讀: <a href="https://www.thenewslens.com/article/60943">https://www.thenewslens.com/article/60943</a></p>
