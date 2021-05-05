@@ -158,7 +158,14 @@ img.add_border {
 <p>內定安裝於 c:\robodk</p>
 <p>可附帶安裝 Python 3.7.3, 並安裝 robodk 模組</p>
 <p>會先安裝 vcredist_x64_2017</p>
-<p>安裝版 30 天內可存檔, 必須 IPv4 上網才能取得 free trial 權限.</p>
+<p>安裝版 30 天內可存檔, 必須 IPv4 上網才能取得 free trial 30 天權限.</p>
+<p>RoboDK 的 remote API 必須先 IPv4 上網後, 經官方網站確認 License 後, 才可啟動 API server, 否則只能在 localhost 上執行 API 操控.</p>
+<h4>電腦輔助設計室網路連線順序:</h4>
+<ol>
+<li>以 IPv4 NAT 連線, 啟動可攜 RoboDK 取得 limited 連線授權.</li>
+<li>改以純 IPv6 網路連線, 內部建立 192.168.192.1XX 網路群, 按照組序與學員序取得 IPv4 固定網址.</li>
+<li>各學員可以透過 Proxy 取得 Robot libraary 中的資料, 並且透過 remote API 進行網際協同操控.</li>
+</ol>
 <p><a href="./../downloads/Setup and Interfacing of a KUKA RoboticsLab.pdf">Setup and Interfacing of a KUKA RoboticsLab.pdf</a></p>
 <p>RoboDK API for Python:</p>
 <p><a href="https://raw.githubusercontent.com/RoboDK/RoboDK-API/master/Python/robodk.py">https://raw.githubusercontent.com/RoboDK/RoboDK-API/master/Python/robodk.py</a></p>
