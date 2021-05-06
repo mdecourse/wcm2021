@@ -3030,6 +3030,8 @@ start "" RoboDK-GL2.exe -DEBUG -SKIPINI</pre>
 <h4>Hint:</h4>
 <p>MoveJ(self, target, blocking=True) <a href="https://robodk.com/forum/Thread-Get-robot-pose-while-the-robot-is-moving-to-a-target">reference</a><br/>Moves a robot to a specific target ("Move Joint" mode). self function blocks until the robot finishes its movements.<br/>In  1 : joints/pose/item -&gt; target to move to. It can be the robot joints (Nx1 or 1xN), the pose (4x4) or an item (item pointer)<br/>In  2 (optional): blocking -&gt; True if we want the instruction to wait until the robot finished the movement (default=True)</p>
 <p>add Camera: <a href="https://robodk.com/doc/en/PythonAPI/robolink.html#robolink.Robolink.Cam2D_Add">https://robodk.com/doc/en/PythonAPI/robolink.html#robolink.Robolink.Cam2D_Add</a></p>
+<h4>Temp py programs:</h4>
+<p><a href="https://robodk.com/forum/Thread-Convert-a-main-program-to-a-python-script">https://robodk.com/forum/Thread-Convert-a-main-program-to-a-python-script</a> </p>
 <h4>Set Robot base:</h4>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">RDK = robolink()
 
@@ -3042,6 +3044,8 @@ robot_base.setPose(4x4 mat with the position)</pre>
 <p>編寫能夠協助 CMSiMDE <span style="background-color: #ffff99;">分頁</span>錯誤時進行 debug 的<span style="background-color: #ffff99;">輔助程式</span> (擬採用 <a href="https://github.com/PySimpleGUI/PySimpleGUI">https://github.com/PySimpleGUI/PySimpleGUI</a> or <a href="https://github.com/dddomodossola/remi">https://github.com/dddomodossola/remi</a> 進行測試), 假如要讓 CMSiMDE 能夠透過中文斷字 (<a href="https://github.com/fxsjy/jieba">https://github.com/fxsjy/jieba</a>), 試著解讀網際內容管理的關鍵字, 進而了解網站的內容屬性.</p>
 <p></p><h2>W11</h2>
 <p>為何只有在<a href="http://evds.ucalgary.ca/evds_info/files/evds_info/unitis/courses/EVDS683.81/F2019/EVDS683.81-F2019-syllabus.pdf">建築相關科系</a>, 才許融入哲學思維?</p>
+<h4 style="padding-left: 30px;"><a href="https://en.wikipedia.org/wiki/Philosophy">Philosophy</a>:</h4>
+<p style="padding-left: 30px;">the study of the fundamental nature of knowledge, reality, and existence, especially when considered as an academic discipline.</p>
 <p><a href="/downloads/1935_The Work of Art in the Age of Mechanical Reproduction.pdf">1935_The Work of Art in the Age of Mechanical Reproduction.pdf</a> (機械複製時代的藝術作品)</p>
 <p style="padding-left: 30px;">導讀: <a href="https://www.thenewslens.com/article/60943">https://www.thenewslens.com/article/60943</a></p>
 <p style="padding-left: 30px;">其他閱讀: <a href="https://www.thenewslens.com/author/soriano">https://www.thenewslens.com/author/soriano</a></p>
@@ -3059,7 +3063,10 @@ robot_base.setPose(4x4 mat with the position)</pre>
 <h4>3. 針對</h4>
 <p style="padding-left: 30px;"><a href="https://github.com/RoboDK/RoboDK-API/blob/master/Python/robolink.py">https://github.com/RoboDK/RoboDK-API/blob/master/Python/robolink.py</a></p>
 <p style="padding-left: 30px;"><a href="https://github.com/RoboDK/RoboDK-API/blob/master/Python/robodk.py">https://github.com/RoboDK/RoboDK-API/blob/master/Python/robodk.py</a></p>
-<p style="padding-left: 30px;">探討能否透過網際模式監控 RoboDK 機械手臂模擬.</p><h2>分組專題</h2>
+<p style="padding-left: 30px;">RoboDK 內建 remote Python API, 結合 Flask 與 camera image stream, 將可建立一個網際六軸機械臂模擬系統, 其中包含座標轉換, 流程控制, 多執行續同步操控以及自動化製造系統展示.</p>
+<h4 style="padding-left: 30px;">衍生專案:</h4>
+<p style="padding-left: 60px;">修改 robolink.py 中的 socket 傳送,  增加 IPv6 網路環境下的 Python remote API 功能.</p>
+<p style="padding-left: 60px;">修改 <a href="https://github.com/mdecourse/RobotSimulator">https://github.com/mdecourse/RobotSimulator</a>, 採用 RoboDK 相容格式與介面, 建立開源 Industrial Robot Simulator 套件, 其中 Robot  定義採用 <a href="https://www.parallemic.org/RoKiSim.html">https://www.parallemic.org/RoKiSim.html</a> 中的相容格式.</p><h2>分組專題</h2>
 <p><a href="https://drive.google.com/drive/folders/1OyEy67kGXiNjQSccad3Fd0H_59paqOiU?usp=sharing">分組報告影片</a></p>
 <h4>Solvespace 3D 參數設計繪圖建立零組件 (<a href="https://solvespace.com">Solvespace</a> 編譯與<a href="http://www.farwire.net/SolveSpace-LearningGuide.htm">應用</a>):</h4>
 <ol>
