@@ -154,13 +154,44 @@ img.add_border {
 <h4>2. 各分組從 <a href="http://mde.tw/wcm2021/content/W10.html">http://mde.tw/wcm2021/content/W10.html</a> 網際程式中選擇一項, 負責從近端執行部署至 Heroku.</h4>
 <h4>3. 導入 RoboDK:</h4>
 <p style="padding-left: 30px;"><a href="https://coro.etsmtl.ca/blog/?p=529">https://coro.etsmtl.ca/blog/?p=529</a></p>
-<p style="padding-left: 30px;"><a href="http://en.etsmtl.ca/unites-de-recherche/coro/accueil?lang=en-CA">http://en.etsmtl.ca/unites-de-recherche/coro/accueil?lang=en-CA</a> </p>
+<p style="padding-left: 30px;"><a href="http://en.etsmtl.ca/unites-de-recherche/coro/accueil?lang=en-CA">http://en.etsmtl.ca/unites-de-recherche/coro/accueil?lang=en-CA</a></p>
 <p style="padding-left: 30px;"><a href="https://github.com/RoboDK/RoboDK-API/blob/master/Python/robolink.py">https://github.com/RoboDK/RoboDK-API/blob/master/Python/robolink.py</a></p>
 <p style="padding-left: 30px;"><a href="https://github.com/RoboDK/RoboDK-API/blob/master/Python/robodk.py">https://github.com/RoboDK/RoboDK-API/blob/master/Python/robodk.py</a></p>
 <p style="padding-left: 30px;">RoboDK 內建 remote Python API, 結合 Flask 與 camera image stream, 將可建立一個網際六軸機械臂模擬系統, 其中包含座標轉換, 流程控制, 多執行續同步操控以及自動化製造系統展示.</p>
 <h4 style="padding-left: 30px;">衍生專案:</h4>
 <p style="padding-left: 60px;">修改 robolink.py 中的 socket 傳送,  增加 IPv6 網路環境下的 Python remote API 功能.</p>
-<p style="padding-left: 60px;">修改 <a href="https://github.com/mdecourse/RobotSimulator">https://github.com/mdecourse/RobotSimulator</a>, 採用 RoboDK 相容格式與介面, 建立開源 Industrial Robot Simulator 套件, 其中 Robot  定義採用 <a href="https://www.parallemic.org/RoKiSim.html">https://www.parallemic.org/RoKiSim.html</a> 中的相容格式 (<a href="http://a.kmol.info:88/Robot_files.7z">Robot_files.7z</a>).</p><br />CMSiMDE Debug 程式 << <a href='CMSiMDE Debug 程式.html'>Previous</a> <a href='分組專題.html'>Next</a> >> 分組專題</div>
+<p style="padding-left: 60px;">修改 <a href="https://github.com/mdecourse/RobotSimulator">https://github.com/mdecourse/RobotSimulator</a>, 採用 RoboDK 相容格式與介面, 建立開源 Industrial Robot Simulator 套件, 其中 Robot  定義採用 <a href="https://www.parallemic.org/RoKiSim.html">https://www.parallemic.org/RoKiSim.html</a> 中的相容格式 (<a href="http://a.kmol.info:88/Robot_files.7z">Robot_files.7z</a>).</p>
+<p style="padding-left: 60px;">使用 <a href="https://doc.qt.io/qt-5/dnd.html">https://doc.qt.io/qt-5/dnd.html</a> drag and drop 方式, 將 STL 零件檔案帶進特定座標下的 viewer 視窗.</p>
+<p style="padding-left: 60px;"><a href="https://github.com/Be4rR/STLViewer">https://github.com/Be4rR/STLViewer</a></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from PyQt5.QtWidgets import QMainWindow, QApplication
+import sys
+
+
+class MainWidget(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Drag and Drop")
+        self.resize(720, 480)
+        self.setAcceptDrops(True)
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.accept()
+        else:
+            event.ignore()
+
+    def dropEvent(self, event):
+        files = [u.toLocalFile() for u in event.mimeData().urls()]
+        for f in files:
+            print(f)
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ui = MainWidget()
+    ui.show()
+    sys.exit(app.exec_())</pre>
+<p style="padding-left: 60px;"></p><br />CMSiMDE Debug 程式 << <a href='CMSiMDE Debug 程式.html'>Previous</a> <a href='分組專題.html'>Next</a> >> 分組專題</div>
         
     <!-- footer -->
       <div class="container">
