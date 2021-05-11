@@ -137,6 +137,12 @@ img.add_border {
     <div id="tipue_search_content">網際機械設計程式 << <a href='網際機械設計程式.html'>Previous</a> <a href='CMSiMDE Debug 程式.html'>Next</a> >> CMSiMDE Debug 程式<br /><h1>網際 RoboDK 程式</h1>
 <h4>下半學期的教學目標之三:</h4>
 <p>利用 <a href="https://robodk.com/">RoboDK</a> 作為整合英文, 數學與網際內容管理相關技術的測試工具, 希望能夠透過網際程式控制特定的六軸機械手臂 (<a href="https://robodk.com/blog/online-programming/">參考</a>, <a href="https://robodk.com/doc/en/Basic-Guide.html">Guide</a>).</p>
+<p>官方 Pick and Place 範例: <a href="https://github.com/mdecourse/wcm2021/tree/main/downloads/robodk/pick_and_place">https://github.com/mdecourse/wcm2021/tree/main/downloads/robodk/pick_and_place</a></p>
+<h4>自行利用 Python API 建立 station:</h4>
+<p>從 <a href="https://github.com/mdecourse/wcm2021/tree/main/downloads/robodk/pick_and_place_kmol_mac">https://github.com/mdecourse/wcm2021/tree/main/downloads/robodk/pick_and_place_kmol_mac</a> 目錄, 可以使用 Python 建立 RoboDK station:</p>
+<p>程式碼: <a href="https://github.com/mdecourse/wcm2021/blob/main/downloads/robodk/pick_and_place_kmol_mac/pick_and_place_kmol.py">https://github.com/mdecourse/wcm2021/blob/main/downloads/robodk/pick_and_place_kmol_mac/pick_and_place_kmol.py</a></p>
+<p>所完成的 station:</p>
+<p><img alt="" height="299" src="./../images/robodk_all_in_python.png" width="500"/></p>
 <p>RoboDK Forum: <a href="https://robodk.com/forum">https://robodk.com/forum</a></p>
 <p>Euler Angles: <a href="https://www.mecademic.com/en/how-is-orientation-in-space-represented-with-euler-angles">https://www.mecademic.com/en/how-is-orientation-in-space-represented-with-euler-angles</a></p>
 <p><a href="./../downloads/RoboDK-Doc-EN-Getting-Started.pdf">RoboDK-Doc-EN-Getting-Started.pdf</a></p>
@@ -210,7 +216,7 @@ start "" RoboDK-GL2.exe -DEBUG -SKIPINI</pre>
 <p>MoveJ(self, target, blocking=True) <a href="https://robodk.com/forum/Thread-Get-robot-pose-while-the-robot-is-moving-to-a-target">reference</a><br/>Moves a robot to a specific target ("Move Joint" mode). self function blocks until the robot finishes its movements.<br/>In  1 : joints/pose/item -&gt; target to move to. It can be the robot joints (Nx1 or 1xN), the pose (4x4) or an item (item pointer)<br/>In  2 (optional): blocking -&gt; True if we want the instruction to wait until the robot finished the movement (default=True)</p>
 <p>add Camera: <a href="https://robodk.com/doc/en/PythonAPI/robolink.html#robolink.Robolink.Cam2D_Add">https://robodk.com/doc/en/PythonAPI/robolink.html#robolink.Robolink.Cam2D_Add</a></p>
 <h4>Temp py programs:</h4>
-<p><a href="https://robodk.com/forum/Thread-Convert-a-main-program-to-a-python-script">https://robodk.com/forum/Thread-Convert-a-main-program-to-a-python-script</a> </p>
+<p><a href="https://robodk.com/forum/Thread-Convert-a-main-program-to-a-python-script">https://robodk.com/forum/Thread-Convert-a-main-program-to-a-python-script</a></p>
 <h4>Set Robot base:</h4>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">RDK = robolink()
 
