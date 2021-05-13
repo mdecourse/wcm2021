@@ -3068,15 +3068,15 @@ robot_base.setPose(4x4 mat with the position)</pre>
 <p style="padding-left: 60px;">參考 <a href="http://mde.tw/cd2021/content/task3.html">http://mde.tw/cd2021/content/task3.html</a> 使用各組網際簡報內容引導直撥錄影.</p>
 <h4>2. 各分組從 <a href="http://mde.tw/wcm2021/content/W10.html">http://mde.tw/wcm2021/content/W10.html</a> 網際程式中選擇一項, 負責從近端執行部署至 Heroku.</h4>
 <p style="padding-left: 30px;">Ubuntu 20.04 on Virtualbox, 從 <a href="http://a.kmol.info:88/Ub2004.vdi">http://a.kmol.info:88/Ub2004.vdi</a> 取得 已經安裝 Ubuntu 的虛擬硬碟進行後續設定.</p>
-<h4 style="padding-left: 30px;">先更改 vdi 的 uuid:</h4>
-<p style="padding-left: 60px;">"c:\Program Files\Oracle\VirtualBox\VBoxManage.exe" internalcommands sethduuid Ubwcm2021.vdi</p>
+<h4 style="padding-left: 30px;"><span style="background-color: #ffff99;">先更改 vdi 的 uuid</span>:</h4>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">"c:\Program Files\Oracle\VirtualBox\VBoxManage.exe" internalcommands sethduuid Ubwcm2021.vdi</pre>
 <h4 style="padding-left: 30px;">設定虛擬主機網路連線:</h4>
 <p style="padding-left: 60px;">接著將 Ubuntu 虛擬主機的網路以 Bridged 串接到 Windows 10 已經連線的網路卡.</p>
 <h4 style="padding-left: 30px;">登入系統後進行更新:</h4>
 <p style="padding-left: 60px;">由於 /etc/netplan/net.yaml 中採用 DHCP6 連外, 因此透過 ifconfig 可以取得網路連線資訊.</p>
 <p style="padding-left: 60px;">但因電腦輔助設計室採純 IPv6 設定, 因此必須透過雙網路協定代理主機上網才可執行下列 apt 指令.</p>
-<p style="padding-left: 60px;">因此要以 sudo vi  /etc/apt/apt.conf 建立 apt 代理主機設定檔, 內容如下:</p>
-<p style="padding-left: 60px;">Acquire::http::Proxy "http://proxy_username:proxy_password@[Proxy_server_ipv6_address]:3128";</p>
+<p style="padding-left: 60px;">因此要以 sudo vi  /etc/apt/apt.conf 建立 <span style="background-color: #ffff99;">apt 代理主機設定檔</span>, 內容如下:</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">Acquire::http::Proxy "http://proxy_username:proxy_password@[Proxy_server_ipv6_address]:3128";</pre>
 <p style="padding-left: 60px;">之後就可以完成下列更新指令執行:</p>
 <p style="padding-left: 90px;">sudo apt update</p>
 <p style="padding-left: 90px;">sudo apt upgrade</p>
@@ -3085,6 +3085,45 @@ robot_base.setPose(4x4 mat with the position)</pre>
 <p style="padding-left: 60px;">目的是讓 CMSiMDE 的動態與靜態系統可以在 Ubuntu 操作系統中以服務的方式, 隨電腦開機啟動.</p>
 <h4 style="padding-left: 60px;">首先安裝 nginx:</h4>
 <p style="padding-left: 90px;">sudo apt install nginx</p>
+<h4 style="padding-left: 30px;">Windows 10 與虛擬主機交換檔案:</h4>
+<p style="padding-left: 60px;">由於 Ubuntu 虛擬主機並無安裝 ubuntu-desktop, 因此並無 X Window GUI 介面, 因此要在 Windows 10 與純 IPv6 連外的虛擬主機交換檔案的方式, 採取內建一個內部 IPv4 區域網路進行資料交換. 意即將 /etc/netplan/net.yaml 設為:</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false"># This is the network config written by 'subiquity'
+network:
+  ethernets:
+    enp0s3:
+      dhcp4: false 
+      addresses:
+        - 192.168.19.1/24
+      gateway4: 192.168.19.254    
+      dhcp6: true
+      nameservers:
+              addresses:
+                      - 2001:b000:168::1
+
+  version: 2</pre>
+<p style="padding-left: 60px;">然後以 sudo netplan apply 啟用, 接著在 Windows 設定同群 IPv4 網路位址, 以便利用 python3 -m http.server 從 Ubuntu 啟動 www server, 讓 Windows 10 的瀏覽器可以直接取得 Ubuntu 系統中的檔案, 然後再從 Windows 10 以 sftp 對 Ubuntu 連線, 將修改後的相關設定檔案送進 Ubuntu, 然後透過 sudo cp 將設定檔案送至指定位置, 並令其生效.</p>
+<p style="padding-left: 60px;">使用者也可以利用 ifconfig &gt; ifconfig 將 Ubuntu 網路設定檔案內容存為 ifconfig, 並以上述 Ubuntu www server 對 Windows 10 瀏覽器的連線方式將 ifconfig 設定檔案取下.</p>
+<p style="padding-left: 60px;">在 Ubuntu 可以透過 <span style="background-color: #ffff99;">python3 -m http.server --bind ipv4_or_ipv6_address</span>, 啟動 port 為 8000 的 www server.</p>
+<p style="padding-left: 60px;">隨後有關 nginx 或 uwsgi 的相關設定檔案, 就可以利用上述方式將設定檔案, 傳至 Windows 以圖形介面編輯修改後, 再傳回 Ubuntu 進行測試.</p>
+<h4 style="padding-left: 30px;">安裝 pip3:</h4>
+<p style="padding-left: 60px;">假如 Ubuntu 尚未安裝 pip3, 可以利用 sudo apt install python3-pip 安裝.</p>
+<h4 style="padding-left: 30px;">安裝 CMSiMDE 所需 Python 模組:</h4>
+<p style="padding-left: 60px;">由於目前所安裝的 Ubuntu 並無 GUI 介面, 因此並不會直接在 Ubuntu 操作系統中啟動 Leo Editor, 錦會透過 uwsgi 啟動動態系統, 以 nginx 伺服靜態系統網頁, 因此只需安裝:</p>
+<p style="padding-left: 90px;">sudo pip3 install flask bs4 lxml flask_cors</p>
+<p style="padding-left: 60px;">接下來安裝 uwsgi 所需程式庫與模組:</p>
+<p style="padding-left: 90px;">sudo apt install uwsgi uwsgi-plugin-python3</p>
+<p style="padding-left: 90px;">sudo pip3 install uwsgi</p>
+<p style="padding-left: 60px;">接下來希望將 <a href="https://github.com/mdecourse/cmstemplate">https://github.com/mdecourse/cmstemplate</a> clone 至 /home/wcm2020/github 目錄下, 其他目錄資料可利用 rm -r 目錄名稱 刪除, -r 代表連全部的子目錄一併刪除.</p>
+<p style="padding-left: 60px;">若希望使用 git clone --recurse-submodules <a href="https://github.com/mdecourse/cmstemplate.git">https://github.com/mdecourse/cmstemplate.git</a> 取下 cmstemplate 倉儲內容, 必須使用 git config 設定 http.proxy.</p>
+<p style="padding-left: 90px;">git config http.proxy <a href="http://proxy_account:proxy_password@[proxy_ipv6_address]port">http://proxy_account:proxy_password@[proxy_ipv6_address]:port</a></p>
+<p style="padding-left: 60px;">此時必須確認是否先前已經在 /home/wcm2020/ 目錄下已經設定 .gitconfig, 上述 git config 並無法蓋過先前設定的檔案, 必須以 vi .gitconfig 進入修改, 加上 proxy 帳號與密碼.</p>
+<h4 style="padding-left: 30px;">以 nginx 啟動靜態系統:</h4>
+<p style="padding-left: 60px;">已知 cmstemplate 位於 /home/wcm2020/github/cmstemplate, 接下來希望利用 nginx 啟動此一靜態系統.</p>
+<p style="padding-left: 60px;">只要將 /etc/nginx/sites-available/default 中 port 80 伺服 root 設定為 /home/wcm2020/github/cmstemplate 即可由 nginx 伺服 index.html.</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">#root /var/www/html;
+root /home/wcm2020/github/cmstemplate/;</pre>
+<p style="padding-left: 60px;">然後利用 sudo /etc/init.d/nginx restart 重新啟動 nginx.</p>
+<p style="padding-left: 30px;">安裝 stunnel:</p>
 <p style="padding-left: 60px;"></p>
 <h4>3. 導入 RoboDK:</h4>
 <p style="padding-left: 30px;"><a href="https://coro.etsmtl.ca/blog/?p=529">https://coro.etsmtl.ca/blog/?p=529</a></p>
@@ -3124,8 +3163,8 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     ui = MainWidget()
     ui.show()
-    sys.exit(app.exec_())</pre>
-<p style="padding-left: 60px;"></p><h2>分組專題</h2>
+    sys.exit(app.exec_())</pre><h3>YAML</h3>
+<p>YAML’s block collections use indentation for scope and begin each entry on its own line. Block sequences indicate each entry with a dash and space ( "- "). Mappings use a colon and space (": ") to mark each key: value pair. Comments begin with an octothorpe (also called a "hash", "sharp", "pound", or "number sign" - "#").</p><h2>分組專題</h2>
 <p><a href="https://drive.google.com/drive/folders/1OyEy67kGXiNjQSccad3Fd0H_59paqOiU?usp=sharing">分組報告影片</a></p>
 <h4>Solvespace 3D 參數設計繪圖建立零組件 (<a href="https://solvespace.com">Solvespace</a> 編譯與<a href="http://www.farwire.net/SolveSpace-LearningGuide.htm">應用</a>):</h4>
 <ol>
