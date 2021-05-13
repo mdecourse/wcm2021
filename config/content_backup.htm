@@ -3123,7 +3123,10 @@ network:
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">#root /var/www/html;
 root /home/wcm2020/github/cmstemplate/;</pre>
 <p style="padding-left: 60px;">然後利用 sudo /etc/init.d/nginx restart 重新啟動 nginx.</p>
-<p style="padding-left: 30px;">安裝 stunnel:</p>
+<h4 style="padding-left: 30px;">安裝 stunnel:</h4>
+<p style="padding-left: 60px;">因為隨後安裝 Fossil SCM 時, 需要透過 stunnel 配置 https 協定連線, 在此先完成安裝, 並且與 uwsgi + nginx 共用 credential 與 key.</p>
+<p style="padding-left: 60px;">進入 /etc/stunnel 後, 執行下列指令, 建立 localhost.crt 與 localhost.key:</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt</pre>
 <p style="padding-left: 60px;"></p>
 <h4>3. 導入 RoboDK:</h4>
 <p style="padding-left: 30px;"><a href="https://coro.etsmtl.ca/blog/?p=529">https://coro.etsmtl.ca/blog/?p=529</a></p>

@@ -3124,7 +3124,32 @@ network:
 root /home/wcm2020/github/cmstemplate/;</pre>
 <p style="padding-left: 60px;">然後利用 sudo /etc/init.d/nginx restart 重新啟動 nginx.</p>
 <h4 style="padding-left: 30px;">安裝 stunnel:</h4>
-<p style="padding-left: 60px;"></p>
+<p style="padding-left: 60px;">因為隨後安裝 Fossil SCM 時, 需要透過 stunnel 配置 https 協定連線, 在此先完成安裝, 並且與 uwsgi + nginx 共用 credential 與 key.</p>
+<p style="padding-left: 60px;">進入 /etc/stunnel 後, 執行下列指令, 建立 localhost.crt 與 localhost.key:</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt</pre>
+<h4 style="padding-left: 30px;">設定 uwsgi_ini/uwsgi.ini:</h4>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[uwsgi]
+socket = :8080
+uid = wcm2020
+gid = wcm2020
+plugins-dir = /usr/lib/uwsgi/plugins/
+plugin = python3
+master = true
+process = 4
+threads = 2
+chdir = /home/wcm2020/github/cmstemplate
+wsgi-file = /home/wcm2020/github/cmstemplate/cmsimde/wsgi.py
+</pre>
+<h4 style="padding-left: 30px;">測試 uwsgi 設定:</h4>
+<p style="padding-left: 60px;">sudo /usr/bin/uwsgi --emperor /home/wcm2020/wsgi_ini</p>
+<p style="padding-left: 60px;">在上述指令啟動時, CMSiMDE 出現無法 import flask app 的錯誤, 因此修改 CMSiMDE, 納入下列設定:</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__)))
+# import flaskapp at the same directory
+import flaskapp
+import ssl</pre>
+<p style="padding-left: 60px;">即可順利透過 uwsgi 啟動 CMSiMDE.</p>
 <h4>3. 導入 RoboDK:</h4>
 <p style="padding-left: 30px;"><a href="https://coro.etsmtl.ca/blog/?p=529">https://coro.etsmtl.ca/blog/?p=529</a></p>
 <p style="padding-left: 30px;"><a href="http://en.etsmtl.ca/unites-de-recherche/coro/accueil?lang=en-CA">http://en.etsmtl.ca/unites-de-recherche/coro/accueil?lang=en-CA</a></p>
