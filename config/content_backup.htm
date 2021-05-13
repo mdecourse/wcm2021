@@ -2958,6 +2958,12 @@ total:34</pre>
 <p style="padding-left: 60px;"><a href="http://mde.tw/cad2019/downloads/NX%20Installation%20Guide%20for%20Linux%20and%20Mac%20OS%20X.pdf">http://mde.tw/cad2019/downloads/NX Installation Guide for Linux and Mac OS X.pdf</a></p><h3>網際 RoboDK 程式</h3>
 <h4>下半學期的教學目標之三:</h4>
 <p>利用 <a href="https://robodk.com/">RoboDK</a> 作為整合英文, 數學與網際內容管理相關技術的測試工具, 希望能夠透過網際程式控制特定的六軸機械手臂 (<a href="https://robodk.com/blog/online-programming/">參考</a>, <a href="https://robodk.com/doc/en/Basic-Guide.html">Guide</a>).</p>
+<p>官方 Pick and Place 範例: <a href="https://github.com/mdecourse/wcm2021/tree/main/downloads/robodk/pick_and_place">https://github.com/mdecourse/wcm2021/tree/main/downloads/robodk/pick_and_place</a></p>
+<h4>自行利用 Python API 建立 station:</h4>
+<p>從 <a href="https://github.com/mdecourse/wcm2021/tree/main/downloads/robodk/pick_and_place_kmol_mac">https://github.com/mdecourse/wcm2021/tree/main/downloads/robodk/pick_and_place_kmol_mac</a> 目錄, 可以使用 Python 建立 RoboDK station:</p>
+<p>程式碼: <a href="https://github.com/mdecourse/wcm2021/blob/main/downloads/robodk/pick_and_place_kmol_mac/pick_and_place_kmol.py">https://github.com/mdecourse/wcm2021/blob/main/downloads/robodk/pick_and_place_kmol_mac/pick_and_place_kmol.py</a></p>
+<p>所完成的 station:</p>
+<p><img alt="" height="299" src="/images/robodk_all_in_python.png" width="500"/></p>
 <p>RoboDK Forum: <a href="https://robodk.com/forum">https://robodk.com/forum</a></p>
 <p>Euler Angles: <a href="https://www.mecademic.com/en/how-is-orientation-in-space-represented-with-euler-angles">https://www.mecademic.com/en/how-is-orientation-in-space-represented-with-euler-angles</a></p>
 <p><a href="/downloads/RoboDK-Doc-EN-Getting-Started.pdf">RoboDK-Doc-EN-Getting-Started.pdf</a></p>
@@ -3031,7 +3037,7 @@ start "" RoboDK-GL2.exe -DEBUG -SKIPINI</pre>
 <p>MoveJ(self, target, blocking=True) <a href="https://robodk.com/forum/Thread-Get-robot-pose-while-the-robot-is-moving-to-a-target">reference</a><br/>Moves a robot to a specific target ("Move Joint" mode). self function blocks until the robot finishes its movements.<br/>In  1 : joints/pose/item -&gt; target to move to. It can be the robot joints (Nx1 or 1xN), the pose (4x4) or an item (item pointer)<br/>In  2 (optional): blocking -&gt; True if we want the instruction to wait until the robot finished the movement (default=True)</p>
 <p>add Camera: <a href="https://robodk.com/doc/en/PythonAPI/robolink.html#robolink.Robolink.Cam2D_Add">https://robodk.com/doc/en/PythonAPI/robolink.html#robolink.Robolink.Cam2D_Add</a></p>
 <h4>Temp py programs:</h4>
-<p><a href="https://robodk.com/forum/Thread-Convert-a-main-program-to-a-python-script">https://robodk.com/forum/Thread-Convert-a-main-program-to-a-python-script</a> </p>
+<p><a href="https://robodk.com/forum/Thread-Convert-a-main-program-to-a-python-script">https://robodk.com/forum/Thread-Convert-a-main-program-to-a-python-script</a></p>
 <h4>Set Robot base:</h4>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">RDK = robolink()
 
@@ -3054,12 +3060,32 @@ robot_base.setPose(4x4 mat with the position)</pre>
 <p style="padding-left: 30px;"><a href="https://www.entrepreneur.com/article/368124">https://www.entrepreneur.com/article/368124</a></p>
 <p style="padding-left: 30px;"><a href="https://www.natlawreview.com/article/taxing-non-fungible-tokens-nfts">https://www.natlawreview.com/article/taxing-non-fungible-tokens-nfts</a></p>
 <h4>1. OBS + Youtube 分組直播錄影測試:</h4>
+<p style="padding-left: 30px;"><span style="background-color: #ffff99;">首次進行 Youtube 直播需要等待 24 小時後才可啟用.</span></p>
 <p style="padding-left: 30px;">在 IPv6 環境下進行各分組桌面操作直播錄影</p>
 <p style="padding-left: 60px;">登入 @gm 帳號後連結至 Youtube 選擇 Live stream, 取得直播金鑰</p>
 <p style="padding-left: 60px;">將直播金鑰輸入 OBS, 啟動顯示器擷取, 透過串流訊號將桌面操作影像傳至 Youtube 進行直播錄影.</p>
 <p style="padding-left: 60px;">根據 <a href="http://mde.tw/cd2021/content/task2.html">http://mde.tw/cd2021/content/task2.html</a> 進行 IPv6 + 區域網路操控進行測試.</p>
 <p style="padding-left: 60px;">參考 <a href="http://mde.tw/cd2021/content/task3.html">http://mde.tw/cd2021/content/task3.html</a> 使用各組網際簡報內容引導直撥錄影.</p>
 <h4>2. 各分組從 <a href="http://mde.tw/wcm2021/content/W10.html">http://mde.tw/wcm2021/content/W10.html</a> 網際程式中選擇一項, 負責從近端執行部署至 Heroku.</h4>
+<p style="padding-left: 30px;">Ubuntu 20.04 on Virtualbox, 從 <a href="http://a.kmol.info:88/Ub2004.vdi">http://a.kmol.info:88/Ub2004.vdi</a> 取得 已經安裝 Ubuntu 的虛擬硬碟進行後續設定.</p>
+<h4 style="padding-left: 30px;">先更改 vdi 的 uuid:</h4>
+<p style="padding-left: 60px;">"c:\Program Files\Oracle\VirtualBox\VBoxManage.exe" internalcommands sethduuid Ubwcm2021.vdi</p>
+<h4 style="padding-left: 30px;">設定虛擬主機網路連線:</h4>
+<p style="padding-left: 60px;">接著將 Ubuntu 虛擬主機的網路以 Bridged 串接到 Windows 10 已經連線的網路卡.</p>
+<h4 style="padding-left: 30px;">登入系統後進行更新:</h4>
+<p style="padding-left: 60px;">由於 /etc/netplan/net.yaml 中採用 DHCP6 連外, 因此透過 ifconfig 可以取得網路連線資訊.</p>
+<p style="padding-left: 60px;">但因電腦輔助設計室採純 IPv6 設定, 因此必須透過雙網路協定代理主機上網才可執行下列 apt 指令.</p>
+<p style="padding-left: 60px;">因此要以 sudo vi  /etc/apt/apt.conf 建立 apt 代理主機設定檔, 內容如下:</p>
+<p style="padding-left: 60px;">Acquire::http::Proxy "http://proxy_username:proxy_password@[Proxy_server_ipv6_address]:3128";</p>
+<p style="padding-left: 60px;">之後就可以完成下列更新指令執行:</p>
+<p style="padding-left: 90px;">sudo apt update</p>
+<p style="padding-left: 90px;">sudo apt upgrade</p>
+<p style="padding-left: 90px;">sudo apt autoremove</p>
+<h4 style="padding-left: 30px;">進行 nginx 與 uwsgi 的設定:</h4>
+<p style="padding-left: 60px;">目的是讓 CMSiMDE 的動態與靜態系統可以在 Ubuntu 操作系統中以服務的方式, 隨電腦開機啟動.</p>
+<h4 style="padding-left: 60px;">首先安裝 nginx:</h4>
+<p style="padding-left: 90px;">sudo apt install nginx</p>
+<p style="padding-left: 60px;"></p>
 <h4>3. 導入 RoboDK:</h4>
 <p style="padding-left: 30px;"><a href="https://coro.etsmtl.ca/blog/?p=529">https://coro.etsmtl.ca/blog/?p=529</a></p>
 <p style="padding-left: 30px;"><a href="http://en.etsmtl.ca/unites-de-recherche/coro/accueil?lang=en-CA">http://en.etsmtl.ca/unites-de-recherche/coro/accueil?lang=en-CA</a></p>
