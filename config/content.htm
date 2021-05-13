@@ -3180,10 +3180,10 @@ WantedBy=multi-user.target</pre>
 <p style="padding-left: 90px;">sudo apt install fossil</p>
 <h4 style="padding-left: 60px;">查 fossil 版本:</h4>
 <p style="padding-left: 60px;">fossil version</p>
-<p style="padding-left: 30px;">因為採用 sudo apt install fossil 的版本為 2.5 版, 希望採用目前的最新版本 2.9, 因此:</p>
-<p style="padding-left: 30px;">直接在 Windows 10 下載 https://fossil-scm.org/home/uv/fossil-linux-x64-2.9.tar.gz, 解開壓縮檔案後, 將 fossil 送到 /homt/wcm2020/ 目錄下, 再使用指令, 將檔案複製到 /usr/bin/ 目錄下, 在 Ubuntu 要查詢 fossil 可執行檔案的位置, 使用 whereis fossil.</p>
+<p style="padding-left: 30px;">因為採用 sudo apt install fossil 的版本為 2.10 版, 希望採用目前的最新版本 2.15, 因此:</p>
+<p style="padding-left: 30px;">直接在 Windows 10 下載 https://fossil-scm.org/home/uv/fossil-linux-x64-snapshot-20210429.tar.gz, 解開壓縮檔案後, 將 fossil 送到 /homt/wcm2020/ 目錄下, 再使用指令, 將檔案複製到 /usr/bin/ 目錄下, 在 Ubuntu 要查詢 fossil 可執行檔案的位置, 使用 whereis fossil.</p>
 <p style="padding-left: 60px;">sudo cp fossil /usr/bin/</p>
-<p style="padding-left: 30px;">複製後, 再用 fossil version 查驗版本, 確認為最新的 2.9 版.</p>
+<p style="padding-left: 30px;">複製後, 再用 fossil version 查驗版本, 確認為最新的 2.15 版.</p>
 <p style="padding-left: 30px;">接著在 /home/wcm2020 目錄下建立 repository 目錄, 並且利用 fossil 起始一個 wcm2020.fossil 倉儲壓縮檔案.</p>
 <p style="padding-left: 60px;">mkdir repository</p>
 <p style="padding-left: 60px;">cd repository</p>
@@ -3208,6 +3208,26 @@ exec = /usr/bin/fossil
 execargs = /usr/bin/fossil http /home/wcm2020/repository/ --https --nojail --notfound wcm2020</pre>
 <p style="padding-left: 30px;">表示利用 stunnel 執行 fossil 指令, 並且透過 http 協定啟動 位於 /home/wcm2020/repository 目錄下的倉儲壓縮檔案, 且附加採用 https 與 nojail 模式啟動.</p>
 <p style="padding-left: 30px;">其中 --nojail 目的在 drop the root privilege but do not enter the chroot jail, 其後的 --notfound 表示若沒有特別在 URL 中列出所要擷取的 .fossil 檔案 (指位於 /home/wcm2020/repository/ 目錄下), 則採用 wcm2020.fossil<br/><br/>重新啟用 stunnel:<br/><br/>sudo /etc/init.d/stunnel4 restart<br/><br/>啟動後的 Fossil SCM 位於 port 5443, 且將 wcm2020 管理者密碼設為 XXXX.</p>
+<p style="padding-left: 30px;">Fossil SCM 查詢 .fossil 檔案內容:</p>
+<p style="padding-left: 60px;">以 fossil sql 指令擷取 .fossil 檔案內容</p>
+<p style="padding-left: 30px;">使用者以 fossil init foo.fossil 建立倉儲檔案後, 除了使用 sqlite3 命令檢視 fossil 倉儲內容外, 也可以利用 fossil 指令查驗倉儲資料庫檔案的內容.</p>
+<p style="padding-left: 60px;">fossil sql -R foo.fossil</p>
+<p style="padding-left: 30px;">進入 sqlite 指令環境後, 可以利用 .schema user 查驗 user 資料表的欄位設計.</p>
+<p style="padding-left: 60px;">以 select login, pw, cap from user;</p>
+<p style="padding-left: 30px;">可以查詢目前 foo.fossil 檔案中 user 資料表 login, pw 與 cap 等3個欄位的資料內容.</p>
+<p style="padding-left: 30px;">若要更改特定 login 登入帳號的 pw 或 cap 可以使用下列 sqlite3 SQL 語法:</p>
+<p style="padding-left: 60px;">update user set pw='mynewpassword' where login='myloginaccount';</p>
+<p style="padding-left: 60px;">update user set cap='s' where login='myloginaccount';</p>
+<h4 style="padding-left: 30px;">從 Windows 10 clone, open Fossil SCM 倉儲:</h4>
+<p style="padding-left: 60px;">c:\tmp&gt;mkdir repository</p>
+<p style="padding-left: 60px;">c:\tmp&gt;cd repository</p>
+<p style="padding-left: 60px;">c:\tmp\repository&gt;fossil clone <a href="https://wcm2020@192.168.19.1:5443/wcm2020">https://wcm2020@192.168.19.1:5443/wcm2020</a> wcm2020.fossil</p>
+<p style="padding-left: 60px;">表示要從 <a href="https://192.168.19.1:5443">https://192.168.19.1:5443</a> clone wcm2020 倉儲, 帳號為 wcm2020, 而且要存至近端名稱為 wcm2020.fossil</p>
+<p style="padding-left: 60px;">之後必須輸入與 wcm2020 帳號對應的倉儲管理者密碼後, 就可以 clone 下 wcm2020.fossil 倉儲檔案.</p>
+<p style="padding-left: 60px;">c:\tmp\repository&gt;mkdir wd</p>
+<p style="padding-left: 60px;">c:\tmp\repository\wd&gt;mkdir wcm2020</p>
+<p style="padding-left: 60px;">c:\tmp\repository\wd\wcm2020&gt;fossil open ./../../wcm2020.fossil</p>
+<p style="padding-left: 60px;">之後只要將 cmstemplate 倉儲資料放入 c:\tmp\repository\wd\wcm2020 目錄中 (但不能複製 __FOSSIL__ 檔案, 就可以設法利用 fossil add . 以及 fossil commit -m "initial add" 將已經更新的 wcm2020 倉儲內容推送到 <a href="https://192.168.19.1:5443/wcm2020">https://192.168.19.1:5443/wcm2020</a> 倉儲中. 這時與 Github Pages 類似的網際靜態網站內容將位於: <a href="https://192.168.19.1:5443/wcm2020/doc/trunk/content/index.html">https://192.168.19.1:5443/wcm2020/doc/trunk/content/index.html</a> </p>
 <h4>3. 導入 RoboDK:</h4>
 <p style="padding-left: 30px;"><a href="https://coro.etsmtl.ca/blog/?p=529">https://coro.etsmtl.ca/blog/?p=529</a></p>
 <p style="padding-left: 30px;"><a href="http://en.etsmtl.ca/unites-de-recherche/coro/accueil?lang=en-CA">http://en.etsmtl.ca/unites-de-recherche/coro/accueil?lang=en-CA</a></p>
