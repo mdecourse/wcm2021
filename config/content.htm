@@ -3150,6 +3150,64 @@ sys.path.append(os.path.join(os.path.dirname(__file__)))
 import flaskapp
 import ssl</pre>
 <p style="padding-left: 60px;">即可順利透過 uwsgi 啟動 CMSiMDE.</p>
+<h4 style="padding-left: 30px;">apt proxy 設定檔案:</h4>
+<p style="padding-left: 60px;">若採手動設定, apt 的 proxy 將位於 /etc/apt/apt.conf, 但先前曾在安裝階段輸入 proxy 設定後, Ubuntu 會將 apt 的 proxy 設定存入:</p>
+<p style="padding-left: 90px;">/etc/apt/apt.conf.d/90curtin-aptproxy</p>
+<h4 style="padding-left: 30px;">設定 Ubuntu 系統服務, 用來啟動 uwsgi:</h4>
+<p style="padding-left: 60px;">/etc/systemd/system/ 目錄中的 cmsimde.service 服務啟動檔案內容:</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[Unit]
+Description=uWSGI to serve CMSiMDE
+After=network.target
+  
+[Service]
+User=wcm2020
+Group=wcm2020
+WorkingDirectory=/home/wcm2020/uwsgi_ini
+ExecStart=/usr/local/bin/uwsgi --emperor /home/wcm2020/uwsgi_ini
+  
+[Install]
+WantedBy=multi-user.target</pre>
+<h4 style="padding-left: 60px;">接著將 cmsimde 服務設為隨系統開機啟動:</h4>
+<p style="padding-left: 90px;">sudo systemctl enable cmsimde</p>
+<h4 style="padding-left: 60px;">若要取消 cmsimde 服務隨系統開機啟動:</h4>
+<p style="padding-left: 90px;">sudo systemctl disable cmsimde</p>
+<h4 style="padding-left: 60px;">手動啟動 cmsimde.service 服務:</h4>
+<p style="padding-left: 90px;">sudo systemctl start cmsimde</p>
+<h4 style="padding-left: 60px;">手動停止 cmsimde.service 服務:</h4>
+<p style="padding-left: 90px;">sudo systemctl stop cmsimde</p>
+<h4 style="padding-left: 30px;">在 Ubuntu 虛擬主機中設定 Fossil SCM:</h4>
+<h4 style="padding-left: 60px;">安裝 fossil:</h4>
+<p style="padding-left: 90px;">sudo apt install fossil</p>
+<h4 style="padding-left: 60px;">查 fossil 版本:</h4>
+<p style="padding-left: 60px;">fossil version</p>
+<p style="padding-left: 30px;">因為採用 sudo apt install fossil 的版本為 2.5 版, 希望採用目前的最新版本 2.9, 因此:</p>
+<p style="padding-left: 30px;">直接在 Windows 10 下載 https://fossil-scm.org/home/uv/fossil-linux-x64-2.9.tar.gz, 解開壓縮檔案後, 將 fossil 送到 /homt/wcm2020/ 目錄下, 再使用指令, 將檔案複製到 /usr/bin/ 目錄下, 在 Ubuntu 要查詢 fossil 可執行檔案的位置, 使用 whereis fossil.</p>
+<p style="padding-left: 60px;">sudo cp fossil /usr/bin/</p>
+<p style="padding-left: 30px;">複製後, 再用 fossil version 查驗版本, 確認為最新的 2.9 版.</p>
+<p style="padding-left: 30px;">接著在 /home/wcm2020 目錄下建立 repository 目錄, 並且利用 fossil 起始一個 wcm2020.fossil 倉儲壓縮檔案.</p>
+<p style="padding-left: 60px;">mkdir repository</p>
+<p style="padding-left: 60px;">cd repository</p>
+<p style="padding-left: 60px;">fossil init wcm2020.fossil</p>
+<p style="padding-left: 30px;">完成後, 紀錄 wcm2020.fossil 的管理密碼, 以便啟動 Fossil SCM 伺服器時, 利用 wcm2020 當作帳號, 而以記錄的管理者密碼登入進行設定.</p>
+<p style="padding-left: 30px;">接下來為了要在 https 的模式下使用 Fossil SCM 伺服器, 因此必須安裝配置 stunnel:</p>
+<p style="padding-left: 60px;">sudo apt install stunnel</p>
+<p style="padding-left: 30px;">修改 /etc/environment, 加入:</p>
+<p style="padding-left: 60px;">HTTPS=on</p>
+<p style="padding-left: 30px;">修改 /etc/default/stunnel4, 修改 ENABLED=1</p>
+<p style="padding-left: 30px;">假如此時 /etc/stunnel 目錄下尚無 localhost.crt 與 localhost.key, 可以利用下列指令建立:</p>
+<h4 style="padding-left: 30px;">建立 localhost.key 與 localhost.crt:</h4>
+<p style="padding-left: 60px;">sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt</p>
+<h4 style="padding-left: 30px;">接著設定 /etc/stunnel/stunnel.conf 如下:</h4>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[https]
+accept = wcm2020:5443
+# 只先啟用 ipv4
+#accept = :::443
+cert = /etc/stunnel/localhost.crt
+key = /etc/stunnel/localhost.key
+exec = /usr/bin/fossil
+execargs = /usr/bin/fossil http /home/wcm2020/repository/ --https --nojail --notfound wcm2020</pre>
+<p style="padding-left: 30px;">表示利用 stunnel 執行 fossil 指令, 並且透過 http 協定啟動 位於 /home/wcm2020/repository 目錄下的倉儲壓縮檔案, 且附加採用 https 與 nojail 模式啟動.</p>
+<p style="padding-left: 30px;">其中 --nojail 目的在 drop the root privilege but do not enter the chroot jail, 其後的 --notfound 表示若沒有特別在 URL 中列出所要擷取的 .fossil 檔案 (指位於 /home/wcm2020/repository/ 目錄下), 則採用 wcm2020.fossil<br/><br/>重新啟用 stunnel:<br/><br/>sudo /etc/init.d/stunnel4 restart<br/><br/>啟動後的 Fossil SCM 位於 port 5443, 且將 wcm2020 管理者密碼設為 XXXX.</p>
 <h4>3. 導入 RoboDK:</h4>
 <p style="padding-left: 30px;"><a href="https://coro.etsmtl.ca/blog/?p=529">https://coro.etsmtl.ca/blog/?p=529</a></p>
 <p style="padding-left: 30px;"><a href="http://en.etsmtl.ca/unites-de-recherche/coro/accueil?lang=en-CA">http://en.etsmtl.ca/unites-de-recherche/coro/accueil?lang=en-CA</a></p>
