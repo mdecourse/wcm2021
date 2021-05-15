@@ -3122,8 +3122,8 @@ network:
 <p style="padding-left: 90px;">git config http.proxy <a href="http://proxy_account:proxy_password@[proxy_ipv6_address]port">http://proxy_account:proxy_password@[proxy_ipv6_address]:port</a></p>
 <p style="padding-left: 60px;">此時必須確認是否先前已經在 /home/wcm2021/ 目錄下已經設定 .gitconfig, 上述 git config 並無法蓋過先前設定的檔案, 必須以 vi .gitconfig 進入修改, 加上 proxy 帳號與密碼.</p>
 <h4 style="padding-left: 30px;">以 nginx 啟動靜態系統:</h4>
-<p style="padding-left: 60px;">已知 cmstemplate 位於 /home/wcm2020/github/cmstemplate, 接下來希望利用 nginx 啟動此一靜態系統.</p>
-<p style="padding-left: 60px;">只要將 /etc/nginx/sites-available/default 中 port 80 伺服 root 設定為 /home/wcm2020/github/cmstemplate 即可由 nginx 伺服 index.html.</p>
+<p style="padding-left: 60px;">已知 cmstemplate 位於 /home/wcm2021/github/cmstemplate, 接下來希望利用 nginx 啟動此一靜態系統.</p>
+<p style="padding-left: 60px;">只要將 /etc/nginx/sites-available/default 中 port 80 伺服 root 設定為 /home/wcm2021/github/cmstemplate 即可由 nginx 伺服 index.html.</p>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">#root /var/www/html;
 root /home/wcm2021/github/cmstemplate/;</pre>
 <p style="padding-left: 60px;">然後利用 sudo /etc/init.d/nginx restart 重新啟動 nginx.</p>
@@ -3210,11 +3210,11 @@ WantedBy=multi-user.target</pre>
 <p style="padding-left: 30px;">在 Ubuntu 要查詢 fossil 可執行檔案的位置, 使用 whereis fossil.</p>
 <p style="padding-left: 60px;">sudo cp fossil /usr/bin/</p>
 <p style="padding-left: 30px;">複製後, 再用 fossil version 查驗版本, 確認為最新的 2.15 版.</p>
-<p style="padding-left: 30px;">接著在 /home/wcm2020 目錄下建立 repository 目錄, 並且利用 fossil 起始一個 wcm2020.fossil 倉儲壓縮檔案.</p>
+<p style="padding-left: 30px;">接著在 /home/wcm2021 目錄下建立 repository 目錄, 並且利用 fossil 起始一個 wcm2021.fossil 倉儲壓縮檔案.</p>
 <p style="padding-left: 60px;">mkdir repository</p>
 <p style="padding-left: 60px;">cd repository</p>
 <p style="padding-left: 60px;">fossil init cmstemplate.fossil</p>
-<p style="padding-left: 30px;">完成後, 紀錄 cmstemplate.fossil 的管理密碼, 以便啟動 Fossil SCM 伺服器時, 利用 wcm2020 當作帳號, 而以記錄的管理者密碼登入進行設定.</p>
+<p style="padding-left: 30px;">完成後, 紀錄 cmstemplate.fossil 的管理密碼, 以便啟動 Fossil SCM 伺服器時, 利用 wcm2021 當作帳號, 而以記錄的管理者密碼登入進行設定.</p>
 <p style="padding-left: 30px;">截至 Fossil SCM 2.15 版, 若 server 使用 IPv6 網路協定, 則必須設定 DNS domain 後, 全程使用 domain name 進行 fossil clone <a href="https://username@your_fossil_server_domain_nameport">https://username@your_fossil_server_domain_name:port/cmstemplate</a> cmstemplate.fossil, 表示要使用 fossil clone 將位於遠端伺服器中, 帳號為 username 且倉儲名稱為 cmstemplate 的檔案, clone 到近端存為 cmstemplate.fossil.</p>
 <p style="padding-left: 30px;">接下來為了要在 https 的模式下使用 Fossil SCM 伺服器, 因此必須安裝配置 stunnel:</p>
 <p style="padding-left: 60px;">sudo apt install stunnel</p>
@@ -3226,15 +3226,14 @@ WantedBy=multi-user.target</pre>
 <p style="padding-left: 60px;">sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt</p>
 <h4 style="padding-left: 30px;">接著設定 /etc/stunnel/stunnel.conf 如下:</h4>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[https]
-accept = wcm2020:5443
-# 只先啟用 ipv4
-#accept = :::443
+accept = :5443
+accept = :::5443
 cert = /etc/stunnel/localhost.crt
 key = /etc/stunnel/localhost.key
 exec = /usr/bin/fossil
-execargs = /usr/bin/fossil http /home/wcm2020/repository/ --https --nojail --notfound wcm2020</pre>
-<p style="padding-left: 30px;">表示利用 stunnel 執行 fossil 指令, 並且透過 http 協定啟動 位於 /home/wcm2020/repository 目錄下的倉儲壓縮檔案, 且附加採用 https 與 nojail 模式啟動.</p>
-<p style="padding-left: 30px;">其中 --nojail 目的在 drop the root privilege but do not enter the chroot jail, 其後的 --notfound 表示若沒有特別在 URL 中列出所要擷取的 .fossil 檔案 (指位於 /home/wcm2020/repository/ 目錄下), 則採用 wcm2020.fossil<br/><br/>重新啟用 stunnel:<br/><br/>sudo /etc/init.d/stunnel4 restart<br/><br/>啟動後的 Fossil SCM 位於 port 5443, 且將 wcm2020 管理者密碼設為 XXXX.</p>
+execargs = /usr/bin/fossil http /home/wcm2021/repository/ --https --nojail --notfound wcm2021</pre>
+<p style="padding-left: 30px;">表示利用 stunnel 執行 fossil 指令, 並且透過 http 協定啟動 位於 /home/wcm2021/repository 目錄下的倉儲壓縮檔案, 且附加採用 https 與 nojail 模式啟動.</p>
+<p style="padding-left: 30px;">其中 --nojail 目的在 drop the root privilege but do not enter the chroot jail, 其後的 --notfound 表示若沒有特別在 URL 中列出所要擷取的 .fossil 檔案 (指位於 /home/wcm2021/repository/ 目錄下), 則採用 wcm2021.fossil<br/><br/>重新啟用 stunnel:<br/><br/>sudo /etc/init.d/stunnel4 restart<br/><br/>啟動後的 Fossil SCM 位於 port 5443, 且將 wcm2021 管理者密碼設為 XXXX.</p>
 <p style="padding-left: 30px;">Fossil SCM 查詢 .fossil 檔案內容:</p>
 <p style="padding-left: 60px;">以 fossil sql 指令擷取 .fossil 檔案內容</p>
 <p style="padding-left: 30px;">使用者以 fossil init foo.fossil 建立倉儲檔案後, 除了使用 sqlite3 命令檢視 fossil 倉儲內容外, 也可以利用 fossil 指令查驗倉儲資料庫檔案的內容.</p>
@@ -3248,13 +3247,13 @@ execargs = /usr/bin/fossil http /home/wcm2020/repository/ --https --nojail --not
 <h4 style="padding-left: 30px;">從 Windows 10 clone, open Fossil SCM 倉儲:</h4>
 <p style="padding-left: 60px;">c:\tmp&gt;mkdir repository</p>
 <p style="padding-left: 60px;">c:\tmp&gt;cd repository</p>
-<p style="padding-left: 60px;">c:\tmp\repository&gt;fossil clone <a href="https://wcm2020@192.168.19.1:5443/wcm2020">https://wcm2020@192.168.19.1:5443/wcm2020</a> wcm2020.fossil</p>
-<p style="padding-left: 60px;">表示要從 <a href="https://192.168.19.1:5443">https://192.168.19.1:5443</a> clone wcm2020 倉儲, 帳號為 wcm2020, 而且要存至近端名稱為 wcm2020.fossil</p>
-<p style="padding-left: 60px;">之後必須輸入與 wcm2020 帳號對應的倉儲管理者密碼後, 就可以 clone 下 wcm2020.fossil 倉儲檔案.</p>
+<p style="padding-left: 60px;">c:\tmp\repository&gt;fossil clone <a href="https://wcm2021@192.168.19.1:5443/wcm2021%20">https://wcm2021@192.168.19.1:5443/wcm2021 </a>wcm2021.fossil</p>
+<p style="padding-left: 60px;">表示要從 <a href="https://192.168.19.1:5443">https://192.168.19.1:5443</a> clone wcm2021 倉儲, 帳號為 wcm2020, 而且要存至近端名稱為 wcm2021.fossil</p>
+<p style="padding-left: 60px;">之後必須輸入與 wcm2021 帳號對應的倉儲管理者密碼後, 就可以 clone 下 wcm2021.fossil 倉儲檔案.</p>
 <p style="padding-left: 60px;">c:\tmp\repository&gt;mkdir wd</p>
-<p style="padding-left: 60px;">c:\tmp\repository\wd&gt;mkdir wcm2020</p>
-<p style="padding-left: 60px;">c:\tmp\repository\wd\wcm2020&gt;fossil open ./../../wcm2020.fossil</p>
-<p style="padding-left: 60px;">之後只要將 cmstemplate 倉儲資料放入 c:\tmp\repository\wd\wcm2020 目錄中 (但不能複製 __FOSSIL__ 檔案, 就可以設法利用 fossil add . 以及 fossil commit -m "initial add" 將已經更新的 wcm2020 倉儲內容推送到 <a href="https://192.168.19.1:5443/wcm2020">https://192.168.19.1:5443/wcm2020</a> 倉儲中. 這時與 Github Pages 類似的網際靜態網站內容將位於: <a href="https://192.168.19.1:5443/wcm2020/doc/trunk/content/index.html">https://192.168.19.1:5443/wcm2020/doc/trunk/content/index.html</a></p>
+<p style="padding-left: 60px;">c:\tmp\repository\wd&gt;mkdir wcm2021</p>
+<p style="padding-left: 60px;">c:\tmp\repository\wd\wcm2021&gt;fossil open ./../../wcm2021.fossil</p>
+<p style="padding-left: 60px;">之後只要將 cmstemplate 倉儲資料放入 c:\tmp\repository\wd\wcm2020 目錄中 (但不能複製 __FOSSIL__ 檔案, 就可以設法利用 fossil add . 以及 fossil commit -m "initial add" 將已經更新的 wcm2021 倉儲內容推送到 <a href="https://192.168.19.1:5443/wcm2020">https://192.168.19.1:5443/wcm202</a>1 倉儲中. 這時與 Github Pages 類似的網際靜態網站內容將位於: <a href="https://192.168.19.1:5443/wcm2020/doc/trunk/content/index.html">https://192.168.19.1:5443/wcm2021/doc/trunk/content/index.html</a></p>
 <p style="padding-left: 60px;">登入 @gm 帳號後, 可以取得<a href="https://drive.google.com/file/d/1KfkQR3g3Uq2Bcz-1Hn5Cu9ov6pGCRWPY/view?usp=sharing">下載 Ubwcm2021.7z</a> (約 4GB, 解開壓縮後約 12GB, Ubuntu 20.04 Desktop Virtualbox 虛擬主機檔案 with uwsgi, Fossil SCM, RoboDK 5.2.2 Free trial and CoppeliaSim 4.1.0 Edu version) 虛擬主機檔案的連結資料.</p>
 <h4>3. 導入 RoboDK:</h4>
 <p style="padding-left: 30px;"><a href="https://coro.etsmtl.ca/blog/?p=529">https://coro.etsmtl.ca/blog/?p=529</a></p>
@@ -3295,7 +3294,14 @@ if __name__ == '__main__':
     ui = MainWidget()
     ui.show()
     sys.exit(app.exec_())</pre><h3>YAML</h3>
-<p>YAML’s block collections use indentation for scope and begin each entry on its own line. Block sequences indicate each entry with a dash and space ( "- "). Mappings use a colon and space (": ") to mark each key: value pair. Comments begin with an octothorpe (also called a "hash", "sharp", "pound", or "number sign" - "#").</p><h2>分組專題</h2>
+<p>YAML’s block collections use indentation for scope and begin each entry on its own line. Block sequences indicate each entry with a dash and space ( "- "). Mappings use a colon and space (": ") to mark each key: value pair. Comments begin with an octothorpe (also called a "hash", "sharp", "pound", or "number sign" - "#").</p><h2>W13-W14</h2>
+<p>為因應校方公告:</p>
+<p style="padding-left: 30px;"><a href="/downloads/「嚴重特殊傳染性肺炎」疫情課程彈性處理事項_遠距教學公告_0515D(中英版本).pdf">「嚴重特殊傳染性肺炎」疫情課程彈性處理事項_遠距教學公告_0515D(中英版本).pdf</a></p>
+<p>5月17日至5月30日全校所有課程改採遠距教學.</p>
+<p>本課程將在 W13-W14 週採取同步線上模式上課, 請所有修課學員密切注意 <a href="https://gitter.im/mdecourse/wcm2021">https://gitter.im/mdecourse/wcm2021</a> 上之公告, 線上同步上課將採 OBS + Youtube 直播方式進行, 請各學員屆時必須事先登入 github 帳號與 @gm 電子郵箱帳號, 以便在課程直播網站上留言討論.</p>
+<p>同步直播課程進行過程將指定各組員針對課程內容進行直播操作, 負責直播學員必須即時將直播網址公布於 <a href="https://gitter.im/mdecourse/wcm2021">https://gitter.im/mdecourse/wcm2021</a>, 以便與其他學員及老師進行互動.</p>
+<p>課程同步直播時段將與上課時段相同, 每段直播中間的暫停時間將視實際情況決定.</p>
+<p></p><h2>分組專題</h2>
 <p><a href="https://drive.google.com/drive/folders/1OyEy67kGXiNjQSccad3Fd0H_59paqOiU?usp=sharing">分組報告影片</a></p>
 <h4>Solvespace 3D 參數設計繪圖建立零組件 (<a href="https://solvespace.com">Solvespace</a> 編譯與<a href="http://www.farwire.net/SolveSpace-LearningGuide.htm">應用</a>):</h4>
 <ol>
