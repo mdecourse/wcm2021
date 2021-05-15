@@ -147,13 +147,17 @@ img.add_border {
 <p style="padding-left: 30px;"><a href="https://www.natlawreview.com/article/taxing-non-fungible-tokens-nfts">https://www.natlawreview.com/article/taxing-non-fungible-tokens-nfts</a></p>
 <h4>1. OBS + Youtube 分組直播錄影測試:</h4>
 <p style="padding-left: 30px;"><span style="background-color: #ffff99;">首次進行 Youtube 直播需要等待 24 小時後才可啟用.</span></p>
+<p style="padding-left: 30px;">假如是在 Mac 環境安裝 OBS, 必須至 System Preferences - Security &amp; Privacy 處允許 OBS 使用 Camera 與 Screen Recording.</p>
 <p style="padding-left: 30px;">在 IPv6 環境下進行各分組桌面操作直播錄影</p>
 <p style="padding-left: 60px;">登入 @gm 帳號後連結至 Youtube 選擇 Live stream, 取得直播金鑰</p>
 <p style="padding-left: 60px;">將直播金鑰輸入 OBS, 啟動顯示器擷取, 透過串流訊號將桌面操作影像傳至 Youtube 進行直播錄影.</p>
 <p style="padding-left: 60px;">根據 <a href="http://mde.tw/cd2021/content/task2.html">http://mde.tw/cd2021/content/task2.html</a> 進行 IPv6 + 區域網路操控進行測試.</p>
 <p style="padding-left: 60px;">參考 <a href="http://mde.tw/cd2021/content/task3.html">http://mde.tw/cd2021/content/task3.html</a> 使用各組網際簡報內容引導直撥錄影.</p>
 <h4>2. 各分組從 <a href="http://mde.tw/wcm2021/content/W10.html">http://mde.tw/wcm2021/content/W10.html</a> 網際程式中選擇一項, 負責從近端執行部署至 Heroku.</h4>
-<p style="padding-left: 30px;">Ubuntu 20.04 on Virtualbox, 從 <a href="http://a.kmol.info:88/Ub2004.vdi">http://a.kmol.info:88/Ub2004.vdi</a> 取得 已經安裝 Ubuntu 的虛擬硬碟進行後續設定.</p>
+<h4 style="padding-left: 30px;">自行利用 Ubuntu 建立可啟動 CMSiMDE 動態系統與 Fossil SCM 伺服器的目的:</h4>
+<p style="padding-left: 60px;">建立完整的 Python 網際程式開發環境.</p>
+<p style="padding-left: 60px;">開發的程式碼可採用 Fossil SCM 與 Github 同步的方式進行分散式版次管理.</p>
+<p style="padding-left: 30px;">Ubuntu 20.04 on Virtualbox, 從 <a href="http://a.kmol.info:88/Ub2004.vdi">http://a.kmol.info:88/Ub2004.vdi</a> 取得 已經安裝 Ubuntu 的虛擬硬碟進行後續設定. 或者自行下載 Ubuntu 20.04 Desktop 版 iso 檔案自行安裝帶有桌面的虛擬主機.</p>
 <h4 style="padding-left: 30px;"><span style="background-color: #ffff99;">先更改 vdi 的 uuid</span>:</h4>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">"c:\Program Files\Oracle\VirtualBox\VBoxManage.exe" internalcommands sethduuid Ubwcm2021.vdi</pre>
 <h4 style="padding-left: 30px;">設定虛擬主機網路連線:</h4>
@@ -199,16 +203,36 @@ network:
 <p style="padding-left: 60px;">接下來安裝 uwsgi 所需程式庫與模組:</p>
 <p style="padding-left: 90px;">sudo apt install uwsgi uwsgi-plugin-python3</p>
 <p style="padding-left: 90px;">sudo pip3 install uwsgi</p>
-<p style="padding-left: 60px;">接下來希望將 <a href="https://github.com/mdecourse/cmstemplate">https://github.com/mdecourse/cmstemplate</a> clone 至 /home/wcm2020/github 目錄下, 其他目錄資料可利用 rm -r 目錄名稱 刪除, -r 代表連全部的子目錄一併刪除.</p>
+<p style="padding-left: 60px;">接下來希望將 <a href="https://github.com/mdecourse/cmstemplate">https://github.com/mdecourse/cmstemplate</a> clone 至 /home/wcm2021/github 目錄下, 其他目錄資料可利用 rm -r 目錄名稱 刪除, -r 代表連全部的子目錄一併刪除.</p>
 <p style="padding-left: 60px;">若希望使用 git clone --recurse-submodules <a href="https://github.com/mdecourse/cmstemplate.git">https://github.com/mdecourse/cmstemplate.git</a> 取下 cmstemplate 倉儲內容, 必須使用 git config 設定 http.proxy.</p>
 <p style="padding-left: 90px;">git config http.proxy <a href="http://proxy_account:proxy_password@[proxy_ipv6_address]port">http://proxy_account:proxy_password@[proxy_ipv6_address]:port</a></p>
-<p style="padding-left: 60px;">此時必須確認是否先前已經在 /home/wcm2020/ 目錄下已經設定 .gitconfig, 上述 git config 並無法蓋過先前設定的檔案, 必須以 vi .gitconfig 進入修改, 加上 proxy 帳號與密碼.</p>
+<p style="padding-left: 60px;">此時必須確認是否先前已經在 /home/wcm2021/ 目錄下已經設定 .gitconfig, 上述 git config 並無法蓋過先前設定的檔案, 必須以 vi .gitconfig 進入修改, 加上 proxy 帳號與密碼.</p>
 <h4 style="padding-left: 30px;">以 nginx 啟動靜態系統:</h4>
-<p style="padding-left: 60px;">已知 cmstemplate 位於 /home/wcm2020/github/cmstemplate, 接下來希望利用 nginx 啟動此一靜態系統.</p>
-<p style="padding-left: 60px;">只要將 /etc/nginx/sites-available/default 中 port 80 伺服 root 設定為 /home/wcm2020/github/cmstemplate 即可由 nginx 伺服 index.html.</p>
+<p style="padding-left: 60px;">已知 cmstemplate 位於 /home/wcm2021/github/cmstemplate, 接下來希望利用 nginx 啟動此一靜態系統.</p>
+<p style="padding-left: 60px;">只要將 /etc/nginx/sites-available/default 中 port 80 伺服 root 設定為 /home/wcm2021/github/cmstemplate 即可由 nginx 伺服 index.html.</p>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">#root /var/www/html;
-root /home/wcm2020/github/cmstemplate/;</pre>
+root /home/wcm2021/github/cmstemplate/;</pre>
 <p style="padding-left: 60px;">然後利用 sudo /etc/init.d/nginx restart 重新啟動 nginx.</p>
+<h4 style="padding-left: 30px;">以 nginx 啟動動態系統:</h4>
+<p style="padding-left: 60px;">uwsgi 與 nginx 結合, 需要 /home/wcm2021/uwsgi_ini 目錄中的 uwsgi.ini 設定檔案與 /etc/nginx/sites-available/default 中的 port 443 server 設定:</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">server {
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
+   
+    location / {
+        include uwsgi_params;
+        uwsgi_pass  127.0.0.1:8080;
+    }
+   
+    ssl_certificate /etc/stunnel/localhost.crt;
+    ssl_certificate_key /etc/stunnel/localhost.key;
+    ssl_session_timeout 5m;
+    ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers "HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES";
+    ssl_prefer_server_ciphers on;
+    try_files $uri $uri/ =404;
+}</pre>
+<p style="padding-left: 60px;">上述設定透過 uwsgi 在 127.0.0.1:8080 啟動 cmsimde/wsgi.py 動態網站程式, 並將網際資料送給 nginx 後, 以 port 443 ssl 協定對連外網路進行 WWW 伺服.</p>
 <h4 style="padding-left: 30px;">安裝 stunnel:</h4>
 <p style="padding-left: 60px;">因為隨後安裝 Fossil SCM 時, 需要透過 stunnel 配置 https 協定連線, 在此先完成安裝, 並且與 uwsgi + nginx 共用 credential 與 key.</p>
 <p style="padding-left: 60px;">進入 /etc/stunnel 後, 執行下列指令, 建立 localhost.crt 與 localhost.key:</p>
@@ -216,18 +240,18 @@ root /home/wcm2020/github/cmstemplate/;</pre>
 <h4 style="padding-left: 30px;">設定 uwsgi_ini/uwsgi.ini:</h4>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[uwsgi]
 socket = :8080
-uid = wcm2020
-gid = wcm2020
+uid = wcm2021
+gid = wcm2021
 plugins-dir = /usr/lib/uwsgi/plugins/
 plugin = python3
 master = true
 process = 4
 threads = 2
-chdir = /home/wcm2020/github/cmstemplate
-wsgi-file = /home/wcm2020/github/cmstemplate/cmsimde/wsgi.py
+chdir = /home/wcm2021/github/cmstemplate
+wsgi-file = /home/wcm2021/github/cmstemplate/cmsimde/wsgi.py
 </pre>
 <h4 style="padding-left: 30px;">測試 uwsgi 設定:</h4>
-<p style="padding-left: 60px;">sudo /usr/bin/uwsgi --emperor /home/wcm2020/wsgi_ini</p>
+<p style="padding-left: 60px;">sudo /usr/bin/uwsgi --emperor /home/wcm2021/wsgi_ini</p>
 <p style="padding-left: 60px;">在上述指令啟動時, CMSiMDE 出現無法 import flask app 的錯誤, 因此修改 CMSiMDE, 納入下列設定:</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import sys
 import os
@@ -246,10 +270,10 @@ Description=uWSGI to serve CMSiMDE
 After=network.target
   
 [Service]
-User=wcm2020
-Group=wcm2020
-WorkingDirectory=/home/wcm2020/uwsgi_ini
-ExecStart=/usr/local/bin/uwsgi --emperor /home/wcm2020/uwsgi_ini
+User=wcm2021
+Group=wcm2021
+WorkingDirectory=/home/wcm2021/uwsgi_ini
+ExecStart=/usr/local/bin/uwsgi --emperor /home/wcm2021/uwsgi_ini
   
 [Install]
 WantedBy=multi-user.target</pre>
@@ -267,14 +291,17 @@ WantedBy=multi-user.target</pre>
 <h4 style="padding-left: 60px;">查 fossil 版本:</h4>
 <p style="padding-left: 60px;">fossil version</p>
 <p style="padding-left: 30px;">因為採用 sudo apt install fossil 的版本為 2.10 版, 希望採用目前的最新版本 2.15, 因此:</p>
-<p style="padding-left: 30px;">直接在 Windows 10 下載 https://fossil-scm.org/home/uv/fossil-linux-x64-snapshot-20210429.tar.gz, 解開壓縮檔案後, 將 fossil 送到 /homt/wcm2020/ 目錄下, 再使用指令, 將檔案複製到 /usr/bin/ 目錄下, 在 Ubuntu 要查詢 fossil 可執行檔案的位置, 使用 whereis fossil.</p>
+<p style="padding-left: 30px;">直接在 Windows 10 下載 <a href="https://fossil-scm.org/home/uv/fossil-linux-x64-snapshot-20210429.tar.gz">https://fossil-scm.org/home/uv/fossil-linux-x64-snapshot-20210429.tar.gz</a>, 解開壓縮檔案後, 將 fossil 送到 /homt/wcm2021/ 目錄下, 再使用指令, 將檔案複製到 /usr/bin/ 目錄下.</p>
+<p style="padding-left: 30px;">也可以直接在 Ubuntu 下以 wget 取下 <a href="https://fossil-scm.org/home/uv/fossil-linux-x64-snapshot-20210429.tar.gz">https://fossil-scm.org/home/uv/fossil-linux-x64-snapshot-20210429.tar.gz</a> 後, 使用 tar zxvf 解開壓縮檔後, 將檔案複製至 /usr/bin 中執行.</p>
+<p style="padding-left: 30px;">在 Ubuntu 要查詢 fossil 可執行檔案的位置, 使用 whereis fossil.</p>
 <p style="padding-left: 60px;">sudo cp fossil /usr/bin/</p>
 <p style="padding-left: 30px;">複製後, 再用 fossil version 查驗版本, 確認為最新的 2.15 版.</p>
-<p style="padding-left: 30px;">接著在 /home/wcm2020 目錄下建立 repository 目錄, 並且利用 fossil 起始一個 wcm2020.fossil 倉儲壓縮檔案.</p>
+<p style="padding-left: 30px;">接著在 /home/wcm2021 目錄下建立 repository 目錄, 並且利用 fossil 起始一個 wcm2021.fossil 倉儲壓縮檔案.</p>
 <p style="padding-left: 60px;">mkdir repository</p>
 <p style="padding-left: 60px;">cd repository</p>
-<p style="padding-left: 60px;">fossil init wcm2020.fossil</p>
-<p style="padding-left: 30px;">完成後, 紀錄 wcm2020.fossil 的管理密碼, 以便啟動 Fossil SCM 伺服器時, 利用 wcm2020 當作帳號, 而以記錄的管理者密碼登入進行設定.</p>
+<p style="padding-left: 60px;">fossil init cmstemplate.fossil</p>
+<p style="padding-left: 30px;">完成後, 紀錄 cmstemplate.fossil 的管理密碼, 以便啟動 Fossil SCM 伺服器時, 利用 wcm2021 當作帳號, 而以記錄的管理者密碼登入進行設定.</p>
+<p style="padding-left: 30px;">截至 Fossil SCM 2.15 版, 若 server 使用 IPv6 網路協定, 則必須設定 DNS domain 後, 全程使用 domain name 進行 fossil clone <a href="https://username@your_fossil_server_domain_nameport">https://username@your_fossil_server_domain_name:port/cmstemplate</a> cmstemplate.fossil, 表示要使用 fossil clone 將位於遠端伺服器中, 帳號為 username 且倉儲名稱為 cmstemplate 的檔案, clone 到近端存為 cmstemplate.fossil.</p>
 <p style="padding-left: 30px;">接下來為了要在 https 的模式下使用 Fossil SCM 伺服器, 因此必須安裝配置 stunnel:</p>
 <p style="padding-left: 60px;">sudo apt install stunnel</p>
 <p style="padding-left: 30px;">修改 /etc/environment, 加入:</p>
@@ -285,15 +312,14 @@ WantedBy=multi-user.target</pre>
 <p style="padding-left: 60px;">sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt</p>
 <h4 style="padding-left: 30px;">接著設定 /etc/stunnel/stunnel.conf 如下:</h4>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[https]
-accept = wcm2020:5443
-# 只先啟用 ipv4
-#accept = :::443
+accept = :5443
+accept = :::5443
 cert = /etc/stunnel/localhost.crt
 key = /etc/stunnel/localhost.key
 exec = /usr/bin/fossil
-execargs = /usr/bin/fossil http /home/wcm2020/repository/ --https --nojail --notfound wcm2020</pre>
-<p style="padding-left: 30px;">表示利用 stunnel 執行 fossil 指令, 並且透過 http 協定啟動 位於 /home/wcm2020/repository 目錄下的倉儲壓縮檔案, 且附加採用 https 與 nojail 模式啟動.</p>
-<p style="padding-left: 30px;">其中 --nojail 目的在 drop the root privilege but do not enter the chroot jail, 其後的 --notfound 表示若沒有特別在 URL 中列出所要擷取的 .fossil 檔案 (指位於 /home/wcm2020/repository/ 目錄下), 則採用 wcm2020.fossil<br/><br/>重新啟用 stunnel:<br/><br/>sudo /etc/init.d/stunnel4 restart<br/><br/>啟動後的 Fossil SCM 位於 port 5443, 且將 wcm2020 管理者密碼設為 XXXX.</p>
+execargs = /usr/bin/fossil http /home/wcm2021/repository/ --https --nojail --notfound wcm2021</pre>
+<p style="padding-left: 30px;">表示利用 stunnel 執行 fossil 指令, 並且透過 http 協定啟動 位於 /home/wcm2021/repository 目錄下的倉儲壓縮檔案, 且附加採用 https 與 nojail 模式啟動.</p>
+<p style="padding-left: 30px;">其中 --nojail 目的在 drop the root privilege but do not enter the chroot jail, 其後的 --notfound 表示若沒有特別在 URL 中列出所要擷取的 .fossil 檔案 (指位於 /home/wcm2021/repository/ 目錄下), 則採用 wcm2021.fossil<br/><br/>重新啟用 stunnel:<br/><br/>sudo /etc/init.d/stunnel4 restart<br/><br/>啟動後的 Fossil SCM 位於 port 5443, 且將 wcm2021 管理者密碼設為 XXXX.</p>
 <p style="padding-left: 30px;">Fossil SCM 查詢 .fossil 檔案內容:</p>
 <p style="padding-left: 60px;">以 fossil sql 指令擷取 .fossil 檔案內容</p>
 <p style="padding-left: 30px;">使用者以 fossil init foo.fossil 建立倉儲檔案後, 除了使用 sqlite3 命令檢視 fossil 倉儲內容外, 也可以利用 fossil 指令查驗倉儲資料庫檔案的內容.</p>
@@ -307,13 +333,14 @@ execargs = /usr/bin/fossil http /home/wcm2020/repository/ --https --nojail --not
 <h4 style="padding-left: 30px;">從 Windows 10 clone, open Fossil SCM 倉儲:</h4>
 <p style="padding-left: 60px;">c:\tmp&gt;mkdir repository</p>
 <p style="padding-left: 60px;">c:\tmp&gt;cd repository</p>
-<p style="padding-left: 60px;">c:\tmp\repository&gt;fossil clone <a href="https://wcm2020@192.168.19.1:5443/wcm2020">https://wcm2020@192.168.19.1:5443/wcm2020</a> wcm2020.fossil</p>
-<p style="padding-left: 60px;">表示要從 <a href="https://192.168.19.1:5443">https://192.168.19.1:5443</a> clone wcm2020 倉儲, 帳號為 wcm2020, 而且要存至近端名稱為 wcm2020.fossil</p>
-<p style="padding-left: 60px;">之後必須輸入與 wcm2020 帳號對應的倉儲管理者密碼後, 就可以 clone 下 wcm2020.fossil 倉儲檔案.</p>
+<p style="padding-left: 60px;">c:\tmp\repository&gt;fossil clone <a href="https://wcm2021@192.168.19.1:5443/wcm2021%20">https://wcm2021@192.168.19.1:5443/wcm2021 </a>wcm2021.fossil</p>
+<p style="padding-left: 60px;">表示要從 <a href="https://192.168.19.1:5443">https://192.168.19.1:5443</a> clone wcm2021 倉儲, 帳號為 wcm2020, 而且要存至近端名稱為 wcm2021.fossil</p>
+<p style="padding-left: 60px;">之後必須輸入與 wcm2021 帳號對應的倉儲管理者密碼後, 就可以 clone 下 wcm2021.fossil 倉儲檔案.</p>
 <p style="padding-left: 60px;">c:\tmp\repository&gt;mkdir wd</p>
-<p style="padding-left: 60px;">c:\tmp\repository\wd&gt;mkdir wcm2020</p>
-<p style="padding-left: 60px;">c:\tmp\repository\wd\wcm2020&gt;fossil open ./../../wcm2020.fossil</p>
-<p style="padding-left: 60px;">之後只要將 cmstemplate 倉儲資料放入 c:\tmp\repository\wd\wcm2020 目錄中 (但不能複製 __FOSSIL__ 檔案, 就可以設法利用 fossil add . 以及 fossil commit -m "initial add" 將已經更新的 wcm2020 倉儲內容推送到 <a href="https://192.168.19.1:5443/wcm2020">https://192.168.19.1:5443/wcm2020</a> 倉儲中. 這時與 Github Pages 類似的網際靜態網站內容將位於: <a href="https://192.168.19.1:5443/wcm2020/doc/trunk/content/index.html">https://192.168.19.1:5443/wcm2020/doc/trunk/content/index.html</a> </p>
+<p style="padding-left: 60px;">c:\tmp\repository\wd&gt;mkdir wcm2021</p>
+<p style="padding-left: 60px;">c:\tmp\repository\wd\wcm2021&gt;fossil open ./../../wcm2021.fossil</p>
+<p style="padding-left: 60px;">之後只要將 cmstemplate 倉儲資料放入 c:\tmp\repository\wd\wcm2020 目錄中 (但不能複製 __FOSSIL__ 檔案, 就可以設法利用 fossil add . 以及 fossil commit -m "initial add" 將已經更新的 wcm2021 倉儲內容推送到 <a href="https://192.168.19.1:5443/wcm2020">https://192.168.19.1:5443/wcm202</a>1 倉儲中. 這時與 Github Pages 類似的網際靜態網站內容將位於: <a href="https://192.168.19.1:5443/wcm2020/doc/trunk/content/index.html">https://192.168.19.1:5443/wcm2021/doc/trunk/content/index.html</a></p>
+<p style="padding-left: 60px;">登入 @gm 帳號後, 可以取得<a href="https://drive.google.com/file/d/1KfkQR3g3Uq2Bcz-1Hn5Cu9ov6pGCRWPY/view?usp=sharing">下載 Ubwcm2021.7z</a> (約 4GB, 解開壓縮後約 12GB, Ubuntu 20.04 Desktop Virtualbox 虛擬主機檔案 with uwsgi, Fossil SCM, RoboDK 5.2.2 Free trial and CoppeliaSim 4.1.0 Edu version) 虛擬主機檔案的連結資料.</p>
 <h4>3. 導入 RoboDK:</h4>
 <p style="padding-left: 30px;"><a href="https://coro.etsmtl.ca/blog/?p=529">https://coro.etsmtl.ca/blog/?p=529</a></p>
 <p style="padding-left: 30px;"><a href="http://en.etsmtl.ca/unites-de-recherche/coro/accueil?lang=en-CA">http://en.etsmtl.ca/unites-de-recherche/coro/accueil?lang=en-CA</a></p>
