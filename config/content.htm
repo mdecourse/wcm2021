@@ -3165,7 +3165,7 @@ chdir = /home/wcm2021/github/cmstemplate
 wsgi-file = /home/wcm2021/github/cmstemplate/cmsimde/wsgi.py
 </pre>
 <h4 style="padding-left: 30px;">測試 uwsgi 設定:</h4>
-<p style="padding-left: 60px;">sudo /usr/bin/uwsgi --emperor /home/wcm2021/wsgi_ini</p>
+<p style="padding-left: 60px;">sudo /usr/bin/uwsgi --emperor /home/wcm2021/uwsgi_ini</p>
 <p style="padding-left: 60px;">在上述指令啟動時, CMSiMDE 出現無法 import flask app 的錯誤, 因此修改 CMSiMDE, 納入下列設定:</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import sys
 import os
@@ -3187,7 +3187,7 @@ After=network.target
 User=wcm2021
 Group=wcm2021
 WorkingDirectory=/home/wcm2021/uwsgi_ini
-ExecStart=/usr/local/bin/uwsgi --emperor /home/wcm2021/uwsgi_ini
+ExecStart=/usr/bin/uwsgi --emperor /home/wcm2021/uwsgi_ini
   
 [Install]
 WantedBy=multi-user.target</pre>
