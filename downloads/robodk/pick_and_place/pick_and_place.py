@@ -75,7 +75,7 @@ def TCP_Off(toolitem, tcp_id, itemleave=0):
 # The program starts here:
 
 # Any interaction with RoboDK must be done through RDK:
-RDK = Robolink(robodk_path="C:/robodk/bin/RoboDK.exe", robodk_ip='192.168.19.222')
+RDK = Robolink()
 
 # Turn off automatic rendering (faster)
 RDK.Render(False)

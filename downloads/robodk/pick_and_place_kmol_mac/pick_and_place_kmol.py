@@ -57,7 +57,8 @@ balls_list = pyramid_calc(4)
 '''
 # https://github.com/RoboDK/RoboDK-API/blob/master/Python/robolink.py
 # robodk_path variable to specify location of RoboDK.exe
-RDK = Robolink(args=["-NEWINSTANCE", "-SKIPINI", "-EXIT_LAST_COM"])
+# cut out "-NEWINSTANCE",
+RDK = Robolink(robodk_path="c:/robodk/bin/robodk.exe", args=[ "-SKIPINI", "-EXIT_LAST_COM"])
 
 # Add robot and the accompanied Base coordinate
 robot = RDK.AddFile('Fanuc-M-710iC-50.robot')
