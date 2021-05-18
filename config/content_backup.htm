@@ -3497,7 +3497,9 @@ while idTake &gt;= 0:
 # Move home when the robot finishes
 robot.MoveJ([0,0,0,0,10,-200])
 </pre>
-<p>今將上述範例中的 Robot, Tool, Table 與 ball 取出後, 可以完全利用外部 Python 程式重建機械手臂 Pick and Place 模擬程式如下 (<a href="https://drive.google.com/file/d/11GFhWqvkCswY2KbLOPB7vRT0EvoiKpdU/view?usp=sharing">pick and place final 專案下載</a>):</p>
+<p>今將上述範例中的 Robot, Tool, Table 與 ball 取出後, 可以完全利用外部 Python 程式重建機械手臂 Pick and Place 模擬, 過程如下:</p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/3EqzMzszMV0" title="YouTube video player" width="560"></iframe></p>
+<p>上述模擬過程所使用的程式如下 (<a href="https://drive.google.com/file/d/11GFhWqvkCswY2KbLOPB7vRT0EvoiKpdU/view?usp=sharing">pick and place final 專案下載</a>):</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from robolink import *
 from robodk import *
  
@@ -3716,10 +3718,7 @@ robot.MoveJ([0,0,0,0,10,-200])</pre>
 <h4>網路內容管理課程的線上延伸專題 (各組需於 W13-W14 週完成):</h4>
 <p>請在 Pick and Place final 專題中, 設法加上後續程式碼, 讓所有位於 Table2 上的 ball, 逐一由 Robot 放回 Table1.</p>
 <h4>協同產品設計實習課程的線上練習專題 (各組需於 W13-W14 週完成):</h4>
-<p>請利用 CoppeliaSim 4.1.0 中的同類型 Robot 機械手臂, 採 remote API 方式, 建立上述 Pick and Place final 專題中的取放球模擬, 先設法將 Table1 採 square pyramid 方式排列的球, 逐一取放至 Table2, 然後在第二階段再由 Table2 取放回 Table1.</p>
-<p></p>
-<p><br/><br/></p>
-<p></p><h2>分組專題</h2>
+<p>請利用 CoppeliaSim 4.1.0 中的同類型 Robot 機械手臂, 採 remote API 方式, 建立上述 Pick and Place final 專題中的取放球模擬, 先設法將 Table1 採 square pyramid 方式排列的球, 逐一取放至 Table2, 然後在第二階段再由 Table2 取放回 Table1.</p><h2>分組專題</h2>
 <p><a href="https://drive.google.com/drive/folders/1OyEy67kGXiNjQSccad3Fd0H_59paqOiU?usp=sharing">分組報告影片</a></p>
 <h4>Solvespace 3D 參數設計繪圖建立零組件 (<a href="https://solvespace.com">Solvespace</a> 編譯與<a href="http://www.farwire.net/SolveSpace-LearningGuide.htm">應用</a>):</h4>
 <ol>
