@@ -1,0 +1,30 @@
+y:\tmp\wcm2021>
+
+git remote add gitlab https://gitlab.com/40923101/wcm2021.git
+
+git remote add gitlab git@gitlab.com:40923101/wcm2021.git
+
+https://40923101.gitlab.io/wcm2021
+
+acp "add W14 content"
+
+git push gitlab
+
+y:\tmp\wcm2021-ag1>
+
+git add .
+git commit -m ""
+
+git push
+
+git pull
+
+git remote add ag1 git@github.com:40923101/wcm2021-ag1.git
+
+acp "add W14"
+
+git push ag1
+
+git remote add gitlabag1 git@gitlab.com:40923101/wcm2021-ag1.git
+
+git push gitlabag1
