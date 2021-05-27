@@ -1,34 +1,34 @@
 # wcm2021_gen_html.py
 studList = "wcm2021_list.txt"
 courTitle = "wcm2021"
- 
+
 # group title initial
-grpTitle = studList[:6] + "-" + studList[8] + "g"
- 
+grpTitle = studList[:7] + "-ag"
+
 # student Account and github Account as inputs
 def perWeb(s, g):
     pSite = "<a href=\"https://" + g + ".github.io/" + courTitle + "\">" + s + " web</a>"
     print(pSite)
- 
+
 def perRepo(s, g):
     pSite = "<a href=\"https://github.com/" + g + "/" + courTitle + "\">" + s + " repo</a>"
     print(pSite)
-     
+    
 def grpWeb(s, g, ord):
     pSite = "<a href=\"https://" + g + ".github.io/" + grpTitle + str(ord) + "\">grp web</a>"
     print(pSite)
-     
+    
 def grpRepo(s, g, ord):
     pSite = "<a href=\"https://github.com/" + g + "/" + grpTitle + str(ord) + "\">grp repo</a>"
     print(pSite)
- 
+
 # open file, default is read mode, since txt content no chinese char
 # no encoding = "UTF-8" is needed
 with open(studList) as fh:
     # readlines will read into the whole line and put into list format
     # has \n at the end of each line
     data = fh.readlines()
- 
+
 grpCount = 0
 for i in range(len(data)):
     # grpCount is the group order
