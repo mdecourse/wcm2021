@@ -156,7 +156,14 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive</pre>
 <p>接下來則需要在近端的倉儲中, 設法透過 git remote add 的指令, 在近端的 wcm2021 倉儲中的 .git/config 設定檔案中, 新增一個名稱為 gitlab 的 remote add 連結設定.</p>
 <p>指令語法為, 進入近端倉儲目錄:</p>
-<p>git remote add gitlab http_URL 或 SSH_URL</p><br />W14 << <a href='W14.html'>Previous</a> <a href='分組連結.html'>Next</a> >> 分組連結</div>
+<p>以學號為 40923101 為例, Github 與 Gitlab 帳號都與學號相同:</p>
+<p>將近端倉儲設一個額外的 remote add 到 Gitlab, 若採用 https 協定則指令為:</p>
+<p>y:\tmp\wcm2021&gt;git remote add gitlab <a href="https://gitlab.com/40923101/wcm2021.git">https://gitlab.com/40923101/wcm2021.git</a></p>
+<p>若採用 SSH 協定, 則指令為:</p>
+<p>y:\tmp\wcm2021&gt;git remote add gitlab <a href="mailto:git@gitlab.com:40923101/wcm2021.git">git@gitlab.com:40923101/wcm2021.git</a></p>
+<p>當使用 SSH 協定時, gitlab.com 為 PUTTY 中的 session 名稱, 必須設定 .ppk private key 位置, 並選擇性設定 Proxy server.</p>
+<p>設定完後, 可以在每次改版後, 以 acp "提交訊息" 新增, 提交並推送到 origin (也就是 Github URL),</p>
+<p>若再執行 git push gitlab, 則可將改版資料推向 Gitlab, 並交由 .gitlab-ci.yml 建立對應的 Gitlab Pages 網頁.</p><br />W14 << <a href='W14.html'>Previous</a> <a href='分組連結.html'>Next</a> >> 分組連結</div>
         
     <!-- footer -->
       <div class="container">
