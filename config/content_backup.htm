@@ -2746,7 +2746,7 @@ cam_id = RDK.Cam2D_Add(camref, 'FOCAL_LENGHT=6 FOV=32 FAR_LENGHT=2500 SHADER_FRA
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/D3w3ZANOy3s" title="YouTube video player" width="560"></iframe></p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/N7IsiSujJa8" title="YouTube video player" width="560"></iframe></p>
 <h4>Reference:</h4>
-<p style="padding-left: 30px;"><a href="https://www.youtube.com/user/asodemann3/videos">https://www.youtube.com/user/asodemann3/videos</a></p><h2>W9</h2>
+<p style="padding-left: 30px;"><a href="https://www.youtube.com/user/asodemann3/videos">https://www.youtube.com/user/asodemann3/videos</a></p><h4>W9</h4>
 <h4>期中考週流程:</h4>
 <ol>
 <li>利用 ::17 開啟 Ethercalc 表單, 收集各班學員課程期望分數, 將期中期望成績送至教務主機.</li>
@@ -3730,7 +3730,20 @@ robot.MoveJ([0,0,0,0,10,-200])</pre><h2>W14</h2>
 <p>2. 請每一組於 W15 上課之前根據 <a href="http://mde.tw/wcm2021/content/W11.html">http://mde.tw/wcm2021/content/W11.html</a> 中之說明, 討論如何利用組員的連外網路, 討論如何建立一台具 X-Window 功能的 Ubuntu 伺服器, 以便在此一虛擬主機上配置各組的 CMSiMDE 靜態與動態網頁.</p>
 <p>3. 請各組在上述分組 Ubuntu 主機上安裝 RoboDK (Windows 端 X server 可使用 <a href="https://sourceforge.net/projects/xming/">Xming</a>), 並且讓各組員可以在線上串流過程中 (Google Meet 或 OBS + Youtube), 跨網路利用 <a href="http://mde.tw/wcm2021/content/W13.html">W13 週</a>的 Python Remote API 程式, 遠端操控 FANUC 六軸機械手臂的圓球取放流程.</p>
 <p>4. 以上各組在討論與任務內容執行過程, 必須全程錄影, 並將影片設為可公開連結或觀看後, 放入各組的期末分組網站中, 且各組員必須在各自的倉儲帳號下, 分別建立一個各組的分組同步倉儲與同步分組網站.</p>
-<p>5. 請各學員在 Gitlab 利用 SSH 協定, 建立個人在 Github 課程倉儲的同步倉儲, 並利用 <a href="https://docs.gitlab.com/ee/user/project/pages/">Gitlab Pages</a> 呈現個人與分組同步網站.</p><h3>Gitlab 同步</h3>
+<p>5. 請各學員在 Gitlab 利用 SSH 協定, 建立個人在 Github 課程倉儲的同步倉儲, 並利用 <a href="https://docs.gitlab.com/ee/user/project/pages/">Gitlab Pages</a> 呈現個人與分組同步網站.</p><h3>倉儲同步</h3>
+<p>2021.05.14 之後建立的 Gitlab 帳號, 在使用 CI/CD 部署 Gitlab Pages 上已經要求用戶必須提供信用卡或簽帳卡才能認證開通, 因此之後要讓 CMSMDE 靜態網頁透過 Gitlab Pages 伺服網頁, 應該已經不可行, 假如 Github Pages 也為了防止用戶濫用 CI/CD 進行加密挖礦, 之後的課程相關分散式版次管理, 就必須自行架構在工作站中的主機.</p>
+<h4>目前建議三種方案:</h4>
+<ol>
+<li>使用 Fossil SCM 建立網站資料版次管理系統, 可以在伺服器上限制每一用戶空間至多 1GB, 系統優點為建置簡易, 缺點則是需要額外利用程式為每一位用戶建立帳號與密碼, 並透過＠gm 電子郵箱寄送通知訊息.</li>
+<li>使用 <a href="https://github.com/gogs/gogs">gogs</a> 在 Ubuntu 上建立代管服務, 基本用法與 Github 相同, 惟需進一步研究是否可以利用 Oauth2 讓用戶登入 <a href="https://github.com/gogs/gogs">gogs</a> 伺服管理系統.</li>
+<li>各學員分組團隊必須自行利用上述兩種方法, 在專案執行過程提供一台能讓組員連線的非常駐虛擬主機, 並利用 OBS + Youtube 與 Google Meet 串流並錄製每週協同專案製作流程, 最終將影片依照製作時間投放至 Youtube 以供查驗.</li>
+</ol>
+<h4>以下將針對第三種方案, 研議是否能在組員的 Windows 10 上透過 Fossil SCM 與 Stunnel 建立穩定的網際 SCM 服務系統:</h4>
+<p style="padding-left: 30px;"><a href="/downloads/Windows 環境下啟動 Stunnel 與 Fossil SCM - 2017Spring 網際內容管理 (虎尾科大MDE).pdf">Windows 環境下啟動 Stunnel 與 Fossil SCM - 2017Spring 網際內容管理 (虎尾科大MDE).pdf</a></p>
+<p style="padding-left: 30px;">原始參考資料: <a href="http://mde.tw/2017springwcm/blog/tag/stunnel.html">http://mde.tw/2017springwcm/blog/tag/stunnel.html</a></p>
+<p style="padding-left: 30px;"><a href="http://mde.tw/2017springvcp/blog/fossil-scm-server.html">http://mde.tw/2017springvcp/blog/fossil-scm-server.html</a></p>
+<p style="padding-left: 30px;">http://mde.tw/2017springcd/blog/intro-fossil-scm.html </p>
+<h4>Gitlab 同步</h4>
 <p>要利用 Gitlab 同步位於 Github 上的 CMSiMDE 倉儲與 Github Pages 網頁, 需要注意以下兩個要點:</p>
 <ol>
 <li>完成 <a href="https://gitlab.com/users/sign_up">https://gitlab.com/users/sign_up</a> 帳號申請與驗證.</li>
@@ -3757,8 +3770,11 @@ variables:
 <p>y:\tmp\wcm2021&gt;git remote add gitlab <a href="https://gitlab.com/40923101/wcm2021.git">https://gitlab.com/40923101/wcm2021.git</a></p>
 <p>若採用 SSH 協定, 則指令為:</p>
 <p>y:\tmp\wcm2021&gt;git remote add gitlab <a href="mailto:git@gitlab.com:40923101/wcm2021.git">git@gitlab.com:40923101/wcm2021.git</a></p>
-<p>當使用 SSH 協定時, gitlab.com 為 PUTTY 中的 session 名稱, 必須設定 .ppk private key 位置, 並選擇性設定 Proxy server.</p><h3>分組連結</h3>
-<p>wcm2021-ag1<br/> <a href="https://40923135.github.io/wcm2021">40923135 web</a> | <a href="https://github.com/40923135/wcm2021">40923135 repo</a> | <a href="https://40923135.github.io/wcm2021-ag1">grp web</a> | <a href="https://github.com/40923135/wcm2021-ag1">grp repo</a> <br/> <a href="https://40923108.github.io/wcm2021">40923108 web</a> | <a href="https://github.com/40923108/wcm2021">40923108 repo</a> | <a href="https://40923108.github.io/wcm2021-ag1">grp web</a> | <a href="https://github.com/40923108/wcm2021-ag1">grp repo</a> <br/> <a href="https://40923101.github.io/wcm2021">40923101 web</a> | <a href="https://github.com/40923101/wcm2021">40923101 repo</a> | <a href="https://40923101.github.io/wcm2021-ag1">grp web</a> | <a href="https://github.com/40923101/wcm2021-ag1">grp repo</a> <br/> <a href="https://40923142.github.io/wcm2021">40923142 web</a> | <a href="https://github.com/40923142/wcm2021">40923142 repo</a> | <a href="https://40923142.github.io/wcm2021-ag1">grp web</a> | <a href="https://github.com/40923142/wcm2021-ag1">grp repo</a> <br/> wcm2021-ag2<br/> <a href="https://40923105.github.io/wcm2021">40923105 web</a> | <a href="https://github.com/40923105/wcm2021">40923105 repo</a> | <a href="https://40923105.github.io/wcm2021-ag2">grp web</a> | <a href="https://github.com/40923105/wcm2021-ag2">grp repo</a> <br/> <a href="https://40923104.github.io/wcm2021">40923104 web</a> | <a href="https://github.com/40923104/wcm2021">40923104 repo</a> | <a href="https://40923104.github.io/wcm2021-ag2">grp web</a> | <a href="https://github.com/40923104/wcm2021-ag2">grp repo</a> <br/> <a href="https://40923107.github.io/wcm2021">40923107 web</a> | <a href="https://github.com/40923107/wcm2021">40923107 repo</a> | <a href="https://40923107.github.io/wcm2021-ag2">grp web</a> | <a href="https://github.com/40923107/wcm2021-ag2">grp repo</a> <br/> <a href="https://40923110.github.io/wcm2021">40923110 web</a> | <a href="https://github.com/40923110/wcm2021">40923110 repo</a> | <a href="https://40923110.github.io/wcm2021-ag2">grp web</a> | <a href="https://github.com/40923110/wcm2021-ag2">grp repo</a> <br/> <a href="https://40923102.github.io/wcm2021">40923102 web</a> | <a href="https://github.com/40923102/wcm2021">40923102 repo</a> | <a href="https://40923102.github.io/wcm2021-ag2">grp web</a> | <a href="https://github.com/40923102/wcm2021-ag2">grp repo</a> <br/> <a href="https://40923106.github.io/wcm2021">40923106 web</a> | <a href="https://github.com/40923106/wcm2021">40923106 repo</a> | <a href="https://40923106.github.io/wcm2021-ag2">grp web</a> | <a href="https://github.com/40923106/wcm2021-ag2">grp repo</a> <br/> wcm2021-ag3<br/> <a href="https://40923123.github.io/wcm2021">40923123 web</a> | <a href="https://github.com/40923123/wcm2021">40923123 repo</a> | <a href="https://40923123.github.io/wcm2021-ag3">grp web</a> | <a href="https://github.com/40923123/wcm2021-ag3">grp repo</a> <br/> <a href="https://40923151.github.io/wcm2021">40923151 web</a> | <a href="https://github.com/40923151/wcm2021">40923151 repo</a> | <a href="https://40923151.github.io/wcm2021-ag3">grp web</a> | <a href="https://github.com/40923151/wcm2021-ag3">grp repo</a> <br/> <a href="https://40923139.github.io/wcm2021">40923139 web</a> | <a href="https://github.com/40923139/wcm2021">40923139 repo</a> | <a href="https://40923139.github.io/wcm2021-ag3">grp web</a> | <a href="https://github.com/40923139/wcm2021-ag3">grp repo</a> <br/> <a href="https://40923147.github.io/wcm2021">40923147 web</a> | <a href="https://github.com/40923147/wcm2021">40923147 repo</a> | <a href="https://40923147.github.io/wcm2021-ag3">grp web</a> | <a href="https://github.com/40923147/wcm2021-ag3">grp repo</a> <br/> wcm2021-ag4<br/> <a href="https://40923148.github.io/wcm2021">40923148 web</a> | <a href="https://github.com/40923148/wcm2021">40923148 repo</a> | <a href="https://40923148.github.io/wcm2021-ag4">grp web</a> | <a href="https://github.com/40923148/wcm2021-ag4">grp repo</a> <br/> <a href="https://40923111.github.io/wcm2021">40923111 web</a> | <a href="https://github.com/40923111/wcm2021">40923111 repo</a> | <a href="https://40923111.github.io/wcm2021-ag4">grp web</a> | <a href="https://github.com/40923111/wcm2021-ag4">grp repo</a> <br/> <a href="https://40923116.github.io/wcm2021">40923116 web</a> | <a href="https://github.com/40923116/wcm2021">40923116 repo</a> | <a href="https://40923116.github.io/wcm2021-ag4">grp web</a> | <a href="https://github.com/40923116/wcm2021-ag4">grp repo</a> <br/> <a href="https://40923122.github.io/wcm2021">40923122 web</a> | <a href="https://github.com/40923122/wcm2021">40923122 repo</a> | <a href="https://40923122.github.io/wcm2021-ag4">grp web</a> | <a href="https://github.com/40923122/wcm2021-ag4">grp repo</a> <br/> wcm2021-ag5<br/> <a href="https://40923127.github.io/wcm2021">40923127 web</a> | <a href="https://github.com/40923127/wcm2021">40923127 repo</a> | <a href="https://40923127.github.io/wcm2021-ag5">grp web</a> | <a href="https://github.com/40923127/wcm2021-ag5">grp repo</a> <br/> <a href="https://40923128.github.io/wcm2021">40923128 web</a> | <a href="https://github.com/40923128/wcm2021">40923128 repo</a> | <a href="https://40923128.github.io/wcm2021-ag5">grp web</a> | <a href="https://github.com/40923128/wcm2021-ag5">grp repo</a> <br/> <a href="https://40923125.github.io/wcm2021">40923125 web</a> | <a href="https://github.com/40923125/wcm2021">40923125 repo</a> | <a href="https://40923125.github.io/wcm2021-ag5">grp web</a> | <a href="https://github.com/40923125/wcm2021-ag5">grp repo</a> <br/> <a href="https://40923136.github.io/wcm2021">40923136 web</a> | <a href="https://github.com/40923136/wcm2021">40923136 repo</a> | <a href="https://40923136.github.io/wcm2021-ag5">grp web</a> | <a href="https://github.com/40923136/wcm2021-ag5">grp repo</a> <br/> <a href="https://40923124.github.io/wcm2021">40923124 web</a> | <a href="https://github.com/40923124/wcm2021">40923124 repo</a> | <a href="https://40923124.github.io/wcm2021-ag5">grp web</a> | <a href="https://github.com/40923124/wcm2021-ag5">grp repo</a> <br/> <a href="https://40923126.github.io/wcm2021">40923126 web</a> | <a href="https://github.com/40923126/wcm2021">40923126 repo</a> | <a href="https://40923126.github.io/wcm2021-ag5">grp web</a> | <a href="https://github.com/40923126/wcm2021-ag5">grp repo</a> <br/> wcm2021-ag6<br/> <a href="https://s40723240.github.io/wcm2021">40723240 web</a> | <a href="https://github.com/s40723240/wcm2021">40723240 repo</a> | <a href="https://s40723240.github.io/wcm2021-ag6">grp web</a> | <a href="https://github.com/s40723240/wcm2021-ag6">grp repo</a> <br/> <a href="https://s40723238.github.io/wcm2021">40723238 web</a> | <a href="https://github.com/s40723238/wcm2021">40723238 repo</a> | <a href="https://s40723238.github.io/wcm2021-ag6">grp web</a> | <a href="https://github.com/s40723238/wcm2021-ag6">grp repo</a> <br/> wcm2021-ag7<br/> <a href="https://40523923.github.io/wcm2021">40523923 web</a> | <a href="https://github.com/40523923/wcm2021">40523923 repo</a> | <a href="https://40523923.github.io/wcm2021-ag7">grp web</a> | <a href="https://github.com/40523923/wcm2021-ag7">grp repo</a> <br/> <a href="https://40523148.github.io/wcm2021">40523148 web</a> | <a href="https://github.com/40523148/wcm2021">40523148 repo</a> | <a href="https://40523148.github.io/wcm2021-ag7">grp web</a> | <a href="https://github.com/40523148/wcm2021-ag7">grp repo</a> <br/> wcm2021-ag8<br/> <a href="https://40923117.github.io/wcm2021">40923117 web</a> | <a href="https://github.com/40923117/wcm2021">40923117 repo</a> | <a href="https://40923117.github.io/wcm2021-ag8">grp web</a> | <a href="https://github.com/40923117/wcm2021-ag8">grp repo</a> <br/> <a href="https://40923120.github.io/wcm2021">40923120 web</a> | <a href="https://github.com/40923120/wcm2021">40923120 repo</a> | <a href="https://40923120.github.io/wcm2021-ag8">grp web</a> | <a href="https://github.com/40923120/wcm2021-ag8">grp repo</a> <br/> <a href="https://40923119.github.io/wcm2021">40923119 web</a> | <a href="https://github.com/40923119/wcm2021">40923119 repo</a> | <a href="https://40923119.github.io/wcm2021-ag8">grp web</a> | <a href="https://github.com/40923119/wcm2021-ag8">grp repo</a></p><h2>分組專題</h2>
+<p>當使用 SSH 協定時, gitlab.com 為 PUTTY 中的 session 名稱, 必須設定 .ppk private key 位置, 並選擇性設定 Proxy server.</p>
+<p>設定完後, 可以在每次改版後, 以 acp "提交訊息" 新增, 提交並推送到 origin (也就是 Github URL),</p>
+<p>若再執行 git push gitlab, 則可將改版資料推向 Gitlab, 並交由 .gitlab-ci.yml 建立對應的 Gitlab Pages 網頁.</p><h3>分組連結</h3>
+<p>wcm2021-ag1<br/> <a href="https://40923135.github.io/wcm2021">40923135 web</a> | <a href="https://github.com/40923135/wcm2021">40923135 repo</a> | <a href="https://40923135.github.io/wcm2021-ag1">grp web</a> | <a href="https://github.com/40923135/wcm2021-ag1">grp repo</a> <br/> <a href="https://40923108.github.io/wcm2021">40923108 web</a> | <a href="https://github.com/40923108/wcm2021">40923108 repo</a> | <a href="https://40923108.github.io/wcm2021-ag1">grp web</a> | <a href="https://github.com/40923108/wcm2021-ag1">grp repo</a> <br/> <a href="https://40923101.github.io/wcm2021">40923101 web</a> | <a href="https://github.com/40923101/wcm2021">40923101 repo</a> | <a href="https://40923101.github.io/wcm2021-ag1">grp web</a> | <a href="https://github.com/40923101/wcm2021-ag1">grp repo</a> <br/> <a href="https://40923142.github.io/wcm2021">40923142 web</a> | <a href="https://github.com/40923142/wcm2021">40923142 repo</a> | <a href="https://40923142.github.io/wcm2021-ag1">grp web</a> | <a href="https://github.com/40923142/wcm2021-ag1">grp repo</a> <br/> wcm2021-ag2<br/> <a href="https://40923105.github.io/wcm2021">40923105 web</a> | <a href="https://github.com/40923105/wcm2021">40923105 repo</a> | <a href="https://40923105.github.io/wcm2021-ag2">grp web</a> | <a href="https://github.com/40923105/wcm2021-ag2">grp repo</a> <br/> <a href="https://40923104.github.io/wcm2021">40923104 web</a> | <a href="https://github.com/40923104/wcm2021">40923104 repo</a> | <a href="https://40923104.github.io/wcm2021-ag2">grp web</a> | <a href="https://github.com/40923104/wcm2021-ag2">grp repo</a> <br/> <a href="https://40923107.github.io/wcm2021">40923107 web</a> | <a href="https://github.com/40923107/wcm2021">40923107 repo</a> | <a href="https://40923107.github.io/wcm2021-ag2">grp web</a> | <a href="https://github.com/40923107/wcm2021-ag2">grp repo</a> <br/> <a href="https://40923110.github.io/wcm2021">40923110 web</a> | <a href="https://github.com/40923110/wcm2021">40923110 repo</a> | <a href="https://40923110.github.io/wcm2021-ag2">grp web</a> | <a href="https://github.com/40923110/wcm2021-ag2">grp repo</a> <br/> <a href="https://40923102.github.io/wcm2021">40923102 web</a> | <a href="https://github.com/40923102/wcm2021">40923102 repo</a> | <a href="https://40923102.github.io/wcm2021-ag2">grp web</a> | <a href="https://github.com/40923102/wcm2021-ag2">grp repo</a> <br/> <a href="https://40923106.github.io/wcm2021">40923106 web</a> | <a href="https://github.com/40923106/wcm2021">40923106 repo</a> | <a href="https://40923106.github.io/wcm2021-ag2">grp web</a> | <a href="https://github.com/40923106/wcm2021-ag2">grp repo</a> <br/> wcm2021-ag3<br/> <a href="https://40923123.github.io/wcm2021">40923123 web</a> | <a href="https://github.com/40923123/wcm2021">40923123 repo</a> | <a href="https://40923123.github.io/wcm2021-ag3">grp web</a> | <a href="https://github.com/40923123/wcm2021-ag3">grp repo</a> <br/> <a href="https://40923151.github.io/wcm2021">40923151 web</a> | <a href="https://github.com/40923151/wcm2021">40923151 repo</a> | <a href="https://40923151.github.io/wcm2021-ag3">grp web</a> | <a href="https://github.com/40923151/wcm2021-ag3">grp repo</a> <br/> <a href="https://40923139.github.io/wcm2021">40923139 web</a> | <a href="https://github.com/40923139/wcm2021">40923139 repo</a> | <a href="https://40923139.github.io/wcm2021-ag3">grp web</a> | <a href="https://github.com/40923139/wcm2021-ag3">grp repo</a> <br/> <a href="https://40923147.github.io/wcm2021">40923147 web</a> | <a href="https://github.com/40923147/wcm2021">40923147 repo</a> | <a href="https://40923147.github.io/wcm2021-ag3">grp web</a> | <a href="https://github.com/40923147/wcm2021-ag3">grp repo</a> <br/> wcm2021-ag4<br/> <a href="https://40923148.github.io/wcm2021">40923148 web</a> | <a href="https://github.com/40923148/wcm2021">40923148 repo</a> | <a href="https://40923148.github.io/wcm2021-ag4">grp web</a> | <a href="https://github.com/40923148/wcm2021-ag4">grp repo</a> <br/> <a href="https://40923111.github.io/wcm2021">40923111 web</a> | <a href="https://github.com/40923111/wcm2021">40923111 repo</a> | <a href="https://40923111.github.io/wcm2021-ag4">grp web</a> | <a href="https://github.com/40923111/wcm2021-ag4">grp repo</a> <br/> <a href="https://40923116.github.io/wcm2021">40923116 web</a> | <a href="https://github.com/40923116/wcm2021">40923116 repo</a> | <a href="https://40923116.github.io/wcm2021-ag4">grp web</a> | <a href="https://github.com/40923116/wcm2021-ag4">grp repo</a> <br/> <a href="https://40923122.github.io/wcm2021">40923122 web</a> | <a href="https://github.com/40923122/wcm2021">40923122 repo</a> | <a href="https://40923122.github.io/wcm2021-ag4">grp web</a> | <a href="https://github.com/40923122/wcm2021-ag4">grp repo</a> <br/> wcm2021-ag5<br/> <a href="https://40923127.github.io/wcm2021">40923127 web</a> | <a href="https://github.com/40923127/wcm2021">40923127 repo</a> | <a href="https://40923127.github.io/wcm2021-ag5">grp web</a> | <a href="https://github.com/40923127/wcm2021-ag5">grp repo</a> <br/> <a href="https://40923128.github.io/wcm2021">40923128 web</a> | <a href="https://github.com/40923128/wcm2021">40923128 repo</a> | <a href="https://40923128.github.io/wcm2021-ag5">grp web</a> | <a href="https://github.com/40923128/wcm2021-ag5">grp repo</a> <br/> <a href="https://40923125.github.io/wcm2021">40923125 web</a> | <a href="https://github.com/40923125/wcm2021">40923125 repo</a> | <a href="https://40923125.github.io/wcm2021-ag5">grp web</a> | <a href="https://github.com/40923125/wcm2021-ag5">grp repo</a> <br/> <a href="https://40923136.github.io/wcm2021">40923136 web</a> | <a href="https://github.com/40923136/wcm2021">40923136 repo</a> | <a href="https://40923136.github.io/wcm2021-ag5">grp web</a> | <a href="https://github.com/40923136/wcm2021-ag5">grp repo</a> <br/> <a href="https://40923124.github.io/wcm2021">40923124 web</a> | <a href="https://github.com/40923124/wcm2021">40923124 repo</a> | <a href="https://40923124.github.io/wcm2021-ag5">grp web</a> | <a href="https://github.com/40923124/wcm2021-ag5">grp repo</a> <br/> <a href="https://40923126.github.io/wcm2021">40923126 web</a> | <a href="https://github.com/40923126/wcm2021">40923126 repo</a> | <a href="https://40923126.github.io/wcm2021-ag5">grp web</a> | <a href="https://github.com/40923126/wcm2021-ag5">grp repo</a> <br/> wcm2021-ag6<br/> <a href="https://s40723240.github.io/wcm2021">40723240 web</a> | <a href="https://github.com/s40723240/wcm2021">40723240 repo</a> | <a href="https://s40723240.github.io/wcm2021-ag6">grp web</a> | <a href="https://github.com/s40723240/wcm2021-ag6">grp repo</a> <br/> <a href="https://s40723238.github.io/wcm2021">40723238 web</a> | <a href="https://github.com/s40723238/wcm2021">40723238 repo</a> | <a href="https://s40723238.github.io/wcm2021-ag6">grp web</a> | <a href="https://github.com/s40723238/wcm2021-ag6">grp repo</a> <br/> wcm2021-ag7<br/> <a href="https://40523923.github.io/wcm2021">40523923 web</a> | <a href="https://github.com/40523923/wcm2021">40523923 repo</a> | <a href="https://40523923.github.io/wcm2021-ag7">grp web</a> | <a href="https://github.com/40523923/wcm2021-ag7">grp repo</a> <br/> <a href="https://40523148.github.io/wcm2021">40523148 web</a> | <a href="https://github.com/40523148/wcm2021">40523148 repo</a> | <a href="https://40523148.github.io/wcm2021-ag7">grp web</a> | <a href="https://github.com/40523148/wcm2021-ag7">grp repo</a> <br/> wcm2021-ag8<br/> <a href="https://40923117.github.io/wcm2021">40923117 web</a> | <a href="https://github.com/40923117/wcm2021">40923117 repo</a> | <a href="https://40923117.github.io/wcm2021-ag8">grp web</a> | <a href="https://github.com/40923117/wcm2021-ag8">grp repo</a> <br/> <a href="https://40923120.github.io/wcm2021">40923120 web</a> | <a href="https://github.com/40923120/wcm2021">40923120 repo</a> | <a href="https://40923120.github.io/wcm2021-ag8">grp web</a> | <a href="https://github.com/40923120/wcm2021-ag8">grp repo</a> <br/> <a href="https://40923119.github.io/wcm2021">40923119 web</a> | <a href="https://github.com/40923119/wcm2021">40923119 repo</a> | <a href="https://40923119.github.io/wcm2021-ag8">grp web</a> | <a href="https://github.com/40923119/wcm2021-ag8">grp repo</a></p><h2>W15</h2>
+<h2>分組專題</h2>
 <p><a href="https://drive.google.com/drive/folders/1OyEy67kGXiNjQSccad3Fd0H_59paqOiU?usp=sharing">分組報告影片</a></p>
 <h4>Solvespace 3D 參數設計繪圖建立零組件 (<a href="https://solvespace.com">Solvespace</a> 編譯與<a href="http://www.farwire.net/SolveSpace-LearningGuide.htm">應用</a>):</h4>
 <ol>
@@ -4593,6 +4609,105 @@ REM 加入 PostgreSQL 所需的環境變數設定
 <p style="padding-left: 30px;">設法置入機械設計與精密機械領域有關的網際協同功能</p><h2>Fossil scm</h2>
 <p>熟悉 Fossil SCM 在 Windows 與 Ubuntu 上的操作</p>
 <p><a href="https://fossil-scm.org">https://fossil-scm.org</a></p>
+<p>2017 年各班曾經透過一台 Ubuntu 16.04 主機, 建立 Fossil SCM 伺服器, 且每一學員發放一個 Fossil SCM 倉儲, 其中各學員可以利用 Wiki 與 Technote 紀錄學習資料外, 還可以將靜態網誌與簡報檔案放入 Files 資料區.</p>
+<h4>Fossil SCM 常用指令:</h4>
+<p style="padding-left: 30px;">fossil clone</p>
+<p style="padding-left: 30px;">fossil add .</p>
+<p style="padding-left: 30px;">fossil commit -m "提交訊息"</p>
+<p style="padding-left: 30px;">fossil push</p>
+<h4>當時為每位學員建立倉儲的設想流程如下:</h4>
+<ol>
+<li>各學員可以獨立維護倉儲內容, 也可以在總管理員的權限下, 為分組學員建立帳號, 逐步導入協同設計</li>
+<li>各學員的倉儲以修課班級命名伺服器, 以學號命名倉儲, 方便依照此一規律擷取各學員的倉儲頁面.</li>
+<li>各學員能以電子郵件收到與新建倉儲相關的連結, 以及帳號密碼.</li>
+<li>必須擴增 Ubuntu ulimits -n 同時開檔的設限範圍 (內定只允許同時開啟 1024 個檔案)</li>
+</ol>
+<h4>當時所採用的解決方案:</h4>
+<ol>
+<li>主機名稱可以透過 domain dns 中的 CNAME 別名方式處理, 因為目前所能提供出來的 IPv4/IPv6 雙支援主機, 之前已經都設定了符號名稱.</li>
+<li>fossil init 雖然提供指定管理者的 -A 選項功能, 但是無法直接指定管理者對應密碼, 因此必須建立倉儲之後, 再利用 fossil user 修改密碼, 之後再利用 Gmail 寄出通知信, 其中提供倉儲連結, 登入帳號與密碼等資訊.</li>
+<li>建立各學員倉儲檔案的程式如下, 如前所述, 主要透過兩個 Fossil SCM 指令完成, 在 Windows 採用 Fossil SCM 2.3 版建立所有 .fossil 倉儲時, 將同時以 email 通知各學員. 各學員的 .fossil 檔案再以 sftp 送到伺服主機對應帳號所屬的目錄下. 必須要特別注意的是, 採用 Fossil SCM 2.3 版所建立的 .fossil 倉儲檔案, 在 Ubuntu 操作系統上也必須採用相同版本的 fossil, 否則舊版 fossil 可能無法開啟新版 fossil 程式所建立的倉儲檔.</li>
+</ol>
+<p>只不過當年採用 smtplib 寄送 Gmail 信件的方式已經被 Google 禁用, 目前必須透過 Gmail API 寄信.</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import os
+import string
+import random
+# 使用 Gmail 寄信必須導入下列模組
+import smtplib
+import re
+from email.mime.text import MIMEText  
+from email.header import Header
+ 
+# 用來以亂數建立密碼的函式
+def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
+    '''
+    source: https://stackoverflow.com/questions/2257441/random-string-generation-with-upper-case-letters-and-digits-in-python
+    '''
+    return ''.join(random.choice(chars) for _ in range(size))
+ 
+# 讀取學員名單, 逐一取得學員學號, 學員名單, 檢查點 1/7
+student_data = open("2017fall_list/1b.txt").read()
+student_list = student_data.splitlines()
+ 
+# 利用 gmail smtp 功能寄信
+server = smtplib.SMTP('smtp.gmail.com:587')
+server.ehlo()
+server.starttls()
+# 以下必須準備好對應郵件帳號與密碼的外部檔案, 所提供的寄信帳號, 是否可以寄信, 檢查點 2/7
+'''
+寄信之前必須到 https://www.google.com/settings/security/lesssecureapps 修改權限, 改為較低安全權限
+否則無法使用程式寄信!
+'''
+# 從外部檔案讀取要用來寄信的 gmail 帳號與密碼
+# mail.txt 格式為: 電子郵箱,對應密碼, 以逗點隔開, 檢查點 3/7
+email_data = open("z:/2017fall/mail.txt").read()
+email, email_password= email_data.split(",")
+print(email, email_password)
+# 是否登入所提供寄信的電子郵箱, 4/7
+server.login(email, email_password)
+# 不同課程名稱, 與對應主機名稱, 必須配合修改 5/7
+course_title = "計算機程式"
+fossil_server = "cpb.kmol.info"
+ 
+for student_num in student_list:
+    username = student_num
+    repository = username + '.fossil'
+    # 利用所提供的字串, 以亂數組成六個字元的密碼
+    password = id_generator(6, "23456789abcdef")
+    print(student_num, ", " , password)
+ 
+    # 執行 dos command 指令, 建立倉儲
+    os.system("fossil init -A " +username + " " + repository)
+    print("已經建立倉儲 " + repository)
+ 
+    # 執行 dos command 指令, 修改使用者密碼
+    os.system("fossil user password " + username + " " + password + " -R " + repository)
+    print("已經修改密碼")
+ 
+    # 利用 Gmail 寄信, 告知各學員倉儲連結與帳號密碼
+    # 每一位學員收到的 output 都從這裡 reset
+    output = ""
+    # 若學號欄為空, 則不寄信
+    if student_num != "":
+        # output 為寄給每一位學員的資料表格
+        mail_content = student_num+' 您好: &lt;br&gt;&lt;br&gt; 您在 '+course_title+' 課程中的區域網路倉儲: &lt;a href="https://'+fossil_server+'/'+student_num+'"&gt;https://'+fossil_server+'/'+student_num+'&lt;/a&gt;&lt;br&gt;&lt;br&gt;'
+        mail_content += '管理帳號為:'+ student_num + '&lt;br&gt; 管理密碼為: '+ password+'&lt;br&gt;&lt;br&gt;'
+        print(student_num)
+        print(mail_content)
+        # 至此 mail_content 已經確定
+        # 在測試與實際寄送資料, 也必須配合修改, 檢查點  6/7
+        receiver_email = student_num + "@gm.nfu.edu.tw"
+        # 測試用
+        #receiver_email = student_num+"@mde.tw"
+        # 列出收信人 email 位址
+        #print(receiver_email)
+        #message= MIMEText(mail_content,'plain','UTF-8')
+        # 以 html 格式寄信
+        message= MIMEText(mail_content,'html','UTF-8')
+        message['Subject'] = Header(course_title+" Fossil SCM 帳號通知", 'UTF-8') 
+        # 可以先不寄信, 確定格式正確後再開啟, 是否實際寄出信件, 檢查點 7/7
+        server.sendmail("gmail_address", receiver_email, message.as_string())
+server.quit()</pre>
 <p></p><h2>CDiMDE</h2>
 <p>延伸 cdproject1 功能, 設法與 Discourse 整合, 應用於機械設計教學與研究.</p>
 <p>整合 CDiMDE 與 Discourse</p>
