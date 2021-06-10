@@ -1,0 +1,28 @@
+https://fossil.kmol.info/u/wcm
+
+c:\tmp\W16\fossil>
+
+fossil clone https://yen@fossil.kmol.info/u/wcm wcm.fossil
+
+mkdir wd
+
+cd wd
+
+mkdir wcm
+
+c:\tmp\W16\fossil\wd\wcm>
+
+cd wcm
+
+fossil open ./../../wcm.fossil
+
+fossil add .
+
+fossil addremove
+
+fossil commit -m "initial add"
+
+fossil scm unversioned
+
+https://fossil.kmol.info/u/wcm/doc/trunk/index.html
+
